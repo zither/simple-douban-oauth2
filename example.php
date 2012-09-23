@@ -32,7 +32,7 @@ if( ! isset($_GET['code']))
 }
 
 // 设置Authorization_code
-DoubanOauth::$authorization_code = $_GET['code'];
+DoubanOauth::$authorizationCode = $_GET['code'];
 
 // 使用Authorization_code获取Access_token
 DoubanOauth::access();
