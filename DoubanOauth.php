@@ -7,24 +7,24 @@
  * @date 2012-09-13
  */
 
-class Douban_oauth {
+class DoubanOauth {
     
     /**
      * @brief var 声明豆瓣OAUTH需要的最基本API链接
      */
-    protected static $authorization_uri = 'https://www.douban.com/service/auth2/auth';
+    protected static $authorizationUri = 'https://www.douban.com/service/auth2/auth';
         
-    protected static $access_uri = 'https://www.douban.com/service/auth2/token';
+    protected static $accessUri = 'https://www.douban.com/service/auth2/token';
             
     /**
      * @brief var 声明豆瓣OAUTH需要的APIKEY以及callback链接
      */
-    protected static $client_id, $secret, $redirect_uri;
+    protected static $clientId, $secret, $redirectUri;
     
     /**
      * @brief var 用于储存已获取的令牌
      */
-    public static $authorization_code, $tokens, $access_token;
+    public static $authorizationCode, $tokens, $accessToken;
     
     /**
      * @brief 注册豆瓣OAUTH，初始化相关数据
@@ -35,13 +35,13 @@ class Douban_oauth {
      *
      * @return void
      */
-    public static function make($client_id, $secret, $redirect_uri)
+    public static function make($clientId, $secret, $redirectUri)
     {
-        static::$client_id = $client_id;
+        static::$clientId = $clientId;
         
         static::$secret = $secret;
 
-        static::$redirect_uri = $redirect_uri;
+        static::$redirectUri = $redirectUri;
     }
 
     /**
@@ -52,49 +52,48 @@ class Douban_oauth {
     public static function authorization()
     {
         // 获取Authorization_code请求链接
-        $authorization_url = static::authorization_url();
+        $authorizationUrl = static::authorizationUrl();
 
-        header('Location:'.$authorization_url);
+        header('Location:'.$authorizationUrl);
     }
     
     /**
      * @brief 通过Authorization_code获取Access_token
      *
-     * @return void
+     * @return string
      */
     public static function access()
     {
         // 获取Access_token请求链接
-        $access_url = static::access_url();
+        $accessUrl = static::accessUrl();
         
         // 在windows下测试，如果没有设置这个HEADER信息，会返回 411 length required error
         $header = array('Content-Length: ');
         
         // 使用curl模拟请求，获取token信息
-        static::$tokens = static::curl($access_url, 'POST', $header);
-        
+        static::$tokens = static::curl($accessUrl, 'POST', $header);
+
         // 设置Access_token
-        static::$access_token = static::$tokens->access_token;
+        return static::$accessToken = static::$tokens->access_token;
     }
 
     /**
      * @brief 一个使用Access_token的例子，获取豆瓣用户数据
      *
-     * @return void
+     * @return object
      */
-    public static function user_info()
+    public static function userInfo()
     {
         // 豆瓣用户API链接
-        $user_url = 'https://api.douban.com/v2/user/~me';
+        $userUrl = 'https://api.douban.com/v2/user/~me';
 
         // 通过header发送Access_token
-        $header = array('Authorization: Bearer '.static::$access_token);
+        $header = array('Authorization: Bearer '.static::$accessToken);
 
         // 使用curl模拟请求，获取用户信息
-        $user_info = static::curl($user_url, 'GET', $header);
+        $userInfo = static::curl($userUrl, 'GET', $header);
 
-        // 使用用户信息
-        echo '<html><img src="'.$user_info->avatar.'" /><br /><span>你好，'.$user_info->name.'</span></html>';
+        return $userInfo;
     }
 
     /**
@@ -102,11 +101,11 @@ class Douban_oauth {
      *
      * @return string
      */
-    protected static function authorization_url()
+    protected static function authorizationUrl()
     {
-        return static::$authorization_uri.
-            '?client_id='.static::$client_id.
-            '&redirect_uri='.static::$redirect_uri.
+        return static::$authorizationUri.
+            '?client_id='.static::$clientId.
+            '&redirect_uri='.static::$redirectUri.
             '&response_type=code';
     }
 
@@ -115,14 +114,14 @@ class Douban_oauth {
      *
      * @return string
      */
-    protected static function access_url()
+    protected static function accessUrl()
     {
-        return static::$access_uri.
-            '?client_id='.static::$client_id.
+        return static::$accessUri.
+            '?client_id='.static::$clientId.
             '&client_secret='.static::$secret.
-            '&redirect_uri='.static::$redirect_uri.
+            '&redirect_uri='.static::$redirectUri.
             '&grant_type=authorization_code'.
-            '&code='.static::$authorization_code;
+            '&code='.static::$authorizationCode;
     }
 
     /**

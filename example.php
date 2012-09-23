@@ -8,10 +8,10 @@
  */
 
 // 包含豆瓣OAUTH类
-require('douban.php');
+require('DoubanOauth.php');
 
 // 豆瓣应用的Public Key
-$client_id = 'Your app public key';
+$clientId = 'Your app public key';
 
 // 豆瓣应用的Secret Key
 $secret = 'Your app secret key';
@@ -20,23 +20,23 @@ $secret = 'Your app secret key';
 $callback = 'http://127.0.0.1/example.php';
 
 // 注册豆瓣OAUTH
-Douban_oauth::make($client_id, $secret, $callback);
+DoubanOauth::make($clientId, $secret, $callback);
 
 // 如果没有设置Authorization_code，跳转到豆瓣授权页面
 if( ! isset($_GET['code']))
 {
     // 跳转到豆瓣授权页面，获取Authorization_code
-    Douban_oauth::authorization();
+    DoubanOauth::authorization();
 
     exit;
 }
 
 // 设置Authorization_code
-Douban_oauth::$authorization_code = $_GET['code'];
+DoubanOauth::$authorization_code = $_GET['code'];
 
 // 使用Authorization_code获取Access_token
-Douban_oauth::access();
+DoubanOauth::access();
 
 // 使用Access_token调用豆瓣API的例子
 // 使用豆瓣用户API获取用户信息
-Douban_oauth::user_info();
+var_dump(DoubanOauth::userInfo());
