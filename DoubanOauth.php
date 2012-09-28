@@ -1,10 +1,10 @@
 <?php
 /**
- * @file douban.php
- * @brief 初次学习Oauth，自写一个简单的豆瓣Oauth类，仅测试了winodws环境
+ * @file DoubanOauth.php
+ * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.1
- * @date 2012-09-13
+ * @version 0.2
+ * @date 2012-09-28
  */
 
 class DoubanOauth {
@@ -12,36 +12,44 @@ class DoubanOauth {
     /**
      * @brief var 声明豆瓣OAUTH需要的最基本API链接
      */
-    protected static $authorizationUri = 'https://www.douban.com/service/auth2/auth';
+    protected $authorizationUri = 'https://www.douban.com/service/auth2/auth';
         
-    protected static $accessUri = 'https://www.douban.com/service/auth2/token';
+    protected $accessUri = 'https://www.douban.com/service/auth2/token';
+
+    protected $apiUri = 'https://api.douban.com';
             
     /**
      * @brief var 声明豆瓣OAUTH需要的APIKEY以及callback链接
      */
-    protected static $clientId, $secret, $redirectUri;
+    protected $clientId, $secret, $redirectUri, $scope, $responseType;
     
     /**
      * @brief var 用于储存已获取的令牌
      */
-    public static $authorizationCode, $tokens, $accessToken;
+    public $authorizationCode, $tokens, $accessToken;
     
     /**
-     * @brief 注册豆瓣OAUTH，初始化相关数据
+     * @brief 初始化豆瓣OAUTH，设置相关参数
      *
      * @param string $client_id
      * @param string $secret
      * @param string $redirect_uri
+     * @param string $scope
+     * @param string $responseType
      *
      * @return void
      */
-    public static function make($clientId, $secret, $redirectUri)
+    public function __construct($clientId, $secret, $redirectUri, $scope ='douban_basic_common', $responseType = 'code')
     {
-        static::$clientId = $clientId;
+        $this->clientId = $clientId;
         
-        static::$secret = $secret;
+        $this->secret = $secret;
 
-        static::$redirectUri = $redirectUri;
+        $this->redirectUri = $redirectUri;
+
+        $this->scope = $scope;
+
+        $this->responseType = $responseType;
     }
 
     /**
@@ -49,10 +57,10 @@ class DoubanOauth {
      *
      * @return Redirect
      */
-    public static function authorization()
+    public function authorization()
     {
         // 获取Authorization_code请求链接
-        $authorizationUrl = static::authorizationUrl();
+        $authorizationUrl = $this->authorizationUrl();
 
         header('Location:'.$authorizationUrl);
     }
@@ -62,38 +70,42 @@ class DoubanOauth {
      *
      * @return string
      */
-    public static function access()
+    public function access()
     {
         // 获取Access_token请求链接
-        $accessUrl = static::accessUrl();
+        $accessUrl = $this->accessUrl();
         
         // 在windows下测试，如果没有设置这个HEADER信息，会返回 411 length required error
         $header = array('Content-Length: ');
         
         // 使用curl模拟请求，获取token信息
-        static::$tokens = static::curl($accessUrl, 'POST', $header);
+        $this->tokens = $this->curl($accessUrl, 'POST', $header);
 
         // 设置Access_token
-        return static::$accessToken = static::$tokens->access_token;
+        return $this->accessToken = $this->tokens->access_token;
     }
-
+    
     /**
-     * @brief 一个使用Access_token的例子，获取豆瓣用户数据
+     * @brief 请求豆瓣API,返回包含相关数据的对象
+     *
+     * @param object $API
+     * @param array $data
      *
      * @return object
      */
-    public static function userInfo()
+    public function make($API, $data = null)
     {
-        // 豆瓣用户API链接
-        $userUrl = 'https://api.douban.com/v2/user/~me';
+        // API的完整URL
+        $url = $this->apiUri.$API->uri;
 
-        // 通过header发送Access_token
-        $header = array('Authorization: Bearer '.static::$accessToken);
+        $header = $API->header;
 
-        // 使用curl模拟请求，获取用户信息
-        $userInfo = static::curl($userUrl, 'GET', $header);
+        $type = $API->type;
 
-        return $userInfo;
+        // 发送请求
+        $result = $this->curl($url, $type, $header, $data);
+
+        return $result;
     }
 
     /**
@@ -101,12 +113,13 @@ class DoubanOauth {
      *
      * @return string
      */
-    protected static function authorizationUrl()
+    protected function authorizationUrl()
     {
-        return static::$authorizationUri.
-            '?client_id='.static::$clientId.
-            '&redirect_uri='.static::$redirectUri.
-            '&response_type=code';
+        return $this->authorizationUri.
+            '?client_id='.$this->clientId.
+            '&redirect_uri='.$this->redirectUri.
+            '&response_type='.$this->responseType.
+            '&scope='.$this->scope;
     }
 
     /**
@@ -114,43 +127,49 @@ class DoubanOauth {
      *
      * @return string
      */
-    protected static function accessUrl()
+    protected function accessUrl()
     {
-        return static::$accessUri.
-            '?client_id='.static::$clientId.
-            '&client_secret='.static::$secret.
-            '&redirect_uri='.static::$redirectUri.
+        return $this->accessUri.
+            '?client_id='.$this->clientId.
+            '&client_secret='.$this->secret.
+            '&redirect_uri='.$this->redirectUri.
             '&grant_type=authorization_code'.
-            '&code='.static::$authorizationCode;
+            '&code='.$this->authorizationCode;
     }
 
     /**
-     * @brief 使用CURL模拟GET和POST请求，并返回取得的数据
+     * @brief 使用CURL模拟请求，并返回取得的数据
      *
      * @param string $url
      * @param string $type
      * @param array $header
+     * @param array $data
      *
      * @return object
      */
-    protected static function curl($url, $type, $header)
+    protected function curl($url, $type, $header, $data = null)
     {
         $ch = curl_init();
-        
-        // GET和POST请求区分设置请求方式
-        if($type == 'GET'){
-            curl_setopt($ch, CURLOPT_POST, 0);
-        }else{
-            curl_setopt($ch, CURLOPT_POST, 1);
-        }
-
-        // 设置相应的HEADER信息
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
         // 设置请求的URL链接
         curl_setopt($ch, CURLOPT_URL, $url);
+
+        // 设置请求类型
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $type);
+
+        // 设置请求Header信息
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
+        // 跳过证书验证
+        curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        // 返回响应内容
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // 传递POST或PUT请求数据
+        if ($type == 'POST' || $type =='PUT') {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);            
+        }
 
         $result = curl_exec($ch);
 
