@@ -7,7 +7,7 @@ A simple douban oauth2 example
 
 无需授权API的GET请求样式为：
 
-    public function userGet($id, $accessToken)
+    public function userGet($id)
     {
         $this->uri = '/v2/user/'.$id;
 
