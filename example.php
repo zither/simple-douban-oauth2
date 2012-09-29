@@ -1,4 +1,11 @@
 <?php
+/**
+ * @file example.php
+ * @brief Simple_douban_oauth2调用实例，内容为使用PUT请求更新用户书评。
+ * @author JonChou <ilorn.mc@gmail.com>
+ * @version 0.2
+ * @date 2012-09-29
+ */
 
 // 载入豆瓣Oauth类和API类
 require 'DoubanOauth.php';
