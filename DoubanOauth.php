@@ -26,7 +26,7 @@ class DoubanOauth {
     /**
      * @brief var 用于储存已获取的令牌
      */
-    public $authorizationCode, $tokens, $accessToken;
+    public $authorizationCode, $tokens, $accessToken, $refreshToken;
     
     /**
      * @brief 初始化豆瓣OAUTH，设置相关参数
@@ -80,6 +80,9 @@ class DoubanOauth {
         
         // 使用curl模拟请求，获取token信息
         $this->tokens = $this->curl($accessUrl, 'POST', $header);
+
+        // 设置refreshToken,需要时可启用
+        //$this->refreshToken = $this->tokens->refresh_token;
 
         // 设置Access_token
         return $this->accessToken = $this->tokens->access_token;
