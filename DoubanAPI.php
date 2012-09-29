@@ -10,9 +10,19 @@
 class DoubanAPI {
     
     /**
-     * @brief 豆瓣API请求需要的相关信息
+     * @brief 豆瓣API uri
      */
-    protected $uri, $type, $header;
+    protected $uri;
+
+    /**
+     * @brief 设置默认请求为GET
+     */
+    protected $type = 'GET';
+
+    /**
+     * @brief 设置默认请求Header信息
+     */ 
+    protected $header = array('Content-Length: ');
     
     /**
      * @brief 豆瓣用户API，获取当前授权用户信息
@@ -27,8 +37,6 @@ class DoubanAPI {
 
         $this->header = array('Authorization: Bearer '.$accessToken);
 
-        $this->type = 'GET';
-
         return $this;
     }
     
@@ -42,10 +50,6 @@ class DoubanAPI {
     public function userGet($id)
     {
         $this->uri = '/v2/user/'.$id;
-
-        $this->header = array('Content-Length: ');
-
-        $this->type = 'GET';
 
         return $this;
     }
@@ -63,10 +67,6 @@ class DoubanAPI {
     {
         $this->uri = "/v2/user?q=$q&start=$start&count=$count";
 
-        $this->header = array('Content-Length: ');
-
-        $this->type = 'GET';
-
         return $this;
     }
     
@@ -80,10 +80,6 @@ class DoubanAPI {
     public function bookGet($id)
     {
         $this->uri = '/v2/book/'.$id;
-
-        $this->header = array('Content-Length: ');
-
-        $this->type = 'GET';
 
         return $this;
     }
@@ -99,10 +95,6 @@ class DoubanAPI {
     {
         $this->uri = '/v2/book/isbn/'.$name;
 
-        $this->header = array('Content-Length: ');
-
-        $this->type = 'GET';
-
         return $this;
     }
     
@@ -116,10 +108,6 @@ class DoubanAPI {
     public function bookTags($id)
     {
         $this->uri = '/v2/book/'.$id.'/tags';
-
-        $this->header = array('Content-Length: ');
-
-        $this->type = 'GET';
 
         return $this;    
     }

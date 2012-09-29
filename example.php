@@ -5,13 +5,13 @@ require 'DoubanOauth.php';
 require 'DoubanAPI.php';
 
 // 豆瓣应用public key
-$clientId = 'public key';
+$clientId = '037c0301d3b81d570a7409057b285805';
 
 // 豆瓣应用secret key
-$secret = 'secret key';
+$secret = 'c2c9c36981ef49c6';
 
 // 用户授权后的回调链接
-$callback = 'http://hostname/example.php';
+$callback = 'http://127.0.0.1/example.php';
 
 // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
 $scope ='douban_basic_common';
@@ -52,7 +52,7 @@ $API = new DoubanAPI();
 $API = $API->reviewEdit('5599867',$accessToken);
 
 // 使用豆瓣Oauth类向修改评论API发送请求，请获取返回结果
-$result = $douban->make($API, $data);
+$result = $douban->send($API, $data);
 
 // 打印结果
 var_dump($result);

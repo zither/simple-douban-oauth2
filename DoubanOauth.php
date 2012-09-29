@@ -76,7 +76,7 @@ class DoubanOauth {
         $accessUrl = $this->accessUrl();
         
         // 在windows下测试，如果没有设置这个HEADER信息，会返回 411 length required error
-        $header = array('Content-Length: ');
+        $header = array('Content_type: application/x-www-form-urlencoded');
         
         // 使用curl模拟请求，获取token信息
         $this->tokens = $this->curl($accessUrl, 'POST', $header);
@@ -93,7 +93,7 @@ class DoubanOauth {
      *
      * @return object
      */
-    public function make($API, $data = null)
+    public function send($API, $data = null)
     {
         // API的完整URL
         $url = $this->apiUri.$API->uri;
