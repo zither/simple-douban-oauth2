@@ -5,10 +5,10 @@ require 'DoubanOauth.php';
 require 'DoubanAPI.php';
 
 // 豆瓣应用public key
-$clientId = '037c0301d3b81d570a7409057b285805';
+$clientId = 'Your app public key';
 
 // 豆瓣应用secret key
-$secret = 'c2c9c36981ef49c6';
+$secret = 'Your app secret key';
 
 // 用户授权后的回调链接
 $callback = 'http://127.0.0.1/example.php';
