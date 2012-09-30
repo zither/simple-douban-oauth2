@@ -43,7 +43,7 @@ API的POST请求样式为：
         return $this;     
     }
 
-了解API样式之后就可以把自己需要的豆瓣API添加到DoubanAPI文件中了。
+了解API样式之后就可以把自己需要的豆瓣API添加到**DoubanAPI**文件中了。
 
 ###Simple Douban Oauth使用方法
 
