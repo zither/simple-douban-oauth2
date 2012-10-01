@@ -38,7 +38,10 @@ $douban->authorizationCode = $_GET['code'];
 // 通过authorizationCode获取accessToken
 $accessToken = $douban->access();
 
-// 用更新用户书评作为示例，$data为书评信息
+// 以更新用户书评作为示例，$reviewId为待修改书评ID
+$reviewId = '5599867';
+
+// $data为书评信息，这里只包含了标题和内容，没有添加评分。
 $data = array(
         'title' => '三个故事',
         'content' => '三个故事并不是都市妖奇谈的正文，它们是可蕊在创作都市妖奇谈正文和捉鬼实习生的夹缝中完成的，但却是我读完都市妖奇谈后印象最为深刻的章节。也许是因为骨子里喜欢仙侠的缘故，当第一次读到这三个故事时惊喜不已。 
@@ -56,10 +59,10 @@ $data = array(
 $API = new DoubanAPI();
 
 // 选择修改评论API
-$API->reviewEdit('5599867',$accessToken);
+$API->reviewEdit($reviewId, $accessToken);
 
-// 使用豆瓣Oauth类向修改评论API发送请求，请获取返回结果
+// 使用豆瓣Oauth类向修改评论API发送请求，并获取返回结果
 $result = $douban->send($API, $data);
 
-// 打印结果
+// 打印结果,返回的$result已经经过json_decode操作
 var_dump($result);
