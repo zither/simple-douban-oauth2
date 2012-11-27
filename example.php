@@ -3,8 +3,8 @@
  * @file example.php
  * @brief Simple_douban_oauth2调用实例，内容为使用PUT请求更新用户书评。
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.2
- * @date 2012-09-29
+ * @version 0.3
+ * @date 2012-11-27
  */
 
 // 载入豆瓣Oauth类和API类
@@ -12,13 +12,13 @@ require 'DoubanOauth.php';
 require 'DoubanAPI.php';
 
 // 豆瓣应用public key
-$clientId = 'Your app public key';
+$clientId = 'Your public key';
 
 // 豆瓣应用secret key
-$secret = 'Your app secret key';
+$secret = 'Your secret key';
 
 // 用户授权后的回调链接
-$callback = 'http://127.0.0.1/example.php';
+$callback = 'http://localhost/example.php';
 
 // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
 $scope ='douban_basic_common';
@@ -38,10 +38,9 @@ $douban->authorizationCode = $_GET['code'];
 // 通过authorizationCode获取accessToken
 $accessToken = $douban->access();
 
-// $data为需要添加的书评信息，book是目标书籍ID，title为评论标题，content为评论内容。
-// 当你在测试API时，请不要原文发表例子中的评论，示例只作示范，你应该自己动手写一篇。
+// $data为需要修改的书评信息，title为评论标题，content为评论内容。
+// 当你在测试API时，请选择你自己发表过的书评，示例只用作示范，否则会返回未授权错误。
 $data = array(
-        'book' => '1932401',
         'title' => '天地铜炉',
         'content' => '作为众多精品残卷中的一员，乱世铜炉还算让人欣慰，最起码十三讲完了铜炉前传。当初在读乱世铜炉时也只是看完了铜炉前传便果断放手，正传的残本一直到现在都未品读。有时放弃也是一种幸福，没必要去跳那些永远不填的大坑。又是十三在《关于铜炉中的一些问题的回答》中填了一首词：
 西江月 藏头 天地铜炉
@@ -55,11 +54,14 @@ $data = array(
 // 生成一个豆瓣API基类实例
 $API = new DoubanAPI();
 
-// 选择添加评论API
-$API->reviewAdd($accessToken);
+// 注册一个豆瓣图书API实例
+$API->apiRegister('BookAPI');
+
+// 选择修改评论
+$API->api->reviewEdit($accessToken, '5671382');
 
 // 使用豆瓣Oauth类向添加评论API发送请求，并获取返回结果
-$result = $douban->send($API, $data);
+$result = $douban->send($API->api, $data);
 
 // 打印结果,返回的$result已经经过json_decode操作
 var_dump($result);

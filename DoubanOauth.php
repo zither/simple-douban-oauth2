@@ -3,8 +3,8 @@
  * @file DoubanOauth.php
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.2
- * @date 2012-09-28
+ * @version 0.3
+ * @date 2012-11-27
  */
 
 class DoubanOauth {

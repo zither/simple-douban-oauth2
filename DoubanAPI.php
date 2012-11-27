@@ -1,171 +1,86 @@
 <?php
 /**
  * @file DoubanAPI.php
- * @brief 豆瓣Oauth API，这里列出的并不完整，可以按需添加。
+ * @brief 豆瓣Oauth API注册类。
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.2
- * @date 2012-09-29
+ * @version 0.3
+ * @date 2012-11-26
  */
 
 class DoubanAPI {
-    
-    /**
-     * @brief 豆瓣API uri
-     */
-    protected $uri;
 
     /**
-     * @brief 设置默认请求为GET
+     * @brief 储存已注册的api实例
      */
-    protected $type = 'GET';
-
-    /**
-     * @brief 设置默认请求Header信息
-     */ 
-    protected $header = array('Content-Length: ');
+    protected $api;
     
     /**
-     * @brief 豆瓣用户API，获取当前授权用户信息
+     * @brief 自动载入api的Base类
      *
-     * @param string $accessToken
-     *
-     * @return object
+     * @return void
      */
-    public function userMe($accessToken)
+    public function __construct()
     {
-        $this->uri = '/v2/user/~me';
+        // Base类路径
+        $basePath = __DIR__.'/api/Base.php';
 
-        $this->header = array('Authorization: Bearer '.$accessToken);
-
-        return $this;
+        // 载入Base类
+        try {
+            $this->fileLoader($basePath);
+        } catch(Exception $e) {
+            echo 'API load error:'.$e->getMessage();
+        }
     }
     
     /**
-     * @brief 豆瓣用户API，获取指定ID用户信息
+     * @brief 注册指定api，并储存api实例
      *
-     * @param string $id
+     * @param string $api
      *
-     * @return object
+     * @return void
      */
-    public function userGet($id)
+    public function apiRegister($api)
     {
-        $this->uri = '/v2/user/'.$id;
+        $apiPath = __DIR__.'/api/'.$api.'.php';
 
-        return $this;
+        // 载入指定API
+        try {
+            $this->fileLoader($apiPath);
+        } catch(Exception $e) {
+            echo 'API load error:'.$e->getMessage();
+        }
+
+        $this->api = new $api();
     }
     
     /**
-     * @brief 豆瓣用户API，搜索用户
+     * @brief 文件加载类
      *
-     * @param string $q
-     * @param int $start
-     * @param int $count
+     * @param string $path
      *
-     * @return object
+     * @return void
      */
-    public function userSearch($q, $start, $count)
+    private function fileLoader($path)
     {
-        $this->uri = "/v2/user?q=$q&start=$start&count=$count";
+        if ( ! file_exists($path)) {
+            throw new Exception('The API you wanted to load does not exists.');
+        }
 
-        return $this;
+        require $path;
     }
-    
-    /**
-     * @brief 豆瓣图书API，获取指定书籍
-     *
-     * @param int $id
-     *
-     * @return object
-     */
-    public function bookGet($id)
-    {
-        $this->uri = '/v2/book/'.$id;
 
-        return $this;
-    }
-    
     /**
-     * @brief 豆瓣图书API,获取Isbn对应书籍
+     * @brief 通过魔术方法获取api实例
      *
      * @param string $name
      *
      * @return object
      */
-    public function bookIsbn($name)
+    public function __get($name)
     {
-        $this->uri = '/v2/book/isbn/'.$name;
-
-        return $this;
-    }
-    
-    /**
-     * @brief 豆瓣图书API，获取书籍标签
-     *
-     * @param int $id
-     *
-     * @return object
-     */
-    public function bookTags($id)
-    {
-        $this->uri = '/v2/book/'.$id.'/tags';
-
-        return $this;    
-    }
-    
-    /**
-     * @brief 豆瓣图书API，添加书评
-     *
-     * @param string $accessToken
-     *
-     * @return object
-     */
-    public function reviewAdd($accessToken)
-    {
-        $this->uri = "/v2/book/reviews";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$accessToken
-                );
-
-        $this->type = 'POST';
-
-        return $this;     
-    }
-
-    /**
-     * @brief 豆瓣图书API，修改书评
-     *
-     * @param int $id
-     * @param string $accessToken
-     *
-     * @return object
-     */
-    public function reviewEdit($id, $accessToken)
-    {
-        $this->uri = "/v2/book/review/$id";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$accessToken
-                );
-
-        $this->type = 'PUT';
-
-        return $this;          
-    }
-
-    /**
-     * @brief 魔术方法，获取类属性
-     *
-     * @param mixed $var
-     *
-     * @return mixed
-     */
-    public function __get($var)
-    {
-        if (isset($this->$var)) {
-            return $this->$var;
+        if (property_exists($this, $name)) {
+            return $this->$name;
         }
     }
+
 }

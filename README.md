@@ -13,6 +13,8 @@ A simple douban oauth2 example
 
 ###添加API方法
 
+api文件夹中保存了豆瓣各组API，例如UserAPI等。你可以选择你需要修改的API文件。
+
 无需授权API的GET请求样式为：
 
     public function userGet($id)
@@ -50,5 +52,3 @@ API的POST请求样式为：
 
         return $this;     
     }
-
-了解API样式之后就可以把自己需要的豆瓣API添加到**DoubanAPI**文件中了。
