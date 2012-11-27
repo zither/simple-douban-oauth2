@@ -1,0 +1,24 @@
+[33mtag v0.2[m
+Tagger: JonChou <ilorn.mc@gmail.com>
+Date:   Tue Nov 27 23:44:31 2012 +0800
+
+version 0.2
+
+[33mcommit 4d0efccfa403e60b44cd61f94124f5f5e0044cc3[m
+Author: JonChou <ilorn.mc@gmail.com>
+Date:   Tue Nov 27 13:51:12 2012 +0800
+
+    update README
+
+[1mdiff --git a/README.md b/README.md[m
+[1mindex e93c05e..96ff716 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -49,6 +49,6 @@[m [mAPI的POST请求样式为：[m
+         $this->type = 'POST';[m
+ [m
+         return $this;     [m
+[31m-        }[m
+[32m+[m[32m    }[m
+ [m
+ 了解API样式之后就可以把自己需要的豆瓣API添加到**DoubanAPI**文件中了。[m
