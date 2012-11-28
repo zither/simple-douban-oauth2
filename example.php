@@ -40,13 +40,13 @@ $accessToken = $douban->access();
 // 通过豆瓣API发送一条豆瓣广播
 $data = array('source' =>$clientId, 'text' =>'更换了header信息，再次通过豆瓣API发表广播。');
 
-// 修改评论需要用到豆瓣图书API，注册一个豆瓣图书API实例
+// 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
 $bookAPI = $douban->apiRegister('Miniblog');
 
-// 选择修改评论API
+// 选择我说API
 $bookAPI->shuo($accessToken);
 
-// 使用豆瓣Oauth类向修改评论API发送请求，并获取返回结果
+// 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
 $result = $douban->send($bookAPI, $data);
 
 // 打印结果,返回的$result已经经过json_decode操作
