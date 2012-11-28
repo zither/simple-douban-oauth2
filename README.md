@@ -1,11 +1,11 @@
 simple-douban-oauth2
 ====================
 
-A simple douban oauth2 example
+A simple douban oauth2
 
 ###Simple Douban Oauth使用方法
 
-在example文件中演示了一个使用POST方法添加书评的例子。
+在example文件中演示了一个使用PUT方法更新书评的例子。
 
     https://github.com/zither/simple-douban-oauth2/blob/master/example.php
 
@@ -13,7 +13,7 @@ A simple douban oauth2 example
 
 ###添加API方法
 
-api文件夹中保存了豆瓣各组API，例如UserAPI等。你可以选择你需要修改的API文件。
+**api**文件夹中保存了豆瓣各组API，例如UserAPI等。你可以选择你需要修改的API文件。
 
 无需授权API的GET请求样式为：
 
