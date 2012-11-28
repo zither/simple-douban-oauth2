@@ -1,7 +1,7 @@
 simple-douban-oauth2
 ====================
 
-A simple douban oauth2
+一个简单的豆瓣oauth2客户端。
 
 ###Simple Douban Oauth使用方法
 
