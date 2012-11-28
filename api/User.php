@@ -1,16 +1,16 @@
 <?php
 /**
- * @file UserAPI.php
+ * @file User.php
  * @brief 豆瓣用户API
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.3
  * @date 2012-11-27
  */
 
-class UserAPI extends Base {
+class User extends Base {
 
     /**
-     * @brief 豆瓣用户API，获取当前授权用户信息
+     * @brief 获取当前授权用户信息
      *
      * @param string $accessToken
      *
@@ -26,7 +26,7 @@ class UserAPI extends Base {
     }
     
     /**
-     * @brief 豆瓣用户API，获取指定ID用户信息
+     * @brief 获取指定ID用户信息
      *
      * @param string $id
      *
@@ -40,7 +40,7 @@ class UserAPI extends Base {
     }
     
     /**
-     * @brief 豆瓣用户API，搜索用户
+     * @brief 搜索用户
      *
      * @param string $q
      * @param int $start

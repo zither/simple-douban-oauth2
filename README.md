@@ -5,7 +5,7 @@ simple-douban-oauth2
 
 ###Simple Douban Oauth使用方法
 
-在example文件中演示了一个使用PUT方法更新书评的例子。
+在example文件中演示了一个使用POST方法发表豆瓣广播的例子。
 
     https://github.com/zither/simple-douban-oauth2/blob/master/example.php
 

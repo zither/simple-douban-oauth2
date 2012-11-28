@@ -1,16 +1,16 @@
 <?php
 /**
- * @file BookAPI.php
+ * @file Book.php
  * @brief 豆瓣图书API
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.3
  * @date 2012-11-27
  */
 
-class BookAPI extends Base {
+class Book extends Base {
 
     /**
-     * @brief 豆瓣图书API，获取指定书籍
+     * @brief 获取指定书籍
      *
      * @param int $id
      *
@@ -24,7 +24,7 @@ class BookAPI extends Base {
     }
     
     /**
-     * @brief 豆瓣图书API,获取Isbn对应书籍
+     * @brief 获取Isbn对应书籍
      *
      * @param string $name
      *
@@ -38,7 +38,7 @@ class BookAPI extends Base {
     }
     
     /**
-     * @brief 豆瓣图书API，获取书籍标签
+     * @brief 获取书籍标签
      *
      * @param int $id
      *
@@ -52,7 +52,7 @@ class BookAPI extends Base {
     }
     
     /**
-     * @brief 豆瓣图书API，添加书评
+     * @brief 添加书评
      *
      * @param string $accessToken
      *
@@ -73,7 +73,7 @@ class BookAPI extends Base {
     }
 
     /**
-     * @brief 豆瓣图书API，修改书评
+     * @brief 修改书评
      *
      * @param int $id
      * @param string $accessToken
