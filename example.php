@@ -41,13 +41,13 @@ $accessToken = $douban->access();
 $data = array('source' =>$clientId, 'text' =>'更换了header信息，再次通过豆瓣API发表广播。');
 
 // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
-$bookAPI = $douban->apiRegister('Miniblog');
+$Miniblog = $douban->apiRegister('Miniblog');
 
 // 选择我说API
-$bookAPI->shuo($accessToken);
+$Miniblog->shuo($accessToken);
 
 // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
-$result = $douban->send($bookAPI, $data);
+$result = $douban->send($Miniblog, $data);
 
 // 打印结果,返回的$result已经经过json_decode操作
 var_dump($result);
