@@ -3,8 +3,8 @@
  * @file DoubanOauth.php
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.3
- * @date 2012-11-27
+ * @version 0.4
+ * @date 2012-11-28
  */
 
 class DoubanOauth {
@@ -42,14 +42,20 @@ class DoubanOauth {
     public function __construct($clientId, $secret, $redirectUri, $scope ='douban_basic_common', $responseType = 'code')
     {
         $this->clientId = $clientId;
-        
         $this->secret = $secret;
-
         $this->redirectUri = $redirectUri;
-
         $this->scope = $scope;
-
         $this->responseType = $responseType;
+
+        // API基类路径
+        $basePath = __DIR__.'/api/Base.php';
+
+        // 载入API基类
+        try {
+            $this->fileLoader($basePath);
+        } catch(Exception $e) {
+            echo 'Baseloader error:'.$e->getMessage();
+        }
     }
 
     /**
@@ -61,7 +67,6 @@ class DoubanOauth {
     {
         // 获取Authorization_code请求链接
         $authorizationUrl = $this->authorizationUrl();
-
         header('Location:'.$authorizationUrl);
     }
     
@@ -100,15 +105,32 @@ class DoubanOauth {
     {
         // API的完整URL
         $url = $this->apiUri.$API->uri;
-
         $header = $API->header;
-
         $type = $API->type;
 
         // 发送请求
-        $result = $this->curl($url, $type, $header, $data);
+        return $this->curl($url, $type, $header, $data);
+    }
+    
+    /**
+     * @brief 豆瓣API实例注册函数
+     *
+     * @param string $api
+     *
+     * @return object
+     */
+    public function apiRegister($api)
+    {
+        // 需要注册的API路径
+        $apiPath = __DIR__.'/api/'.$api.'.php';
 
-        return $result;
+        try {
+            $this->fileLoader($apiPath);
+        } catch(Exception $e) {
+            echo 'Apiloader error:'.$e->getMessage();
+        }
+
+        return new $api();
     }
 
     /**
@@ -179,6 +201,23 @@ class DoubanOauth {
         curl_close($ch);  
         
         // 返回Decode之后的数据
-        return $result = json_decode($result);
+        return json_decode($result);
+    }
+    
+    /**
+     * @brief 文件加载类
+     *
+     * @param string $path
+     *
+     * @return void
+     */
+    protected function fileLoader($path)
+    {
+        // 文件路径错误时抛出异常
+        if ( ! file_exists($path)) {
+            throw new Exception('The file you wanted to load does not exists.');
+        }
+
+        require $path;
     }
 }
