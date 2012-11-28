@@ -13,9 +13,7 @@ class DoubanOauth {
      * @brief var 声明豆瓣OAUTH需要的最基本API链接
      */
     protected $authorizationUri = 'https://www.douban.com/service/auth2/auth';
-        
     protected $accessUri = 'https://www.douban.com/service/auth2/token';
-
     protected $apiUri = 'https://api.douban.com';
             
     /**
