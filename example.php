@@ -1,7 +1,7 @@
 <?php
 /**
  * @file example.php
- * @brief Simple_douban_oauth2调用实例，内容为使用PUT请求更新用户书评。
+ * @brief Simple_douban_oauth2调用实例，内容为使用POST请求发表豆瓣广播。
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
  * @date 2012-11-28
