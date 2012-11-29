@@ -4,7 +4,7 @@
  * @brief 豆瓣广播API
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.1
- * @date 2012-11-29
+ * @date 2012-11-27
  */
 
 class Miniblog extends Base {
