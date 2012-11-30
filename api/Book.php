@@ -16,7 +16,7 @@ class Book extends Base {
      *
      * @return object
      */
-    public function bookGet($id)
+    public function get($id)
     {
         $this->uri = '/v2/book/'.$id;
 
@@ -30,7 +30,7 @@ class Book extends Base {
      *
      * @return object
      */
-    public function bookIsbn($name)
+    public function isbn($name)
     {
         $this->uri = '/v2/book/isbn/'.$name;
 
@@ -44,7 +44,7 @@ class Book extends Base {
      *
      * @return object
      */
-    public function bookTags($id)
+    public function tags($id)
     {
         $this->uri = '/v2/book/'.$id.'/tags';
 
@@ -58,7 +58,7 @@ class Book extends Base {
      *
      * @return object
      */
-    public function reviewAdd($accessToken)
+    public function add($accessToken)
     {
         $this->uri = "/v2/book/reviews";
 
@@ -80,7 +80,7 @@ class Book extends Base {
      *
      * @return object
      */
-    public function reviewEdit($accessToken, $id)
+    public function edit($accessToken, $id)
     {
         $this->uri = "/v2/book/review/$id";
 

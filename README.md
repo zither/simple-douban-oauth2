@@ -13,11 +13,11 @@ simple-douban-oauth2
 
 ###添加API方法
 
-**api**文件夹中保存了豆瓣各组API，例如UserAPI等。你可以选择你需要修改的API文件。
+**api**文件夹中保存了豆瓣各组API，例如User等。你可以选择你需要修改的API文件。
 
 无需授权API的GET请求样式为：
 
-    public function userGet($id)
+    public function get($id)
     {
         $this->uri = '/v2/user/'.$id;
 
@@ -26,7 +26,7 @@ simple-douban-oauth2
 
 需要授权API的GET请求样式为：
 
-    public function userMe($accessToken)
+    public function me($accessToken)
     {
         $this->uri = '/v2/user/~me';
 
@@ -38,7 +38,7 @@ simple-douban-oauth2
 
 API的POST请求样式为：
 
-    public function reviewAdd($accessToken)
+    public function add($accessToken)
     {
         $this->uri = "/v2/book/reviews";
 

@@ -16,7 +16,7 @@ class User extends Base {
      *
      * @return object
      */
-    public function userMe($accessToken)
+    public function me($accessToken)
     {
         $this->uri = '/v2/user/~me';
 
@@ -32,7 +32,7 @@ class User extends Base {
      *
      * @return object
      */
-    public function userGet($id)
+    public function get($id)
     {
         $this->uri = '/v2/user/'.$id;
 
@@ -48,7 +48,7 @@ class User extends Base {
      *
      * @return object
      */
-    public function userSearch($q, $start, $count)
+    public function search($q, $start, $count)
     {
         $this->uri = "/v2/user?q=$q&start=$start&count=$count";
 
