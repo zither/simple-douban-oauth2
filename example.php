@@ -7,7 +7,7 @@
  * @date 2012-11-28
  */
 
-// 载入豆瓣Oauth类和API类
+// 载入豆瓣Oauth类
 require 'DoubanOauth.php';
 
 // 豆瓣应用public key
