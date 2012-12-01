@@ -26,7 +26,7 @@ $scope ='douban_basic_common,shuo_basic_w';
 // 生成一个豆瓣Oauth类实例
 $douban = new DoubanOauth($clientId, $secret, $callback, $scope);
 
-// 如果没有requestToken，跳转到用户授权页面
+// 如果没有authorizeCode，跳转到用户授权页面
 if ( ! isset($_GET['code'])) {
     $douban->getAuthorizeCode();
     exit;
