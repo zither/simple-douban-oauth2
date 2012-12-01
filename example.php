@@ -35,7 +35,7 @@ if ( ! isset($_GET['code'])) {
 // 设置authorizeCode
 $douban->authorizeCode = $_GET['code'];
 
-// 通过requestToken获取accessToken
+// 通过authorizeCode获取accessToken
 $accessToken = $douban->getAccessToken();
 
 // 通过豆瓣API发送一条带图片的豆瓣广播
