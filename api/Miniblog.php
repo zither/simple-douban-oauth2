@@ -22,7 +22,7 @@ class Miniblog extends Base {
 
         $this->header = array(
                 'Content_type: multipart/form-data',
-                'Authorization: Bearer '.$accessToken
+                "Authorization: Bearer $accessToken",
                 );
 
         $this->type = 'POST';

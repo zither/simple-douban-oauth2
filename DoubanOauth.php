@@ -12,7 +12,7 @@ class DoubanOauth {
     /**
      * @brief var 声明豆瓣OAUTH需要的最基本API链接
      */
-    protected $authorizationUri = 'https://www.douban.com/service/auth2/auth';
+    protected $authorizeUri = 'https://www.douban.com/service/auth2/auth';
     protected $accessUri = 'https://www.douban.com/service/auth2/token';
     protected $apiUri = 'https://api.douban.com';
             
@@ -24,7 +24,7 @@ class DoubanOauth {
     /**
      * @brief var 用于储存已获取的令牌
      */
-    public $authorizationCode, $tokens, $accessToken, $refreshToken;
+    public $authorizeCode, $tokens, $accessToken, $refreshToken;
     
     /**
      * @brief 初始化豆瓣OAUTH，设置相关参数
@@ -57,32 +57,33 @@ class DoubanOauth {
     }
 
     /**
-     * @brief 跳转到豆瓣用户授权页面，获取Authorization_code
+     * @brief 跳转到豆瓣用户授权页面，获取AuthorizeCode
      *
      * @return Redirect
      */
-    public function authorization()
+    public function getAuthorizeCode()
     {
-        // 获取Authorization_code请求链接
-        $authorizationUrl = $this->authorizationUrl();
-        header('Location:'.$authorizationUrl);
+        // 获取AuthorizeCode请求链接
+        $authorizeUrl = $this->getAuthorizeUrl();
+        header('Location:'.$authorizeUrl);
     }
     
     /**
-     * @brief 通过Authorization_code获取Access_token
+     * @brief 通过AuthorizeCode获取accessToken
      *
      * @return string
      */
-    public function access()
+    public function getAccessToken()
     {
-        // 获取Access_token请求链接
-        $accessUrl = $this->accessUrl();
-        
+        // 获取accessToken请求链接
+        $accessUrl = $this->getAccessUrl();
+
         // 在windows下测试，如果没有设置这个HEADER信息，会返回 411 length required error
         $header = array('Content_type: application/x-www-form-urlencoded');
         
         // 使用curl模拟请求，获取token信息
-        $this->tokens = $this->curl($accessUrl, 'POST', $header);
+        $result = $this->curl($accessUrl, 'POST', $header);
+        $this->tokens = json_decode($result);
 
         // 设置refreshToken,需要时可启用
         //$this->refreshToken = $this->tokens->refresh_token;
@@ -99,12 +100,12 @@ class DoubanOauth {
      *
      * @return object
      */
-    public function send($API, $data = null)
+    public function send($api, $data = null)
     {
         // API的完整URL
-        $url = $this->apiUri.$API->uri;
-        $header = $API->header;
-        $type = $API->type;
+        $url = $this->apiUri.$api->uri;
+        $header = $api->header;
+        $type = $api->type;
 
         // 发送请求
         return $this->curl($url, $type, $header, $data);
@@ -136,9 +137,9 @@ class DoubanOauth {
      *
      * @return string
      */
-    protected function authorizationUrl()
+    protected function getAuthorizeUrl()
     {
-        return $this->authorizationUri.
+        return $this->authorizeUri.
             '?client_id='.$this->clientId.
             '&redirect_uri='.$this->redirectUri.
             '&response_type='.$this->responseType.
@@ -150,14 +151,14 @@ class DoubanOauth {
      *
      * @return string
      */
-    protected function accessUrl()
+    protected function getAccessUrl()
     {
         return $this->accessUri.
             '?client_id='.$this->clientId.
             '&client_secret='.$this->secret.
             '&redirect_uri='.$this->redirectUri.
             '&grant_type=authorization_code'.
-            '&code='.$this->authorizationCode;
+            '&code='.$this->authorizeCode;
     }
 
     /**
@@ -198,8 +199,8 @@ class DoubanOauth {
 
         curl_close($ch);  
         
-        // 返回Decode之后的数据
-        return json_decode($result);
+        // 返回请求数据
+        return $result;
     }
     
     /**
