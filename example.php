@@ -4,7 +4,7 @@
  * @brief Simple_douban_oauth2调用实例，内容为使用POST请求发表豆瓣广播。
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
- * @date 2012-11-28
+ * @date 2012-12-01
  */
 
 // 载入豆瓣Oauth类
@@ -20,6 +20,7 @@ $secret = 'Your secret key';
 $callback = 'http://localhost/example.php';
 
 // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
+// 我们要发送豆瓣广播，就必须申请shuo_basic_w权限
 $scope ='douban_basic_common,shuo_basic_w';
 
 // 生成一个豆瓣Oauth类实例
@@ -37,8 +38,12 @@ $douban->authorizationCode = $_GET['code'];
 // 通过authorizationCode获取accessToken
 $accessToken = $douban->access();
 
-// 通过豆瓣API发送一条豆瓣广播
-$data = array('source' =>$clientId, 'text' =>'更换了header信息，再次通过豆瓣API发表广播。');
+// 通过豆瓣API发送一条带图片的豆瓣广播
+// 我看到豆瓣API小组里很多朋友都卡在了发送图片广播上，那是因为没有设置正确的Content-Type。
+// 在PHP中通过curl拓展上传图片必须使用类似“@/home/chou/images/123.png;type=image/png”的模式
+// 并且必须在图片绝对路径后指定正确的图片类型，如果没有指定类型会返回“不支持的图片类型错误”。
+// 那是因为没有指定图片类型时，上传的文件类型默认为“application/octet-stream”。
+$data = array('source' => $clientId, 'text' =>'更换了header信息，再次通过豆瓣API发表广播。', 'image' => '@/home/chou/images/123.png;type=image/png');
 
 // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
 $Miniblog = $douban->apiRegister('Miniblog');
