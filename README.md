@@ -1,7 +1,7 @@
 simple-douban-oauth2
 ====================
 
-一个简单的豆瓣oauth2客户端，现在的api还不完整，项目文档也才刚刚建立，不过都会不断完善的。
+一个简单的豆瓣oauth2客户端，现在的api还不完整，[项目文档](http://blog.minimee.org/simple-douban-oauth2)也才刚刚建立，不过都会不断完善的。
 
 ###Simple Douban Oauth使用方法
 
