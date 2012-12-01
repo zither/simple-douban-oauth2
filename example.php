@@ -29,7 +29,7 @@ $douban = new DoubanOauth($clientId, $secret, $callback, $scope);
 // 如果没有authorizeCode，跳转到用户授权页面
 if ( ! isset($_GET['code'])) {
     $douban->getAuthorizeCode();
-        exit;
+    exit;
 }
 
 // 设置authorizeCode
@@ -43,11 +43,7 @@ $accessToken = $douban->getAccessToken();
 // 在PHP中通过curl拓展上传图片必须使用类似“@/home/chou/images/123.png;type=image/png”的模式
 // 并且必须在图片绝对路径后指定正确的图片类型，如果没有指定类型会返回“不支持的图片类型错误”。
 // 那是因为没有指定图片类型时，上传的文件类型默认为“application/octet-stream”。
-<<<<<<< HEAD
 $data = array('source' => $clientId, 'text' =>'进一步规范SDK函数命名。', 'image' => '@/home/chou/images/123.png;type=image/png');
-=======
-$data = array('source' => $clientId, 'text' =>'进一步规范SDK函数命名。', 'image' => '@/home/chou/images/123.png;type=image/png');
->>>>>>> dev
 
 // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
 $miniblog = $douban->apiRegister('Miniblog');
