@@ -1,11 +1,11 @@
 simple-douban-oauth2
 ====================
 
-一个简单的豆瓣oauth2客户端。
+一个简单的豆瓣oauth2客户端，现在的api还不完整，正在不断更新中。
 
 ###Simple Douban Oauth使用方法
 
-在example文件中演示了一个使用POST方法发表豆瓣广播的例子。
+由于看到很多朋友都不知道怎么上传带图片的豆瓣广播，所以特意在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
 
     https://github.com/zither/simple-douban-oauth2/blob/master/example.php
 
@@ -13,7 +13,7 @@ simple-douban-oauth2
 
 ###添加API方法
 
-**api**文件夹中保存了豆瓣各组API，例如User等。你可以选择你需要修改的API文件。
+simple douban oauth2现在的api还不完整，不过可以非常方便的添加。在**api**文件夹中保存了现有的豆瓣api，你可以选择你需要修改的API文件，或者参考例子编写自己需要的api类。
 
 无需授权API的GET请求样式为：
 
