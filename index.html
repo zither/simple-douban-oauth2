@@ -44,6 +44,49 @@
 
         <h3>Usage</h3>
         <p>这里提供了一个<a href="https://github.com/zither/simple-douban-oauth2/blob/master/example.php">使用Simple douban oauth2来发送图片广播</a>的例子。</p>
+
+        <p>Simple douban oauth2的所有API类都保存在<strong>api</strong>文件夹中，你可以参考一下方式非常方便的添加API：</p>
+        <p>添加无需授权的GET请求</p>
+
+        <pre><code>public function get($id)
+{
+    $this->uri = '/v2/user/'.$id;
+
+    return $this;
+}
+        </code></pre>
+
+        <p>添加需授权的GET请求</p>
+
+        <pre><code>public function me($accessToken)
+{
+    $this->uri = '/v2/user/~me';
+
+    // 必须在header中发送授权令牌
+    $this->header = array('Authorization: Bearer '.$accessToken);
+
+    return $this;
+}        </code></pre>
+
+        <p>添加需授权的POST请求</p>
+
+        <pre><code>public function add($accessToken)
+{
+    $this->uri = "/v2/book/reviews";
+
+    $this->header = array(
+            'Content_type: application/x-www-form-urlencoded',
+            'Authorization: Bearer '.$accessToken
+            );
+
+    // API默认请求设置为GET，因此这里需说明请求类型
+    $this->type = 'POST';
+
+    return $this;     
+}        </code></pre>
+
+
+
         
       </section>
     </div>
