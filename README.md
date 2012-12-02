@@ -3,11 +3,7 @@ simple-douban-oauth2
 
 一个简单的豆瓣oauth2客户端，现在的api还不完整，[项目文档](http://zither.github.com/simple-douban-oauth2)也才刚刚建立，不过都会不断完善。
 
-<<<<<<< HEAD
-[Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支添加了完整的豆瓣API接口（**未测试**），新增接口还未添加注释。
-=======
 [Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支添加了完整的豆瓣API接口（未测试），新增接口还未添加注释。
->>>>>>> dev
 
 ###Simple Douban Oauth使用方法
 
