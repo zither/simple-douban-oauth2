@@ -129,7 +129,7 @@ class DoubanOauth {
             echo 'Apiloader error:'.$e->getMessage();
         }
 
-        return new $api();
+        return new $api($this->clientId, $this->accessToken);
     }
 
     /**

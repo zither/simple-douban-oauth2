@@ -26,7 +26,7 @@ $scope ='douban_basic_common,shuo_basic_w';
 // 生成一个豆瓣Oauth类实例
 $douban = new DoubanOauth($clientId, $secret, $callback, $scope);
 
-// 如果没有authorizeCode，跳转到用户授权页面
+// 如果没有requestToken，跳转到用户授权页面
 if ( ! isset($_GET['code'])) {
     $douban->getAuthorizeCode();
     exit;
@@ -35,8 +35,8 @@ if ( ! isset($_GET['code'])) {
 // 设置authorizeCode
 $douban->authorizeCode = $_GET['code'];
 
-// 通过authorizeCode获取accessToken
-$accessToken = $douban->getAccessToken();
+// 通过requestToken获取accessToken
+$douban->getAccessToken();
 
 // 通过豆瓣API发送一条带图片的豆瓣广播
 // 我看到豆瓣API小组里很多朋友都卡在了发送图片广播上，那是因为没有设置正确的Content-Type。
@@ -48,8 +48,8 @@ $data = array('source' => $clientId, 'text' =>'进一步规范SDK函数命名。
 // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
 $miniblog = $douban->apiRegister('Miniblog');
 
-// 选择我说API
-$miniblog->shuo($accessToken);
+// 选择发表我说
+$miniblog->addMiniblog();
 
 // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
 $result = $douban->send($miniblog, $data);
