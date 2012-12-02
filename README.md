@@ -17,40 +17,51 @@ simple-douban-oauth2
 
 simple douban oauth2现在的api还不完整，不过可以非常方便的添加。在**api**文件夹中保存了现有的豆瓣api，你可以选择你需要修改的API文件，或者参考例子编写自己需要的api类。
 
+一个简单的API类示例：
+
+    <?php
+
+    class Book extends Base {
+        
+        // 必须包含构造函数
+        public function __construct($clientId, $accessToken = null)
+        {
+            parent::__construct($clientId, $accessToken);
+        }
+
+        public function getBook($id)
+        {
+            $this->uri = '/v2/book/'.$id;
+            return $this;
+        }
+    }
+
+
 无需授权API的GET请求样式为：
 
     public function get($id)
     {
         $this->uri = '/v2/user/'.$id;
-
         return $this;
     }
 
 需要授权API的GET请求样式为：
 
-    public function me($accessToken)
+    public function me()
     {
         $this->uri = '/v2/user/~me';
-
-        // 必须在header中发送授权令牌
-        $this->header = array('Authorization: Bearer '.$accessToken);
-
+        // 设置Authorization header
+        $this->header = $this->authorizeHeader;
         return $this;
     }
 
 API的POST请求样式为：
 
-    public function add($accessToken)
+    public function addReview()
     {
         $this->uri = "/v2/book/reviews";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         // API默认请求设置为GET，因此这里需说明请求类型
         $this->type = 'POST';
-
         return $this;     
     }
