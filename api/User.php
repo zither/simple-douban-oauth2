@@ -10,18 +10,27 @@
 class User extends Base {
 
     /**
-     * @brief 获取当前授权用户信息
+     * @brief 构造函数，初始设置clientId和accessToken
      *
+     * @param string $clientId
      * @param string $accessToken
+     *
+     * @return void
+     */
+    public function __construct($clientId, $accessToken = null)
+    {
+        parent::__construct($clientId, $accessToken);
+    }
+
+    /**
+     * @brief 获取当前授权用户信息
      *
      * @return object
      */
-    public function me($accessToken)
+    public function me()
     {
         $this->uri = '/v2/user/~me';
-
-        $this->header = array('Authorization: Bearer '.$accessToken);
-
+        $this->header = $this->authorizeHeader;
         return $this;
     }
     
@@ -35,7 +44,6 @@ class User extends Base {
     public function get($id)
     {
         $this->uri = '/v2/user/'.$id;
-
         return $this;
     }
     
@@ -48,10 +56,10 @@ class User extends Base {
      *
      * @return object
      */
-    public function search($q, $start, $count)
+    public function search($q, $start = null, $count = null)
     {
         $this->uri = "/v2/user?q=$q&start=$start&count=$count";
-
         return $this;
     }
+    
 }

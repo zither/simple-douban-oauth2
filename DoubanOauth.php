@@ -78,7 +78,6 @@ class DoubanOauth {
         // 获取accessToken请求链接
         $accessUrl = $this->getAccessUrl();
 
-        // 在windows下测试，如果没有设置这个HEADER信息，会返回 411 length required error
         $header = array('Content_type: application/x-www-form-urlencoded');
         
         // 使用curl模拟请求，获取token信息
@@ -100,7 +99,7 @@ class DoubanOauth {
      *
      * @return object
      */
-    public function send($api, $data = null)
+    public function makeRequest($api, $data = null)
     {
         // API的完整URL
         $url = $this->apiUri.$api->uri;
@@ -129,7 +128,7 @@ class DoubanOauth {
             echo 'Apiloader error:'.$e->getMessage();
         }
 
-        return new $api();
+        return new $api($this->clientId, $this->accessToken);
     }
 
     /**
@@ -177,19 +176,14 @@ class DoubanOauth {
 
         // 设置请求的URL链接
         curl_setopt($ch, CURLOPT_URL, $url);
-
         // 设置请求类型
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $type);
-
         // 设置请求Header信息
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-
         // 跳过证书验证
         curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
-
         // 返回响应内容
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
         // 传递POST或PUT请求数据
         if ($type == 'POST' || $type =='PUT') {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);            
