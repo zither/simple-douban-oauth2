@@ -25,40 +25,28 @@ class Comment extends Base {
     public function getCommentsList($target, $id)
     {
         $this->uri = "/v2/$target/$id/comments";
-
         return $this;
     }
 
     public function addComment($target, $id)
     {
         $this->uri = "/v2/$target/$id/comments";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this; 
     }
 
     public function getComment($target, $id)
     {
         $this->uri = "/v2/$target/$id/comment/:id";
-
         return $this;
     }
 
     public function deleteComment($target, $id)
     {
         $this->uri = "/v2/$target/$id/comments";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this; 
     }
 }

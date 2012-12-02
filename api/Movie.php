@@ -25,48 +25,38 @@ class Movie extends Base {
     public function get($id)
     {
         $this->uri = "/v2/movie/:id";
-
         return $this;
     }
 
     public function imdb($name)
     {
         $this->uri = "/v2/movie/imdb/$name";
-
         return $this;
     }
 
     public function search($q, $tag, $start = 0, $count = 20)
     {
         $this->uri = "/v2/movie/search?q=$q&tag=$tag&start=$start&count=$count";
-
         return $this;
     }
 
     public function movieTags($id)
     {
         $this->uri = "/v2/movie/$id/tags";
-
         return $this;
     }
 
     public function userTags($id)
     {
         $this->uri = "/v2/movie/user_tags/$id";
-
         return $this;
     }
 
     public function addReview()
     {
         $this->uri = "/v2/movie/reviews";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "POST";
-
         return $this;
 
     }
@@ -74,13 +64,8 @@ class Movie extends Base {
     public function editReview($id)
     {
         $this->uri = "/v2/movie/review/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
-
         return $this;
 
     }
@@ -88,13 +73,8 @@ class Movie extends Base {
     public function deleteReview($id)
     {
         $this->uri = "/v2/movie/review/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
-
         return $this;
 
     }

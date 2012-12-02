@@ -25,108 +25,68 @@ class Doumail extends Base {
     public function get($id)
     {
         $this->uri = "/v2/doumail/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         return $this;
     }
 
     public function inbox()
     {
         $this->uri = "/v2/doumail/inbox";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         return $this;
     }
 
     public function outbox()
     {
         $this->uri = "/v2/doumail/outbox";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         return $this;
     }
 
     public function unread()
     {
         $this->uri = "/v2/doumail/inbox/unread";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         return $this;
     }
 
     public function read($id)
     {
         $this->uri = "/v2/doumail/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
+        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
-
         return $this;
     }
 
     public function mutilRead()
     {
         $this->uri = "/v2/doumail/read";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
-
         return $this;
     }
 
     public function delete($id)
     {
         $this->uri = "/v2/doumail/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
-
         return $this;
     }
 
     public function mutilDelete()
     {
         $this->uri = "/v2/doumail/delete";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "POST";
-
         return $this;
     }
 
     public function add()
     {
         $this->uri = "/v2/doumails";
-
-        $this->header = array(
-                    'Authorization: Bearer '.$this->accessToken
-                    );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "POST";
-
         return $this;
     }
 }

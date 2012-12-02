@@ -32,7 +32,6 @@ class Book extends Base {
     public function getBook($id)
     {
         $this->uri = '/v2/book/'.$id;
-
         return $this;
     }
     
@@ -46,7 +45,6 @@ class Book extends Base {
     public function isbn($name)
     {
         $this->uri = "/v2/book/isbn/$name";
-
         return $this;
     }
    
@@ -63,7 +61,6 @@ class Book extends Base {
     public function search($q, $tag, $start = 0, $count = 20)
     {
         $this->uri = "/v2/book/search?q=$q&tag=$tag&start=$start&count=$count";
-
         return $this;
     }
     /**
@@ -76,7 +73,6 @@ class Book extends Base {
     public function bookTags($id)
     {
         $this->uri = '/v2/book/'.$id.'/tags';
-
         return $this;    
     }
    
@@ -90,7 +86,6 @@ class Book extends Base {
     public function userTags($name)
     {
         $this->uri = "/v2/book/user/$name/tags";
-
         return $this;
     }
     
@@ -104,7 +99,6 @@ class Book extends Base {
     public function collections($name)
     {
         $this->uri = "/v2/book/user/$name/collections";
-
         return $this;
     }
     
@@ -118,7 +112,6 @@ class Book extends Base {
     public function getCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
-
         return $this;
     }
      
@@ -132,14 +125,8 @@ class Book extends Base {
     public function addCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "POST";
-
         return $this;
     }
 
@@ -153,14 +140,8 @@ class Book extends Base {
     public function editCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
-
         return $this;
     }
 
@@ -174,13 +155,8 @@ class Book extends Base {
     public function deleteCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
-
         return $this;
     }
 
@@ -194,7 +170,6 @@ class Book extends Base {
     public function userAnnotations($name)
     {
         $this->uri = "/v2/book/user/$name/annotations";
-
         return $this;
     }
     
@@ -208,7 +183,6 @@ class Book extends Base {
     public function bookAnnotations($id)
     {
         $this->uri = "/v2/book/user/$id/annotations";
-
         return $this;
     }
     
@@ -222,7 +196,6 @@ class Book extends Base {
     public function getAnnotation($id)
     {
         $this->uri = "/v2/book/annotation/$id";
-
         return $this;
     }
 
@@ -236,14 +209,8 @@ class Book extends Base {
     public function addAnnotation($id)
     {
         $this->uri = "/v2/book/$id/annotations";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "POST";
-
         return $this;
     }
 
@@ -257,14 +224,8 @@ class Book extends Base {
     public function editAnnotation($id)
     {
         $this->uri = "/v2/book/annotation/$id";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
-
         return $this;
     }
 
@@ -278,13 +239,8 @@ class Book extends Base {
     public function deleteAnnotation($id)
     {
         $this->uri = "/v2/book/annotation/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
-
         return $this;
     }
     /**
@@ -295,14 +251,8 @@ class Book extends Base {
     public function addReview()
     {
         $this->uri = "/v2/book/reviews";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;     
     }
 
@@ -316,14 +266,8 @@ class Book extends Base {
     public function editReview($id)
     {
         $this->uri = "/v2/book/review/$id";
-
-        $this->header = array(
-                'Content_type: application/x-www-form-urlencoded',
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'PUT';
-
         return $this;          
     }
 
@@ -337,13 +281,8 @@ class Book extends Base {
     public function deleteReview($id)
     {
         $this->uri = "/v2/book/review/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;          
     }
 }

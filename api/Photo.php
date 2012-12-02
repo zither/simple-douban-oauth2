@@ -25,46 +25,30 @@ class Photo extends Base {
     public function getAlbum($id)
     {
         $this->uri = "/v2/album/$id";
-
         return $this;
     }
 
     public function addAlbum()
     {
         $this->uri = "/v2/albums";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;
     }
 
     public function editAlbum($id)
     {
         $this->uri = "/v2/album/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'PUT';
-
         return $this;
     }
 
     public function deleteAlbum($id)
     {
         $this->uri = "/v2/album/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;
     }
 
@@ -72,119 +56,80 @@ class Photo extends Base {
     public function getPhotosList($id)
     {
         $this->uri = "/v2/album/$id/photos";
-
         return $this;
     }
 
     public function getPhoto($id)
     {
         $this->uri = "/v2/photo/$id";
-
         return $this;
     }
 
     public function likeAlbum($id)
     {
         $this->uri = "/v2/album/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;
     }
 
     public function dislikeAlbum($id)
     {
         $this->uri = "/v2/album/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;
     }
 
     public function getUserAlbumList($id)
     {
         $this->uri = "/v2/album/user_created/$id";
-
         return $this;
     }
 
     public function userLiked($id)
     {
         $this->uri = "/v2/album/user_liked/$id";
-
         return $this;
     }
 
     public function addPhoto($id)
     {
         $this->uri = "/v2/album/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;
     }
 
     public function editPhoto($id)
     {
         $this->uri = "/v2/album/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'PUT';
-
         return $this;
     }
 
     public function deletePhoto($id)
     {
         $this->uri = "/v2/album/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;
     }
 
     public function likePhoto($id)
     {
         $this->uri = "/v2/photo/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;
     }
 
     public function dislikePhoto($id)
     {
         $this->uri = "/v2/photo/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;
     }
 

@@ -30,14 +30,8 @@ class Miniblog extends Base {
     public function addMiniblog()
     {
         $this->uri = '/shuo/v2/statuses/';
-
-        $this->header = array(
-                'Content_type: multipart/form-data',
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;   
     }
     
@@ -51,7 +45,6 @@ class Miniblog extends Base {
     public function getMiniblog($id)
     {
         $this->uri = "/shuo/v2/statuses/$id";
-
         return $this;   
     }    
 
@@ -65,13 +58,8 @@ class Miniblog extends Base {
     public function deleteMiniblog($id)
     {
         $this->uri = "/shuo/v2/statuses/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;   
     }
     
@@ -87,8 +75,7 @@ class Miniblog extends Base {
     public function getCommentsList($id, $start = 0, $count = 20)
     {
         $this->uri = "/shuo/v2/statuses/$id/comments?start=$start&count=$count";
-
-        $return $this;
+        return $this;
     }
     
     /**
@@ -101,13 +88,8 @@ class Miniblog extends Base {
     public function addComment($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/comments";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;   
     }
     
@@ -121,7 +103,6 @@ class Miniblog extends Base {
     public function getComment($id)
     {
         $this->uri ="/shuo/v2/statuses/comment/$id";
-
         return $this;
     }
     
@@ -135,13 +116,8 @@ class Miniblog extends Base {
     public function deleleComment($id)
     {
         $this->uri = "/shuo/v2/statuses/comment/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;   
     }
     
@@ -155,7 +131,6 @@ class Miniblog extends Base {
     public function getReshare($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/reshare";
-
         return $this;
     }
     
@@ -169,13 +144,8 @@ class Miniblog extends Base {
     public function reshare($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/reshare";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;   
     }
 
@@ -190,13 +160,12 @@ class Miniblog extends Base {
     public function getLikers($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/like";
-
         return $this;
     }
 
 
     /**
-     * @brief 赞一条广播（未测试）
+     * @brief 赞一条广播
      *
      * @param string $id
      *
@@ -205,13 +174,8 @@ class Miniblog extends Base {
     public function like($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;    
     }
 
@@ -225,59 +189,40 @@ class Miniblog extends Base {
     public function dislike($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;    
     }
 
     public function following($id)
     {
         $this->uri = "/shuo/v2/users/$id/following";
-
         return $this;
     }
 
     public function followers($id)
     {
         $this->uri = "/shuo/v2/users/$id/followers";
-
         return $this;
     }
 
     public function followInCommon($id)
     {
         $this->uri = "/shuo/v2/users/$id/follow_in_common";
-
         return $this;
     }
 
     public function suggestions($id)
     {
         $this->uri = "/shuo/v2/users/$id/following_followers_of";
-
         return $this;
     }
 
     public function block($id)
     {
         $this->uri = "/shuo/v2/users/$id/block";
-
-        $this->header = array('Authorization: Bearer '.$this->accessToken);
-
-        return $this;
-    }
-
-    public function follow()
-    {
-        $this->uri = "/shuo/v2/friendships/create";
-        
-        $this->header = array('Authorization: Bearer '.$this->accessToken);
-
+        $this->header = $this->authorizeHeader;
+        $this->type = "POST";
         return $this;
 
     }
@@ -285,9 +230,8 @@ class Miniblog extends Base {
     public function unfollow()
     {
         $this->uri = "/shuo/v2/friendships/destroy";
-        
-        $this->header = array('Authorization: Bearer '.$this->accessToken);
-
+        $this->header = $this->authorizeHeader;
+        $this->type = "POST";
         return $this;
 
     }
@@ -295,7 +239,6 @@ class Miniblog extends Base {
     public function show($source, $sourceId, $targetId)
     {
         $this->uri = "/shuo/v2/friendships/show?soucre=$source&soucre_id=$sourceId&target_id=$targetId";
-
         return $this;
     }
 
@@ -313,11 +256,7 @@ class Miniblog extends Base {
     {
         $this->uri = "/shuo/v2/statuses/home_timeline?since_id=$sinceId&until_id=$untilId
             &count=$count&start=$start";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         return $this;
 
     }
@@ -334,7 +273,6 @@ class Miniblog extends Base {
     public function userTimeline($user, $sinceId = null, $untilId = null)
     {
         $this->uri = "/shuo/v2/statuses/user_timeline/$user?since_id=$sinceId&until_id=$untilId";
-
         return $this;
     }
     

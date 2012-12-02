@@ -25,14 +25,14 @@ class Base {
     protected $clientId;
     
     /**
-     * @brief 用户授权码
-     */
-    protected $accessToken;
-
-    /**
      * @brief 设置默认请求Header信息
      */ 
     protected $header = array('Content-Length: ');
+
+    /**
+     * @brief 需授权请求header信息 
+     */
+    protected $authorizeHeader;
     
     /**
      * @brief 对接口需要的clientId和accessToken进行初始化
@@ -45,7 +45,7 @@ class Base {
     protected function __construct($clientId, $accessToken)
     {
         $this->clientId = $clientId;
-        $this->accessToken = $accessToken;
+        $this->authorizeHeader = array("Authorization: Bearer $accessToken");
     }
 
     /**

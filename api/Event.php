@@ -25,76 +25,62 @@ class Event extends Base {
     public function get($id)
     {
         $this->uri = "/v2/event/$id";
-
         return $this;
     }
 
     public function participants($id)
     {
         $this->uri = "/v2/event/$id/participants";
-
         return $this;
     }
 
     public function wishers($id)
     {
         $this->uri = "/v2/event/$id/wishers";
-
         return $this;
     }
 
     public function userCreated($id)
     {
         $this->uri = "/v2/event/user_created/$id";
-
         return $this;
     }
 
     public function userParticipated($id)
     {
         $this->uri = "/v2/event/user_participated/$id";
-
         return $this;
     }
 
     public function userWished($id)
     {
         $this->uri = "/v2/event/user_wished/$id";
-
         return $this;
     }
 
     public function eventList()
     {
         $this->uri = "/v2/event/list";
-
         return $this;
     }
 
     public function loc($id)
     {
         $this->uri = "/v2/loc/$id";
-
         return $this;
     }
 
     public function locList()
     {
         $this->uri = "/v2/loc/list";
-
         return $this;
     }
 
     public function join($id)
     {
         $this->uri = "/v2/event/$id/participants";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "POST";
-
         return $this;
 
     }
@@ -102,39 +88,24 @@ class Event extends Base {
     public function quit($id)
     {
         $this->uri = "/v2/event/$id/participants";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
-
         return $this;
     }
 
     public function wish($id)
     {
         $this->uri = "/v2/event/$id/wishers";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "POST";
-
         return $this;
     }
 
     public function unwish($id)
     {
         $this->uri = "/v2/event/$id/wishers";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
-
         return $this;
     }
 }

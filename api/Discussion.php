@@ -25,53 +25,36 @@ class Discussion extends Base {
     public function getDiscussion($id)
     {
         $this->uri = "/v2/discussion/$id";
-
         return $this;
     }
 
     public function editDiscussion($id)
     {
         $this->uri = "/v2/discussion/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'PUT';
-
         return $this;   
     }
 
     public function deleteDiscussion($id)
     {
         $this->uri = "/v2/discussion/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;   
     }
 
     public function addDiscussion($target, $id)
     {
         $this->uri = "/v2/$target/$id/discussions";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this; 
     }
 
     public function getDiscussionsList($target, $id)
     {   
         $this->uri = "/v2/$target/$id/discussions";
-
         return $this;
     }
 }

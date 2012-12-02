@@ -30,9 +30,7 @@ class User extends Base {
     public function me()
     {
         $this->uri = '/v2/user/~me';
-
-        $this->header = array('Authorization: Bearer '.$this->accessToken);
-
+        $this->header = $this->authorizeHeader;
         return $this;
     }
     
@@ -46,7 +44,6 @@ class User extends Base {
     public function get($id)
     {
         $this->uri = '/v2/user/'.$id;
-
         return $this;
     }
     
@@ -62,7 +59,6 @@ class User extends Base {
     public function search($q, $start = null, $count = null)
     {
         $this->uri = "/v2/user?q=$q&start=$start&count=$count";
-
         return $this;
     }
     

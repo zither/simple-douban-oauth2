@@ -25,118 +25,76 @@ class Note extends Base {
     public function addNote()
     {
         $this->uri = "/v2/notes";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;   
     }
 
     public function editNote($id)
     {
         $this->uri = "/v2/note/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'PUT';
-
         return $this;   
     }
 
     public function deleteNote($id)
     {
         $this->uri = "/v2/note/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;   
     }
 
     public function like($id)
     {
         $this->uri = "/v2/note/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;   
     }
 
     public function dislike($id)
     {
         $this->uri = "/v2/note/$id/like";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;   
     }
 
     public function image($id)
     {
         $this->uri = "/v2/note/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;  
     }
 
     public function getCommentsList($id)
     {
         $this->uri = "/v2/note/$id/comments";
-
         return $this;
     }
 
     public function reply($id)
     {
         $this->uri = "/v2/note/$id/comments";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
-
         return $this;  
     }
 
     public function getComment($id)
     {
         $this->uri = "/v2/note/:id/comment/$id";
-
         return $this;
     }
 
     public function deleteComment($id)
     {
         $this->uri = "/v2/note/:id/comment/$id";
-
-        $this->header = array(
-                'Authorization: Bearer '.$this->accessToken,
-                );
-
+        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
-
         return $this;
     }
 }
