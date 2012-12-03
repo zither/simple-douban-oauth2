@@ -138,11 +138,14 @@ class DoubanOauth {
      */
     protected function getAuthorizeUrl()
     {
-        return $this->authorizeUri.
-            '?client_id='.$this->clientId.
-            '&redirect_uri='.$this->redirectUri.
-            '&response_type='.$this->responseType.
-            '&scope='.$this->scope;
+        $params = array(
+                    'client_id' => $this->clientId,
+                    'redirect_uri' => $this->redirectUri,
+                    'response_type' => $this->responseType,
+                    'scope' => $this->scope
+                    );
+
+        return $this->authorizeUri.'?'.http_build_query($params);
     }
 
     /**
@@ -152,12 +155,16 @@ class DoubanOauth {
      */
     protected function getAccessUrl()
     {
-        return $this->accessUri.
-            '?client_id='.$this->clientId.
-            '&client_secret='.$this->secret.
-            '&redirect_uri='.$this->redirectUri.
-            '&grant_type=authorization_code'.
-            '&code='.$this->authorizeCode;
+
+        $params = array(
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->secret,
+                    'redirect_uri' => $this->redirectUri,
+                    'grant_type' => 'authorization_code',
+                    'code' => $this->authorizeCode,
+                    );
+
+        return $this->accessUri.'?'.http_build_query($params);
     }
 
     /**

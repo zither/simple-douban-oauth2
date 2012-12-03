@@ -24,7 +24,7 @@ class Movie extends Base {
 
     public function get($id)
     {
-        $this->uri = "/v2/movie/:id";
+        $this->uri = "/v2/movie/$id";
         return $this;
     }
 

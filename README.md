@@ -29,39 +29,23 @@ simple douban oauth2现在的api还不完整，不过可以非常方便的添加
             parent::__construct($clientId, $accessToken);
         }
 
+        // 无需授权的GET请求示例
         public function getBook($id)
         {
             $this->uri = '/v2/book/'.$id;
+            // 在uri里添加apikey可以拥有更宽裕的请求次数
+            // $this->uri = '/v2/book/'.$id.'?apikey='.$this->clientId;
             return $this;
         }
-    }
 
-
-无需授权API的GET请求样式为：
-
-    public function get($id)
-    {
-        $this->uri = '/v2/user/'.$id;
-        return $this;
-    }
-
-需要授权API的GET请求样式为：
-
-    public function me()
-    {
-        $this->uri = '/v2/user/~me';
-        // 设置Authorization header
-        $this->header = $this->authorizeHeader;
-        return $this;
-    }
-
-API的POST请求样式为：
-
-    public function addReview()
-    {
-        $this->uri = "/v2/book/reviews";
-        $this->header = $this->authorizeHeader;
-        // API默认请求设置为GET，因此这里需说明请求类型
-        $this->type = 'POST';
-        return $this;     
+        // 需要授权的POST请求示例
+        public function addReview()
+        {
+            $this->uri = "/v2/book/reviews";
+            // 添加评论需要授权
+            $this->header = $this->authorizeHeader;
+            // API默认请求设置为GET，因此这里需说明请求类型
+            $this->type = 'POST';
+            return $this;     
+        }        
     }
