@@ -10,50 +10,48 @@
 class Doumail extends Base {
 
     /**
-     * @brief 构造函数，初始设置clientId和accessToken
+     * @brief 构造函数，初始设置clientId
      *
      * @param string $clientId
-     * @param string $accessToken
      *
      * @return void
      */
-    public function __construct($clientId, $accessToken = null)
+    public function __construct($clientId)
     {
-        parent::__construct($clientId, $accessToken);
+        $this->clientId = $clientId;
     }
 
     public function get($id)
     {
         $this->uri = "/v2/doumail/$id";
-        $this->header = $this->authorizeHeader;
+        $this->type = 'GET';
         return $this;
     }
 
     public function inbox()
     {
         $this->uri = "/v2/doumail/inbox";
-        $this->header = $this->authorizeHeader;
+        $this->type = 'GET';
         return $this;
     }
 
     public function outbox()
     {
         $this->uri = "/v2/doumail/outbox";
-        $this->header = $this->authorizeHeader;
+        $this->type = 'GET';
         return $this;
     }
 
     public function unread()
     {
         $this->uri = "/v2/doumail/inbox/unread";
-        $this->header = $this->authorizeHeader;
+        $this->type = 'GET';
         return $this;
     }
 
     public function read($id)
     {
         $this->uri = "/v2/doumail/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
         return $this;
     }
@@ -61,7 +59,6 @@ class Doumail extends Base {
     public function mutilRead()
     {
         $this->uri = "/v2/doumail/read";
-        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
         return $this;
     }
@@ -69,7 +66,6 @@ class Doumail extends Base {
     public function delete($id)
     {
         $this->uri = "/v2/doumail/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
         return $this;
     }
@@ -77,7 +73,6 @@ class Doumail extends Base {
     public function mutilDelete()
     {
         $this->uri = "/v2/doumail/delete";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
     }
@@ -85,7 +80,6 @@ class Doumail extends Base {
     public function add()
     {
         $this->uri = "/v2/doumails";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
     }

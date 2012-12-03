@@ -3,23 +3,21 @@
  * @file User.php
  * @brief 豆瓣用户API
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.3
- * @date 2012-11-27
+ * @date 2012-12-03
  */
 
 class User extends Base {
 
     /**
-     * @brief 构造函数，初始设置clientId和accessToken
+     * @brief 构造函数，初始设置clientId
      *
      * @param string $clientId
-     * @param string $accessToken
      *
      * @return void
      */
-    public function __construct($clientId, $accessToken = null)
+    public function __construct($clientId)
     {
-        parent::__construct($clientId, $accessToken);
+        $this->clientId = $clientId;
     }
 
     /**
@@ -30,7 +28,7 @@ class User extends Base {
     public function me()
     {
         $this->uri = '/v2/user/~me';
-        $this->header = $this->authorizeHeader;
+        $this->type = 'GET';
         return $this;
     }
     
@@ -44,6 +42,7 @@ class User extends Base {
     public function get($id)
     {
         $this->uri = '/v2/user/'.$id;
+        $this->type = 'GET';
         return $this;
     }
     
@@ -59,6 +58,7 @@ class User extends Base {
     public function search($q, $start = null, $count = null)
     {
         $this->uri = "/v2/user?q=$q&start=$start&count=$count";
+        $this->type = 'GET';
         return $this;
     }
     

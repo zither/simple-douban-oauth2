@@ -4,28 +4,45 @@
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
- * @date 2012-11-28
+ * @date 2012-12-03
  */
+
+if (!function_exists('curl_init')) {
+    throw new Exception('Simple douban oauth2 needs the CURL PHP extension.');
+}
+if (!function_exists('json_decode')) {
+    throw new Exception('Simple douban oauth2 needs the JSON PHP extension.');
+}
 
 class DoubanOauth {
     
     /**
-     * @brief var 声明豆瓣OAUTH需要的最基本API链接
+     * @var 声明豆瓣OAUTH需要的最基本API链接
      */
     protected $authorizeUri = 'https://www.douban.com/service/auth2/auth';
     protected $accessUri = 'https://www.douban.com/service/auth2/token';
     protected $apiUri = 'https://api.douban.com';
             
     /**
-     * @brief var 声明豆瓣OAUTH需要的APIKEY以及callback链接
+     * @var 声明豆瓣OAUTH需要的APIKEY以及callback链接
      */
     protected $clientId, $secret, $redirectUri, $scope, $responseType;
     
     /**
-     * @brief var 用于储存已获取的令牌
+     * @var 用于储存已获取的令牌
      */
-    public $authorizeCode, $tokens, $accessToken, $refreshToken;
+    protected $authorizeCode, $tokens, $accessToken, $refreshToken;
+
+    /**
+     * @var 默认请求头信息 
+     */
+    protected $defaultHeader = array('Content_type: application/x-www-form-urlencoded');
     
+    /**
+     * @var 需授权的请求头
+     */
+    protected $authorizeHeader;
+
     /**
      * @brief 初始化豆瓣OAUTH，设置相关参数
      *
@@ -59,7 +76,7 @@ class DoubanOauth {
     /**
      * @brief 跳转到豆瓣用户授权页面，获取AuthorizeCode
      *
-     * @return Redirect
+     * @return redirect
      */
     public function getAuthorizeCode()
     {
@@ -69,6 +86,18 @@ class DoubanOauth {
     }
     
     /**
+     * @brief 设置AuthorizeCode
+     *
+     * @param string $authorizeCode
+     *
+     * @return void
+     */
+    public function setAuthorizeCode($authorizeCode)
+    {
+        $this->authorizeCode = $authorizeCode;
+    }
+
+    /**
      * @brief 通过AuthorizeCode获取accessToken
      *
      * @return string
@@ -77,58 +106,15 @@ class DoubanOauth {
     {
         // 获取accessToken请求链接
         $accessUrl = $this->getAccessUrl();
-
-        $header = array('Content_type: application/x-www-form-urlencoded');
-        
+        $header = $this->defaultHeader;
         // 使用curl模拟请求，获取token信息
         $result = $this->curl($accessUrl, 'POST', $header);
         $this->tokens = json_decode($result);
-
         // 设置refreshToken,需要时可启用
         //$this->refreshToken = $this->tokens->refresh_token;
 
         // 设置Access_token
         return $this->accessToken = $this->tokens->access_token;
-    }
-    
-    /**
-     * @brief 请求豆瓣API,返回包含相关数据的对象
-     *
-     * @param object $API
-     * @param array $data
-     *
-     * @return object
-     */
-    public function makeRequest($api, $data = null)
-    {
-        // API的完整URL
-        $url = $this->apiUri.$api->uri;
-        $header = $api->header;
-        $type = $api->type;
-
-        // 发送请求
-        return $this->curl($url, $type, $header, $data);
-    }
-    
-    /**
-     * @brief 豆瓣API实例注册函数
-     *
-     * @param string $api
-     *
-     * @return object
-     */
-    public function apiRegister($api)
-    {
-        // 需要注册的API路径
-        $apiPath = __DIR__.'/api/'.$api.'.php';
-
-        try {
-            $this->fileLoader($apiPath);
-        } catch(Exception $e) {
-            echo 'Apiloader error:'.$e->getMessage();
-        }
-
-        return new $api($this->clientId, $this->accessToken);
     }
 
     /**
@@ -165,6 +151,57 @@ class DoubanOauth {
                     );
 
         return $this->accessUri.'?'.http_build_query($params);
+    }
+
+    /**
+     * @brief 请求豆瓣API,返回包含相关数据的对象
+     *
+     * @param object $API
+     * @param array $data
+     * @param boolean 为true时会在header中发送accessToken
+     *
+     * @return object
+     */
+    public function makeRequest($api, $data = null, $authorization = false)
+    {
+        // API的完整URL
+        $url = $this->apiUri.$api->uri;
+        $header = $authorization ? $this->getAuthorizeHeader() : $this->defaultHeader;
+        $type = $api->type;
+
+        // 发送请求
+        return $this->curl($url, $type, $header, $data);
+    }
+    
+    /**
+     * @brief 豆瓣API实例注册函数
+     *
+     * @param string $api
+     *
+     * @return object
+     */
+    public function apiRegister($api)
+    {
+        // 需要注册的API路径
+        $apiPath = __DIR__.'/api/'.$api.'.php';
+
+        try {
+            $this->fileLoader($apiPath);
+        } catch(Exception $e) {
+            echo 'Apiloader error:'.$e->getMessage();
+        }
+
+        return new $api($this->clientId, $this->accessToken);
+    }
+
+    /**
+     * @brief 获取Authorization header
+     *
+     * @return array
+     */
+    protected function getAuthorizeHeader()
+    {
+        return $this->authorizeHeader = array('Authorization: Bearer '.$this->accessToken);
     }
 
     /**

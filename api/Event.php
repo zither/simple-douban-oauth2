@@ -3,83 +3,89 @@
  * @file Event.php
  * @brief 豆瓣同城API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.1
- * @date 2012-12-02
+ * @date 2012-12-03
  */
 
 class Event extends Base {
 
     /**
-     * @brief 构造函数，初始设置clientId和accessToken
+     * @brief 构造函数，初始设置clientId
      *
      * @param string $clientId
-     * @param string $accessToken
      *
      * @return void
      */
-    public function __construct($clientId, $accessToken = null)
+    public function __construct($clientId)
     {
-        parent::__construct($clientId, $accessToken);
+        $this->clientId = $clientId;
     }
 
     public function get($id)
     {
         $this->uri = "/v2/event/$id";
+        $this->type = 'GET';
         return $this;
     }
 
     public function participants($id)
     {
         $this->uri = "/v2/event/$id/participants";
+        $this->type = 'GET';
         return $this;
     }
 
     public function wishers($id)
     {
         $this->uri = "/v2/event/$id/wishers";
+        $this->type = 'GET';
         return $this;
     }
 
     public function userCreated($id)
     {
         $this->uri = "/v2/event/user_created/$id";
+        $this->type = 'GET';
         return $this;
     }
 
     public function userParticipated($id)
     {
         $this->uri = "/v2/event/user_participated/$id";
+        $this->type = 'GET';
         return $this;
     }
 
     public function userWished($id)
     {
         $this->uri = "/v2/event/user_wished/$id";
+        $this->type = 'GET';
         return $this;
     }
 
     public function eventList()
     {
         $this->uri = "/v2/event/list";
+        $this->type = 'GET';
         return $this;
     }
 
     public function loc($id)
     {
         $this->uri = "/v2/loc/$id";
+        $this->type = 'GET';
         return $this;
     }
 
     public function locList()
     {
         $this->uri = "/v2/loc/list";
+        $this->type = 'GET';
         return $this;
     }
 
     public function join($id)
     {
         $this->uri = "/v2/event/$id/participants";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
 
@@ -88,7 +94,6 @@ class Event extends Base {
     public function quit($id)
     {
         $this->uri = "/v2/event/$id/participants";
-        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
         return $this;
     }
@@ -96,7 +101,6 @@ class Event extends Base {
     public function wish($id)
     {
         $this->uri = "/v2/event/$id/wishers";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
     }
@@ -104,7 +108,6 @@ class Event extends Base {
     public function unwish($id)
     {
         $this->uri = "/v2/event/$id/wishers";
-        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
         return $this;
     }

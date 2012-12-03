@@ -3,23 +3,21 @@
  * @file Miniblog.php
  * @brief 豆瓣广播API
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.1
- * @date 2012-11-27
+ * @date 2012-12-03
  */
 
 class Miniblog extends Base {
 
     /**
-     * @brief 构造函数，初始设置clientId和accessToken
+     * @brief 构造函数，初始设置clientId
      *
      * @param string $clientId
-     * @param string $accessToken
      *
      * @return void
      */
-    public function __construct($clientId, $accessToken = null)
+    public function __construct($clientId)
     {
-        parent::__construct($clientId, $accessToken);
+        $this->clientId = $clientId;
     }
 
     /**
@@ -30,7 +28,6 @@ class Miniblog extends Base {
     public function addMiniblog()
     {
         $this->uri = '/shuo/v2/statuses/';
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this;   
     }
@@ -45,6 +42,7 @@ class Miniblog extends Base {
     public function getMiniblog($id)
     {
         $this->uri = "/shuo/v2/statuses/$id";
+        $this->type = 'GET';
         return $this;   
     }    
 
@@ -58,7 +56,6 @@ class Miniblog extends Base {
     public function deleteMiniblog($id)
     {
         $this->uri = "/shuo/v2/statuses/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
         return $this;   
     }
@@ -75,6 +72,7 @@ class Miniblog extends Base {
     public function getCommentsList($id, $start = 0, $count = 20)
     {
         $this->uri = "/shuo/v2/statuses/$id/comments?start=$start&count=$count";
+        $this->type = 'GET';
         return $this;
     }
     
@@ -88,7 +86,6 @@ class Miniblog extends Base {
     public function addComment($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/comments";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this;   
     }
@@ -103,6 +100,7 @@ class Miniblog extends Base {
     public function getComment($id)
     {
         $this->uri ="/shuo/v2/statuses/comment/$id";
+        $this->type = 'GET';
         return $this;
     }
     
@@ -116,7 +114,6 @@ class Miniblog extends Base {
     public function deleleComment($id)
     {
         $this->uri = "/shuo/v2/statuses/comment/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
         return $this;   
     }
@@ -131,6 +128,7 @@ class Miniblog extends Base {
     public function getReshare($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/reshare";
+        $this->type = 'GET';
         return $this;
     }
     
@@ -144,7 +142,6 @@ class Miniblog extends Base {
     public function reshare($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/reshare";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this;   
     }
@@ -160,6 +157,7 @@ class Miniblog extends Base {
     public function getLikers($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/like";
+        $this->type = 'GET';
         return $this;
     }
 
@@ -174,7 +172,6 @@ class Miniblog extends Base {
     public function like($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/like";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this;    
     }
@@ -189,7 +186,6 @@ class Miniblog extends Base {
     public function dislike($id)
     {
         $this->uri = "/shuo/v2/statuses/$id/like";
-        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
         return $this;    
     }
@@ -197,31 +193,34 @@ class Miniblog extends Base {
     public function following($id)
     {
         $this->uri = "/shuo/v2/users/$id/following";
+        $this->type = 'GET';
         return $this;
     }
 
     public function followers($id)
     {
         $this->uri = "/shuo/v2/users/$id/followers";
+        $this->type = 'GET';
         return $this;
     }
 
     public function followInCommon($id)
     {
         $this->uri = "/shuo/v2/users/$id/follow_in_common";
+        $this->type = 'GET';
         return $this;
     }
 
     public function suggestions($id)
     {
         $this->uri = "/shuo/v2/users/$id/following_followers_of";
+        $this->type = 'GET';
         return $this;
     }
 
     public function block($id)
     {
         $this->uri = "/shuo/v2/users/$id/block";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
 
@@ -230,7 +229,6 @@ class Miniblog extends Base {
     public function unfollow()
     {
         $this->uri = "/shuo/v2/friendships/destroy";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
 
@@ -239,6 +237,7 @@ class Miniblog extends Base {
     public function show($source, $sourceId, $targetId)
     {
         $this->uri = "/shuo/v2/friendships/show?soucre=$source&soucre_id=$sourceId&target_id=$targetId";
+        $this->type = 'GET';
         return $this;
     }
 
@@ -256,7 +255,7 @@ class Miniblog extends Base {
     {
         $this->uri = "/shuo/v2/statuses/home_timeline?since_id=$sinceId&until_id=$untilId
             &count=$count&start=$start";
-        $this->header = $this->authorizeHeader;
+        $this->type = 'GET';
         return $this;
 
     }
@@ -273,6 +272,7 @@ class Miniblog extends Base {
     public function userTimeline($user, $sinceId = null, $untilId = null)
     {
         $this->uri = "/shuo/v2/statuses/user_timeline/$user?since_id=$sinceId&until_id=$untilId";
+        $this->type = 'GET';
         return $this;
     }
     

@@ -3,59 +3,75 @@
  * @file Movie.php
  * @brief 豆瓣电影API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.1
- * @date 2012-12-02
+ * @date 2012-12-03
  */
 
 class Movie extends Base {
 
     /**
-     * @brief 构造函数，初始设置clientId和accessToken
+     * @brief 构造函数，初始设置clientId
      *
      * @param string $clientId
-     * @param string $accessToken
      *
      * @return void
      */
-    public function __construct($clientId, $accessToken = null)
+    public function __construct($clientId)
     {
-        parent::__construct($clientId, $accessToken);
+        $this->clientId = $clientId;
     }
-
+    
+    /**
+     * @brief 获取电影信息
+     *
+     * @param string $id
+     *
+     * @return object
+     */
     public function get($id)
     {
         $this->uri = "/v2/movie/$id";
+        $this->type = 'GET';
         return $this;
     }
-
+    
+    /**
+     * @brief 根据imdb号获取电影信息
+     *
+     * @param string $name
+     *
+     * @return object
+     */
     public function imdb($name)
     {
         $this->uri = "/v2/movie/imdb/$name";
+        $this->type = 'GET';
         return $this;
     }
 
     public function search($q, $tag, $start = 0, $count = 20)
     {
         $this->uri = "/v2/movie/search?q=$q&tag=$tag&start=$start&count=$count";
+        $this->type = 'GET';
         return $this;
     }
 
     public function movieTags($id)
     {
         $this->uri = "/v2/movie/$id/tags";
+        $this->type = 'GET';
         return $this;
     }
 
     public function userTags($id)
     {
         $this->uri = "/v2/movie/user_tags/$id";
+        $this->type = 'GET';
         return $this;
     }
 
     public function addReview()
     {
         $this->uri = "/v2/movie/reviews";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
 
@@ -64,7 +80,6 @@ class Movie extends Base {
     public function editReview($id)
     {
         $this->uri = "/v2/movie/review/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
         return $this;
 
@@ -73,7 +88,6 @@ class Movie extends Base {
     public function deleteReview($id)
     {
         $this->uri = "/v2/movie/review/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
         return $this;
 
