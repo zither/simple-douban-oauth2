@@ -57,7 +57,12 @@ class User extends Base {
      */
     public function search($q, $start = null, $count = null)
     {
-        $this->uri = "/v2/user?q=$q&start=$start&count=$count";
+        $params = array(
+                    'q' => $q,
+                    'start' => $start,
+                    'count' => $count
+                    );
+        $this->uri = '/v2/user?'.http_build_query($params);
         $this->type = 'GET';
         return $this;
     }

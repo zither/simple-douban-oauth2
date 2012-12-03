@@ -41,7 +41,7 @@ class Miniblog extends Base {
      */
     public function getMiniblog($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id";
+        $this->uri = '/shuo/v2/statuses/'.$id;
         $this->type = 'GET';
         return $this;   
     }    
@@ -55,7 +55,7 @@ class Miniblog extends Base {
      */
     public function deleteMiniblog($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id";
+        $this->uri = '/shuo/v2/statuses/'.$id;
         $this->type = 'DELETE';
         return $this;   
     }
@@ -71,7 +71,7 @@ class Miniblog extends Base {
      */
     public function getCommentsList($id, $start = 0, $count = 20)
     {
-        $this->uri = "/shuo/v2/statuses/$id/comments?start=$start&count=$count";
+        $this->uri = '/shuo/v2/statuses/'.$id.'/comments?start='.$start.'&count='.$count;
         $this->type = 'GET';
         return $this;
     }
@@ -85,7 +85,7 @@ class Miniblog extends Base {
      */
     public function addComment($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id/comments";
+        $this->uri = '/shuo/v2/statuses/'.$id.'/comments';
         $this->type = 'POST';
         return $this;   
     }
@@ -99,7 +99,7 @@ class Miniblog extends Base {
      */
     public function getComment($id)
     {
-        $this->uri ="/shuo/v2/statuses/comment/$id";
+        $this->uri ='/shuo/v2/statuses/comment/'.$id;
         $this->type = 'GET';
         return $this;
     }
@@ -113,7 +113,7 @@ class Miniblog extends Base {
      */
     public function deleleComment($id)
     {
-        $this->uri = "/shuo/v2/statuses/comment/$id";
+        $this->uri = '/shuo/v2/statuses/comment/'.$id;
         $this->type = 'DELETE';
         return $this;   
     }
@@ -127,7 +127,7 @@ class Miniblog extends Base {
      */
     public function getReshare($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id/reshare";
+        $this->uri = '/shuo/v2/statuses/'.$id.'/reshare';
         $this->type = 'GET';
         return $this;
     }
@@ -141,7 +141,7 @@ class Miniblog extends Base {
      */
     public function reshare($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id/reshare";
+        $this->uri = '/shuo/v2/statuses/'.$id.'/reshare';
         $this->type = 'POST';
         return $this;   
     }
@@ -156,7 +156,7 @@ class Miniblog extends Base {
      */
     public function getLikers($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id/like";
+        $this->uri = '/shuo/v2/statuses/'.$id.'/like';
         $this->type = 'GET';
         return $this;
     }
@@ -171,7 +171,7 @@ class Miniblog extends Base {
      */
     public function like($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id/like";
+        $this->uri = '/shuo/v2/statuses/'.$id.'/like';
         $this->type = 'POST';
         return $this;    
     }
@@ -185,58 +185,63 @@ class Miniblog extends Base {
      */
     public function dislike($id)
     {
-        $this->uri = "/shuo/v2/statuses/$id/like";
+        $this->uri = '/shuo/v2/statuses/'.$id.'/like';
         $this->type = 'DELETE';
         return $this;    
     }
 
     public function following($id)
     {
-        $this->uri = "/shuo/v2/users/$id/following";
+        $this->uri = '/shuo/v2/users/'.$id.'/following';
         $this->type = 'GET';
         return $this;
     }
 
     public function followers($id)
     {
-        $this->uri = "/shuo/v2/users/$id/followers";
+        $this->uri = '/shuo/v2/users/'.$id.'/followers';
         $this->type = 'GET';
         return $this;
     }
 
     public function followInCommon($id)
     {
-        $this->uri = "/shuo/v2/users/$id/follow_in_common";
+        $this->uri = '/shuo/v2/users/'.$id.'/follow_in_common';
         $this->type = 'GET';
         return $this;
     }
 
     public function suggestions($id)
     {
-        $this->uri = "/shuo/v2/users/$id/following_followers_of";
+        $this->uri = '/shuo/v2/users/'.$id.'/following_followers_of';
         $this->type = 'GET';
         return $this;
     }
 
     public function block($id)
     {
-        $this->uri = "/shuo/v2/users/$id/block";
-        $this->type = "POST";
+        $this->uri = '/shuo/v2/users/'.$id.'/block';
+        $this->type = 'POST';
         return $this;
 
     }
 
     public function unfollow()
     {
-        $this->uri = "/shuo/v2/friendships/destroy";
-        $this->type = "POST";
+        $this->uri = '/shuo/v2/friendships/destroy';
+        $this->type = 'POST';
         return $this;
 
     }
 
     public function show($source, $sourceId, $targetId)
     {
-        $this->uri = "/shuo/v2/friendships/show?soucre=$source&soucre_id=$sourceId&target_id=$targetId";
+        $params = array(
+                    'source' => $source,
+                    'source_id' => $sourceId,
+                    'target_id' => $targetId
+                    );
+        $this->uri = '/shuo/v2/friendships/show?'.http_build_query($params);
         $this->type = 'GET';
         return $this;
     }
@@ -253,8 +258,13 @@ class Miniblog extends Base {
      */
     public function homeTimeline($sinceId = null, $untilId = null, $count = null, $start = null )
     {
-        $this->uri = "/shuo/v2/statuses/home_timeline?since_id=$sinceId&until_id=$untilId
-            &count=$count&start=$start";
+        $params = array(
+                    'since_id' => $sinceId,
+                    'until_id' => $untilId,
+                    'count' => $count,
+                    'start' => $start
+                    );
+        $this->uri = '/shuo/v2/statuses/home_timeline?'.http_build_query($params);
         $this->type = 'GET';
         return $this;
 
@@ -271,7 +281,11 @@ class Miniblog extends Base {
      */
     public function userTimeline($user, $sinceId = null, $untilId = null)
     {
-        $this->uri = "/shuo/v2/statuses/user_timeline/$user?since_id=$sinceId&until_id=$untilId";
+        $params = array(
+                    'since_id' => $sinceId,
+                    'until_id' => $untilId
+                    );
+        $this->uri = '/shuo/v2/statuses/user_timeline/'.$user.'?'.http_build_query($params);
         $this->type = 'GET';
         return $this;
     }

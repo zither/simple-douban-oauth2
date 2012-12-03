@@ -36,12 +36,25 @@ class DoubanOauth {
     /**
      * @var 默认请求头信息 
      */
-    protected $defaultHeader = array('Content_type: application/x-www-form-urlencoded');
+    protected $defaultHeader = array(
+                'Content_type: application/x-www-form-urlencoded'
+                );
     
     /**
      * @var 需授权的请求头
      */
     protected $authorizeHeader;
+    
+    /**
+     * @var curl默认设置  
+     */
+    protected $CURL_OPTS = array(
+                CURLOPT_CONNECTTIMEOUT => 10,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_TIMEOUT        => 60,
+                CURLOPT_USERAGENT      => 'simple-douban-oauth2-0.4',
+                );
 
     /**
      * @brief 初始化豆瓣OAUTH，设置相关参数
@@ -63,7 +76,7 @@ class DoubanOauth {
         $this->responseType = $responseType;
 
         // API基类路径
-        $basePath = __DIR__.'/api/Base.php';
+        $basePath = dirname(__FILE__).'/api/Base.php';
 
         // 载入API基类
         try {
@@ -183,7 +196,7 @@ class DoubanOauth {
     public function apiRegister($api)
     {
         // 需要注册的API路径
-        $apiPath = __DIR__.'/api/'.$api.'.php';
+        $apiPath = dirname(__FILE__).'/api/'.ucfirst(strtolower($api)).'.php';
 
         try {
             $this->fileLoader($apiPath);
@@ -216,28 +229,24 @@ class DoubanOauth {
      */
     protected function curl($url, $type, $header, $data = null)
     {
-        $ch = curl_init();
-
-        // 设置请求的URL链接
-        curl_setopt($ch, CURLOPT_URL, $url);
-        // 设置请求类型
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $type);
-        // 设置请求Header信息
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        // 跳过证书验证
-        curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
-        // 返回响应内容
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // 传递POST或PUT请求数据
+        $opts = $this->CURL_OPTS;
+        $opts[CURLOPT_URL] = $url;
+        $opts[CURLOPT_CUSTOMREQUEST] = $type;
+        $header[] = 'Expect:'; 
+        $opts[CURLOPT_HTTPHEADER] = $header;
         if ($type == 'POST' || $type =='PUT') {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);            
+            $opts[CURLOPT_POSTFIELDS] = $data;
         }
 
+        $ch = curl_init();
+        curl_setopt_array($ch, $opts);
         $result = curl_exec($ch);
 
+        if (curl_errno($ch)) {
+            die('CURL error: '.curl_error($sh));
+        }
+
         curl_close($ch);  
-        
-        // 返回请求数据
         return $result;
     }
     

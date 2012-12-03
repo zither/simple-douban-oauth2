@@ -22,28 +22,28 @@ class Photo extends Base {
 
     public function getAlbum($id)
     {
-        $this->uri = "/v2/album/$id";
+        $this->uri = '/v2/album/'.$id;
         $this->type = 'GET';
         return $this;
     }
 
     public function addAlbum()
     {
-        $this->uri = "/v2/albums";
+        $this->uri = '/v2/albums';
         $this->type = 'POST';
         return $this;
     }
 
     public function editAlbum($id)
     {
-        $this->uri = "/v2/album/$id";
+        $this->uri = '/v2/album/'.$id;
         $this->type = 'PUT';
         return $this;
     }
 
     public function deleteAlbum($id)
     {
-        $this->uri = "/v2/album/$id";
+        $this->uri = '/v2/album/'.$id;
         $this->type = 'DELETE';
         return $this;
     }
@@ -51,77 +51,77 @@ class Photo extends Base {
 
     public function getPhotosList($id)
     {
-        $this->uri = "/v2/album/$id/photos";
+        $this->uri = '/v2/album/'.$id.'/photos';
         $this->type = 'GET';
         return $this;
     }
 
     public function getPhoto($id)
     {
-        $this->uri = "/v2/photo/$id";
+        $this->uri = '/v2/photo/'.$id;
         $this->type = 'GET';
         return $this;
     }
 
     public function likeAlbum($id)
     {
-        $this->uri = "/v2/album/$id/like";
+        $this->uri = '/v2/album/'.$id.'/like';
         $this->type = 'POST';
         return $this;
     }
 
     public function dislikeAlbum($id)
     {
-        $this->uri = "/v2/album/$id/like";
+        $this->uri = '/v2/album/'.$id.'/like';
         $this->type = 'DELETE';
         return $this;
     }
 
     public function getUserAlbumList($id)
     {
-        $this->uri = "/v2/album/user_created/$id";
+        $this->uri = '/v2/album/user_created/'.$id;
         $this->type = 'GET';
         return $this;
     }
 
     public function userLiked($id)
     {
-        $this->uri = "/v2/album/user_liked/$id";
+        $this->uri = '/v2/album/user_liked/'.$id;
         $this->type = 'GET';
         return $this;
     }
 
     public function addPhoto($id)
     {
-        $this->uri = "/v2/album/$id";
+        $this->uri = '/v2/album/'.$id;
         $this->type = 'POST';
         return $this;
     }
 
     public function editPhoto($id)
     {
-        $this->uri = "/v2/album/$id";
+        $this->uri = '/v2/album/'.$id;
         $this->type = 'PUT';
         return $this;
     }
 
     public function deletePhoto($id)
     {
-        $this->uri = "/v2/album/$id";
+        $this->uri = '/v2/album/'.$id;
         $this->type = 'DELETE';
         return $this;
     }
 
     public function likePhoto($id)
     {
-        $this->uri = "/v2/photo/$id/like";
+        $this->uri = '/v2/photo/'.$id.'/like';
         $this->type = 'POST';
         return $this;
     }
 
     public function dislikePhoto($id)
     {
-        $this->uri = "/v2/photo/$id/like";
+        $this->uri = '/v2/photo/'.$id.'/like';
         $this->type = 'DELETE';
         return $this;
     }
