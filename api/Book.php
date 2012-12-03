@@ -3,23 +3,21 @@
  * @file Book.php
  * @brief 豆瓣图书API
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.3
  * @date 2012-11-27
  */
 
 class Book extends Base {
     
     /**
-     * @brief 构造函数，初始设置clientId和accessToken
+     * @brief 构造函数，初始设置clientId
      *
      * @param string $clientId
-     * @param string $accessToken
      *
      * @return void
      */
-    public function __construct($clientId, $accessToken = null)
+    public function __construct($clientId)
     {
-        parent::__construct($clientId, $accessToken);
+        $this->clientId = $clientId;
     }
 
     /**
@@ -32,6 +30,7 @@ class Book extends Base {
     public function getBook($id)
     {
         $this->uri = '/v2/book/'.$id;
+        $this->type = 'GET';
         return $this;
     }
     
@@ -45,6 +44,7 @@ class Book extends Base {
     public function isbn($name)
     {
         $this->uri = "/v2/book/isbn/$name";
+        $this->type = 'GET';
         return $this;
     }
    
@@ -61,6 +61,7 @@ class Book extends Base {
     public function search($q, $tag, $start = 0, $count = 20)
     {
         $this->uri = "/v2/book/search?q=$q&tag=$tag&start=$start&count=$count";
+        $this->type = 'GET';
         return $this;
     }
     /**
@@ -73,6 +74,7 @@ class Book extends Base {
     public function bookTags($id)
     {
         $this->uri = '/v2/book/'.$id.'/tags';
+        $this->type = 'GET';
         return $this;    
     }
    
@@ -86,6 +88,7 @@ class Book extends Base {
     public function userTags($name)
     {
         $this->uri = "/v2/book/user/$name/tags";
+        $this->type = 'GET';
         return $this;
     }
     
@@ -99,6 +102,7 @@ class Book extends Base {
     public function collections($name)
     {
         $this->uri = "/v2/book/user/$name/collections";
+        $this->type = 'GET';
         return $this;
     }
     
@@ -112,6 +116,7 @@ class Book extends Base {
     public function getCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
+        $this->type = 'GET';
         return $this;
     }
      
@@ -125,7 +130,6 @@ class Book extends Base {
     public function addCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
     }
@@ -140,7 +144,6 @@ class Book extends Base {
     public function editCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
-        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
         return $this;
     }
@@ -155,7 +158,6 @@ class Book extends Base {
     public function deleteCollection($id)
     {
         $this->uri = "/v2/book/$id/collection";
-        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
         return $this;
     }
@@ -170,6 +172,7 @@ class Book extends Base {
     public function userAnnotations($name)
     {
         $this->uri = "/v2/book/user/$name/annotations";
+        $this->type = 'GET';
         return $this;
     }
     
@@ -183,6 +186,7 @@ class Book extends Base {
     public function bookAnnotations($id)
     {
         $this->uri = "/v2/book/user/$id/annotations";
+        $this->type = 'GET';
         return $this;
     }
     
@@ -196,6 +200,7 @@ class Book extends Base {
     public function getAnnotation($id)
     {
         $this->uri = "/v2/book/annotation/$id";
+        $this->type = 'GET';
         return $this;
     }
 
@@ -209,7 +214,6 @@ class Book extends Base {
     public function addAnnotation($id)
     {
         $this->uri = "/v2/book/$id/annotations";
-        $this->header = $this->authorizeHeader;
         $this->type = "POST";
         return $this;
     }
@@ -224,7 +228,6 @@ class Book extends Base {
     public function editAnnotation($id)
     {
         $this->uri = "/v2/book/annotation/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = "PUT";
         return $this;
     }
@@ -239,7 +242,6 @@ class Book extends Base {
     public function deleteAnnotation($id)
     {
         $this->uri = "/v2/book/annotation/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = "DELETE";
         return $this;
     }
@@ -251,7 +253,6 @@ class Book extends Base {
     public function addReview()
     {
         $this->uri = "/v2/book/reviews";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this;     
     }
@@ -266,7 +267,6 @@ class Book extends Base {
     public function editReview($id)
     {
         $this->uri = "/v2/book/review/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = 'PUT';
         return $this;          
     }
@@ -281,7 +281,6 @@ class Book extends Base {
     public function deleteReview($id)
     {
         $this->uri = "/v2/book/review/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
         return $this;          
     }

@@ -3,53 +3,54 @@
  * @file Online.php
  * @brief 豆瓣线上活动API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @version 0.1
  * @date 2012-12-02
  */
 
 class Online extends Base {
 
     /**
-     * @brief 构造函数，初始设置clientId和accessToken
+     * @brief 构造函数，初始设置clientId
      *
      * @param string $clientId
-     * @param string $accessToken
      *
      * @return void
      */
-    public function __construct($clientId, $accessToken = null)
+    public function __construct($clientId)
     {
-        parent::__construct($clientId, $accessToken);
+        $this->client = $clientId;
     }
 
     public function getOnline($id)
     {
         $this->uri = "/v2/online/$id";
+        $this->type = 'GET';
         return $this;
     }
 
     public function participants($id)
     {
         $this->uri = "/v2/online/$id/participants";
+        $this->type = 'GET';
         return $this;
     }
 
     public function getDiscussionsList($id)
     {
         $this->uri = "/v2/online/$id/discussions";
+        $this->type = 'GET';
         return $this;
     }
 
     public function getOnlinesList($cate)
     {
         $this->uri = "/v2/onlines?cate=$cate";
+        $this->type = 'GET';
         return $this;
     }
 
     public function addOnline()
     {
         $this->uri = "/v2/onlines";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this; 
     }
@@ -57,7 +58,6 @@ class Online extends Base {
     public function editOnline($id)
     {
         $this->uri = "/v2/onlines/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = 'PUT';
         return $this; 
     }
@@ -65,7 +65,6 @@ class Online extends Base {
     public function deleteOnline($id)
     {
         $this->uri = "/v2/onlines/$id";
-        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
         return $this; 
     }
@@ -73,7 +72,6 @@ class Online extends Base {
     public function join($id)
     {
         $this->uri = "/v2/online/$id/participants";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this; 
     }
@@ -81,7 +79,6 @@ class Online extends Base {
     public function quit($id)
     {
         $this->uri = "/v2/online/$id/participants";
-        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
         return $this; 
     }
@@ -89,7 +86,6 @@ class Online extends Base {
     public function like($id)
     {
         $this->uri = "/v2/online/$id/like";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this; 
     }
@@ -97,7 +93,6 @@ class Online extends Base {
     public function dislike($id)
     {
         $this->uri = "/v2/online/$id/like";
-        $this->header = $this->authorizeHeader;
         $this->type = 'DELETE';
         return $this; 
     }
@@ -105,13 +100,13 @@ class Online extends Base {
     public function getPhoto($id)
     {
         $this->uri = "/v2/online/$id/photos";
+        $this->type = 'GET';
         return $this;
     }
 
     public function addPhoto($id)
     {
         $this->uri = "/v2/online/$id/photos";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this; 
     }
@@ -119,7 +114,6 @@ class Online extends Base {
     public function replyDiscussion($id)
     {
         $this->uri = "/v2/online/$id/discussions";
-        $this->header = $this->authorizeHeader;
         $this->type = 'POST';
         return $this; 
     }
@@ -127,12 +121,14 @@ class Online extends Base {
     public function userParticipated($id, $excludeExpired = true)
     {
         $this->uri = "/v2/online/user_participated/$id?exclude_expired=$excludeExpired";
+        $this->type = 'GET';
         return $this;
     }
 
     public function userCreated($id)
     {
         $this->uri = "/v2/online/user_created/$id";
+        $this->type = 'GET';
         return $this;
     }
 }

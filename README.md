@@ -17,24 +17,26 @@ simple-douban-oauth2
 
 simple douban oauth2现在的api还不完整，不过可以非常方便的添加。在**api**文件夹中保存了现有的豆瓣api，你可以选择你需要修改的API文件，或者参考例子编写自己需要的api类。
 
-一个简单的API类示例：
+一个简单的豆瓣图书Api类作为示例：
 
     <?php
 
     class Book extends Base {
         
-        // 必须包含构造函数
-        public function __construct($clientId, $accessToken = null)
+        // 初始化clientId，在uri后面添加apikey可以拥有更宽裕的请求次数
+        public function __construct($clientId)
         {
-            parent::__construct($clientId, $accessToken);
+            $this->clientId = $clientId;
         }
 
         // 无需授权的GET请求示例
         public function getBook($id)
         {
+            // 没有添加apikey，单IP每分钟只能请求10次
             $this->uri = '/v2/book/'.$id;
-            // 在uri里添加apikey可以拥有更宽裕的请求次数
+            // 添加apikey之后，单IP每分钟可以请求40次
             // $this->uri = '/v2/book/'.$id.'?apikey='.$this->clientId;
+            $this->type = 'GET';
             return $this;
         }
 
@@ -42,8 +44,6 @@ simple douban oauth2现在的api还不完整，不过可以非常方便的添加
         public function addReview()
         {
             $this->uri = "/v2/book/reviews";
-            // 添加评论需要授权
-            $this->header = $this->authorizeHeader;
             // API默认请求设置为GET，因此这里需说明请求类型
             $this->type = 'POST';
             return $this;     
