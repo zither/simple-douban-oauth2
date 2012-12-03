@@ -22,28 +22,28 @@ class Comment extends Base {
 
     public function getCommentsList($target, $id)
     {
-        $this->uri = "/v2/$target/$id/comments";
+        $this->uri = '/v2/'.$target.'/'.$id.'/comments';
         $this->type = 'GET';
         return $this;
     }
 
     public function addComment($target, $id)
     {
-        $this->uri = "/v2/$target/$id/comments";
+        $this->uri = '/v2/'.$target.'/'.$id.'/comments';
         $this->type = 'POST';
         return $this; 
     }
 
-    public function getComment($target, $id)
+    public function getComment($target, $targetId, $commentId)
     {
-        $this->uri = "/v2/$target/$id/comment/:id";
+        $this->uri = '/v2/'.$target.'/'.$targetId.'/comment/'.$commentId;
         $this->type = 'GET';
         return $this;
     }
 
-    public function deleteComment($target, $id)
+    public function deleteComment($target, $targetId, $commentId)
     {
-        $this->uri = "/v2/$target/$id/comments";
+        $this->uri = '/v2/'.$target.'/'.$targetId.'/comment/'.$commentId;
         $this->type = 'DELETE';
         return $this; 
     }

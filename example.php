@@ -44,17 +44,12 @@ $douban->getAccessToken();
 // 在PHP中通过curl拓展上传图片必须使用类似“@/home/chou/images/123.png;type=image/png”的模式
 // 并且必须在图片绝对路径后指定正确的图片类型，如果没有指定类型会返回“不支持的图片类型错误”。
 // 那是因为没有指定图片类型时，上传的文件类型默认为“application/octet-stream”。
-$data = array(
-            'source' => $clientId, 
-            'text' =>'继续修改，继续测试。', 
-            'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg'
-            );
+$data = array('source' => $clientId, 'text' =>'继续修改，继续测试。', 'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg');
 // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
 $miniblog = $douban->apiRegister('Miniblog');
 // 选择发表我说
 $miniblog->addMiniblog();
-// 使用豆瓣Oauth类向我说API发送请求，并获取返回结果，需授权api必须设置第三参数为true
-// 当第三个参数为true时会在header中发送accessToken，默认不发送。
+// 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
 $result = $douban->makeRequest($miniblog, $data, true);
 // 打印结果(Json格式)
 var_dump($result);

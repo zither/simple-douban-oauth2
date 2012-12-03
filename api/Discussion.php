@@ -23,35 +23,35 @@ class Discussion extends Base {
 
     public function getDiscussion($id)
     {
-        $this->uri = "/v2/discussion/$id";
+        $this->uri = '/v2/discussion/'.$id;
         $this->type = 'GET';
         return $this;
     }
 
     public function editDiscussion($id)
     {
-        $this->uri = "/v2/discussion/$id";
+        $this->uri = '/v2/discussion/'.$id;
         $this->type = 'PUT';
         return $this;   
     }
 
     public function deleteDiscussion($id)
     {
-        $this->uri = "/v2/discussion/$id";
+        $this->uri = '/v2/discussion/'.$id;
         $this->type = 'DELETE';
         return $this;   
     }
 
     public function addDiscussion($target, $id)
     {
-        $this->uri = "/v2/$target/$id/discussions";
+        $this->uri = '/v2/'.$target.'/'.$id.'/discussions';
         $this->type = 'POST';
         return $this; 
     }
 
     public function getDiscussionsList($target, $id)
     {   
-        $this->uri = "/v2/$target/$id/discussions";
+        $this->uri = '/v2/'.$target.'/'.$id.'/discussions';
         $this->type = 'GET';
         return $this;
     }
