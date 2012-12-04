@@ -7,7 +7,7 @@
  */
 
 // 载入豆瓣Oauth类
-require 'DoubanOauth.php';
+require '../src/DoubanOauth.php';
 
 /* ------------实例化Oauth2--------------- */
 
