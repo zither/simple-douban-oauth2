@@ -18,7 +18,8 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
 ###Simple Douban Oauth使用方法
 
 在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
-    ```php
+
+   ```php
     // 载入豆瓣Oauth类
     require '../src/DoubanOauth.php';
 
@@ -53,11 +54,15 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
     /* ------------发送图片广播--------------- */
 
     // 通过豆瓣API发送一条带图片的豆瓣广播
-    // 我看到豆瓣API小组里很多朋友都卡在了发送图片广播上，那是因为没有设置正确的Content-Type。
-    // 在PHP中通过curl拓展上传图片必须使用类似“@/home/chou/images/123.png;type=image/png”的模式
-    // 并且必须在图片绝对路径后指定正确的图片类型，如果没有指定类型会返回“不支持的图片类型错误”。
+    // 豆瓣API小组里很多朋友都卡在了发送图片广播上，那是因为没有正确设置Content-Type。
+    // 在PHP中通过curl上传图片需使用“@/home/chou/images/123.png;type=image/png”格式。
+    // 必须在图片绝对路径后指定正确的图片类型，如果没有就会返回“不支持的图片类型错误”。
     // 那是因为没有指定图片类型时，上传的文件类型默认为“application/octet-stream”。
-    $data = array('source' => $clientId, 'text' =>'继续修改，继续测试。', 'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg');
+    $data = array(
+                'source' => $clientId, 
+                'text' =>'继续修改，继续测试。', 
+                'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg'
+                );
     // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
     $miniblog = $douban->apiRegister('Miniblog');
     // 选择发表我说
@@ -74,7 +79,8 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
             <?php var_dump($result); ?>
         </body>
     </html>
-    ```
+   ```
+
 **NOTICE:**需要注意到是例子中的代码只为演示，因此没有做任何过滤和有效性检查。
 
 ###添加API方法
