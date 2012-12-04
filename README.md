@@ -19,6 +19,7 @@ simple douban oauth2现在的api还不完整，不过可以非常方便的添加
 
 一个简单的豆瓣图书Api类作为示例：
 
+    ```php
     <?php
 
     class Book extends Base {
@@ -49,3 +50,5 @@ simple douban oauth2现在的api还不完整，不过可以非常方便的添加
             return $this;     
         }        
     }
+    ```
+
