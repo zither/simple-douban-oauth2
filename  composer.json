@@ -1,5 +1,5 @@
 {
-    "name": "simple-douban-oauth2",
+    "name": "zither/simple-douban-oauth2",
     "description": "Douban PHP SDK",
     "keywords": ["douban", "sdk"],
     "type": "library",
@@ -17,6 +17,12 @@
         "ext-json": "*",
     },
     "autoload": {
-        "classmap":["src"]
-    }
+        "psr-0": {"zither": "src/"}
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/zither/simple-douban.oauth2"
+        }
+    ]
 }
