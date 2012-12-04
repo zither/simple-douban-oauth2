@@ -14,15 +14,10 @@
     "require": {
         "php": ">=5.2.0",
         "ext-curl": "*",
-        "ext-json": "*",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-0": {"zither": "src/"}
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "http://github.com/zither/simple-douban.oauth2"
-        }
-    ]
+    }
 }
+
