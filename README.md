@@ -1,15 +1,15 @@
 simple-douban-oauth2
 ====================
 
-一个简单的豆瓣oauth2客户端，现在的api还不完整，[项目文档](http://zither.github.com/simple-douban-oauth2)也才刚刚建立，不过都会不断完善。
+一个简单的豆瓣oauth2客户端，部分Api还未经过测试，[项目文档](http://zither.github.com/simple-douban-oauth2)也才刚刚建立，不过都会不断完善。
 
-[Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支添加了完整的豆瓣API接口（未测试），新增接口还未添加注释。
+所有最新的修改都会直接上传到[Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支。
 
 ###Simple Douban Oauth使用方法
 
-由于看到很多朋友都不知道怎么上传带图片的豆瓣广播，所以特意在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
+在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
 
-    https://github.com/zither/simple-douban-oauth2/blob/master/example.php
+    https://github.com/zither/simple-douban-oauth2/blob/dev/example/example.php
 
 **NOTICE:**需要注意到是例子中的代码只为演示，因此没有做任何过滤和有效性检查。
 

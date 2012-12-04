@@ -1,0 +1,28 @@
+{
+    "name": "zither/simple-douban-oauth2",
+    "description": "Douban PHP SDK",
+    "keywords": ["douban", "sdk"],
+    "type": "library",
+    "homepage": "https://github.com/zither/simple-douban-oauth2/",
+    "license": "MIT",
+    "authors": [
+            {
+                "name": "Minimee",
+                "homepage": "http://minimee.org"
+            }
+        ],
+    "require": {
+        "php": ">=5.2.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+    },
+    "autoload": {
+        "psr-0": {"zither": "src/"}
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/zither/simple-douban.oauth2"
+        }
+    ]
+}

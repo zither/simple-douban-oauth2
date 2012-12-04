@@ -16,22 +16,66 @@ if (!function_exists('json_decode')) {
 
 class DoubanOauth {
     
-    /**
-     * @var 声明豆瓣OAUTH需要的最基本API链接
-     */
-    protected $authorizeUri = 'https://www.douban.com/service/auth2/auth';
-    protected $accessUri = 'https://www.douban.com/service/auth2/token';
-    protected $apiUri = 'https://api.douban.com';
-            
-    /**
-     * @var 声明豆瓣OAUTH需要的APIKEY以及callback链接
-     */
-    protected $clientId, $secret, $redirectUri, $scope, $responseType;
     
     /**
-     * @var 用于储存已获取的令牌
+     * @brief authorizeCode请求链接
      */
-    protected $authorizeCode, $tokens, $accessToken, $refreshToken;
+    protected $authorizeUri = 'https://www.douban.com/service/auth2/auth';
+    
+    /**
+     * @brief accessToken请求链接
+     */
+    protected $accessUri = 'https://www.douban.com/service/auth2/token';
+    
+    /**
+     * @brief api请求链接
+     */
+    protected $apiUri = 'https://api.douban.com';
+                
+    /**
+     * @brief 豆瓣应用public key
+     */
+    protected $clientId;
+    
+    /**
+     * @brief 豆瓣应用secret key
+     */
+    protected $secret;
+
+    /**
+     * @brief callback链接
+     */
+    protected $redirectUri;
+
+    /**
+     * @brief Api权限
+     */
+    protected $scope;
+    
+    /**
+     * @brief 返回类型，默认使用code
+     */
+    protected $responseType;
+    
+    /**
+     * @brief 用户授权码
+     */
+    protected $authorizeCode;
+
+    /**
+     * @brief 储存返回的令牌（accessToken,refreshToken）
+     */
+    protected $tokens;
+
+    /**
+     * @brief 通过authorizeCode获得的访问令牌
+     */
+    protected $accessToken;
+
+    /**
+     * @brief 用于刷新accessToken
+     */
+    protected $refreshToken;
 
     /**
      * @var 默认请求头信息 
@@ -39,7 +83,7 @@ class DoubanOauth {
     protected $defaultHeader = array(
                 'Content_type: application/x-www-form-urlencoded'
                 );
-    
+
     /**
      * @var 需授权的请求头
      */
@@ -91,7 +135,7 @@ class DoubanOauth {
      *
      * @return redirect
      */
-    public function getAuthorizeCode()
+    public function requestAuthorizeCode()
     {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
@@ -115,19 +159,26 @@ class DoubanOauth {
      *
      * @return string
      */
-    public function getAccessToken()
+    public function requestAccessToken()
     {
         // 获取accessToken请求链接
         $accessUrl = $this->getAccessUrl();
         $header = $this->defaultHeader;
-        // 使用curl模拟请求，获取token信息
         $result = $this->curl($accessUrl, 'POST', $header);
-        $this->tokens = json_decode($result);
-        // 设置refreshToken,需要时可启用
-        //$this->refreshToken = $this->tokens->refresh_token;
 
-        // 设置Access_token
-        return $this->accessToken = $this->tokens->access_token;
+        $this->tokens = json_decode($result);
+        $this->refreshToken = $this->tokens->refresh_token;
+        $this->accessToken = $this->tokens->access_token;
+    }
+        
+    /**
+     * @brief 获取accessToken
+     *
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
     }
 
     /**
@@ -182,7 +233,6 @@ class DoubanOauth {
         $header = $authorization ? $this->getAuthorizeHeader() : $this->defaultHeader;
         $type = $api->type;
 
-        // 发送请求
         return $this->curl($url, $type, $header, $data);
     }
     
