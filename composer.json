@@ -17,7 +17,7 @@
         "ext-json": "*"
     },
     "autoload": {
-        "psr-0": {"zither": "src/"}
+        "classmap": ["src"]
     }
 }
 
