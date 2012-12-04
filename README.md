@@ -66,7 +66,7 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
     // 选择发表我说
     $miniblog->addMiniblog();
     // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
-    $result = $douban->makeRequest($miniblog);
+    $result = $douban->makeRequest($miniblog, $data, true);
     ?>
 
     <html>
