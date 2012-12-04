@@ -19,10 +19,5 @@
     "autoload": {
         "psr-0": {"zither": "src/"}
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "http://github.com/zither/simple-douban.oauth2"
-        }
-    ]
 }
+
