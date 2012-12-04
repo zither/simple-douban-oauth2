@@ -5,6 +5,16 @@ simple-douban-oauth2
 
 所有最新的修改都会直接上传到[Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支。
 
+###依赖
+
+    PHP >= 5.2.0
+    ext-curl
+    ext-json
+
+###Composer包管理
+
+Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[Composer](https://github.com/zither/simple-douban-oauth2/tree/composer)分支了解更多信息。
+
 ###Simple Douban Oauth使用方法
 
 在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
