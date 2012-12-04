@@ -5,11 +5,13 @@ simple-douban-oauth2
 
 所有最新的修改都会直接上传到[Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支。
 
+你现在所看到的时simple douban oauth2的composer分支，文档还未更新。
+
 ###Simple Douban Oauth使用方法
 
 在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
 
-    https://github.com/zither/simple-douban-oauth2/blob/dev/example/example.php
+    https://github.com/zither/simple-douban-oauth2/blob/composer/example/example.php
 
 **NOTICE:**需要注意到是例子中的代码只为演示，因此没有做任何过滤和有效性检查。
 
