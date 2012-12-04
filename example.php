@@ -19,22 +19,22 @@ $secret = 'c2c9c36981ef49c6';
 $callback = 'http://localhost/example.php';
 // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
 // 我们要发送豆瓣广播，就必须申请shuo_basic_w权限
-$scope ='douban_basic_common,shuo_basic_r,shuo_basic_w';
+$scope ='douban_basic_common,shuo_basic_r,shuo_basic_w,community_advanced_doumail_r';
 // 生成一个豆瓣Oauth类实例
 $douban = new DoubanOauth($clientId, $secret, $callback, $scope);
 
 
 /* ------------请求用户授权--------------- */
 
-// 如果没有requestToken，跳转到用户授权页面
+// 如果没有authorizeCode，跳转到用户授权页面
 if ( ! isset($_GET['code'])) {
-    $douban->getAuthorizeCode();
+    $douban->requestAuthorizeCode();
     exit;
 }
 // 设置authorizeCode
 $douban->setAuthorizeCode($_GET['code']);
-// 通过requestToken获取accessToken，至此完成用户授权
-$douban->getAccessToken();
+// 通过authorizeCode获取accessToken，至此完成用户授权
+$douban->requestAccessToken();
 
 
 /* ------------发送图片广播--------------- */
@@ -50,6 +50,14 @@ $miniblog = $douban->apiRegister('Miniblog');
 // 选择发表我说
 $miniblog->addMiniblog();
 // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
-$result = $douban->makeRequest($miniblog, $data, true);
-// 打印结果(Json格式)
-var_dump($result);
+$result = $douban->makeRequest($miniblog);
+?>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <?php var_dump($result); ?>
+    </body>
+</html>
