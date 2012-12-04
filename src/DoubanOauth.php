@@ -118,16 +118,6 @@ class DoubanOauth {
         $this->redirectUri = $redirectUri;
         $this->scope = $scope;
         $this->responseType = $responseType;
-
-        // API基类路径
-        $basePath = dirname(__FILE__).'/api/Base.php';
-
-        // 载入API基类
-        try {
-            $this->fileLoader($basePath);
-        } catch(Exception $e) {
-            echo 'Baseloader error:'.$e->getMessage();
-        }
     }
 
     /**
@@ -245,15 +235,6 @@ class DoubanOauth {
      */
     public function apiRegister($api)
     {
-        // 需要注册的API路径
-        $apiPath = dirname(__FILE__).'/api/'.ucfirst(strtolower($api)).'.php';
-
-        try {
-            $this->fileLoader($apiPath);
-        } catch(Exception $e) {
-            echo 'Apiloader error:'.$e->getMessage();
-        }
-
         return new $api($this->clientId);
     }
 
@@ -298,22 +279,5 @@ class DoubanOauth {
 
         curl_close($ch);  
         return $result;
-    }
-    
-    /**
-     * @brief 文件加载类
-     *
-     * @param string $path
-     *
-     * @return void
-     */
-    protected function fileLoader($path)
-    {
-        // 文件路径错误时抛出异常
-        if ( ! file_exists($path)) {
-            throw new Exception('The file you wanted to load does not exists.');
-        }
-
-        require $path;
     }
 }
