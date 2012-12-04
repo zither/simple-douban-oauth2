@@ -7,9 +7,9 @@ simple-douban-oauth2
 
 ###Simple Douban Oauth使用方法
 
-由于看到很多朋友都不知道怎么上传带图片的豆瓣广播，所以特意在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
+在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
 
-    https://github.com/zither/simple-douban-oauth2/blob/master/example.php
+    https://github.com/zither/simple-douban-oauth2/blob/dev/example/example.php
 
 **NOTICE:**需要注意到是例子中的代码只为演示，因此没有做任何过滤和有效性检查。
 
