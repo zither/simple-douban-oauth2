@@ -18,8 +18,7 @@ simple-douban-oauth2
 simple douban oauth2现在的api还不完整，不过可以非常方便的添加。在**api**文件夹中保存了现有的豆瓣api，你可以选择你需要修改的API文件，或者参考例子编写自己需要的api类。
 
 一个简单的豆瓣图书Api类作为示例：
-
-    ```php
+   ```php
     <?php
 
     class Book extends Base {
@@ -51,4 +50,3 @@ simple douban oauth2现在的api还不完整，不过可以非常方便的添加
         }        
     }
     ```
-
