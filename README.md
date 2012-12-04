@@ -11,13 +11,11 @@ simple-douban-oauth2
     ext-curl
     ext-json
 
-###Composer包管理
+###Composer包
 
 Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[Composer](https://github.com/zither/simple-douban-oauth2/tree/composer)分支了解更多信息。
 
-###Simple Douban Oauth使用方法
-
-在example文件中演示了一个使用POST方法发表图片豆瓣广播的例子。
+###使用方法
 
    ```php
     // 载入豆瓣Oauth类
@@ -81,7 +79,7 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
     </html>
    ```
 
-**NOTICE:**需要注意到是例子中的代码只为演示，因此没有做任何过滤和有效性检查。
+**NOTICE:**例子中的代码只为演示，没有做任何过滤和有效性检查。
 
 ###添加API方法
 
