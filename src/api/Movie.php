@@ -5,6 +5,7 @@
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-03
  */
+namespace Douban\api;
 
 class Movie extends Base {
 

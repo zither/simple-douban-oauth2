@@ -17,7 +17,7 @@
         "ext-json": "*"
     },
     "autoload": {
-        "classmap": ["src"]
+        "psr-0": {"Douban": "src/"}
     },
     "extra": {
         "branch-alias": {

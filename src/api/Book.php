@@ -5,6 +5,7 @@
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-11-27
  */
+namespace Douban\api;
 
 class Book extends Base {
     

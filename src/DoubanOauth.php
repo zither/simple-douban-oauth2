@@ -6,6 +6,7 @@
  * @version 0.4
  * @date 2012-12-03
  */
+namespace Douban;
 
 if (!function_exists('curl_init')) {
     throw new Exception('Simple douban oauth2 needs the CURL PHP extension.');
