@@ -1,13 +1,13 @@
 <?php
 /**
- * @file Movie.php
- * @brief 豆瓣电影API接口
+ * @file Music.php
+ * @brief 豆瓣音乐API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-03
+ * @date 2012-12-02
  */
-namespace Douban\api;
+namespace Douban\Api;
 
-class Movie extends Base {
+class Music extends Base {
 
     /**
      * @brief 构造函数，初始设置clientId
@@ -22,34 +22,30 @@ class Movie extends Base {
     }
     
     /**
-     * @brief 获取电影信息
+     * @brief 获取音乐信息
      *
-     * @param string $id
+     * @param $id
      *
      * @return object
      */
     public function get($id)
     {
-        $this->uri = '/v2/movie/'.$id;
+        $this->uri = '/v2/music/'.$id;
         $this->type = 'GET';
         return $this;
     }
     
     /**
-     * @brief 根据imdb号获取电影信息
+     * @brief 搜索音乐
      *
-     * @param string $name
+     * @param $q
+     * @param $tag
+     * @param $start
+     * @param $count
      *
      * @return object
      */
-    public function imdb($name)
-    {
-        $this->uri = '/v2/movie/imdb/'.$name;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function search($q, $tag, $start = 0, $count = 20)
+    public function search($q, $tag = null, $start = 0, $count = 20)
     {
         $params = array(
                     'q' => $q,
@@ -57,46 +53,57 @@ class Movie extends Base {
                     'start' => $start,
                     'count' => $count
                     );
-        $this->uri = '/v2/movie/search?'.http_build_query($params);
+        $this->uri = '/v2/music/search?'.http_build_query($params);
         $this->type = 'GET';
         return $this;
     }
-
-    public function movieTags($id)
+    
+    /**
+     * @brief 某个音乐中标记最多的标签
+     *
+     * @param $id
+     *
+     * @return object
+     */
+    public function musicTags($id)
     {
-        $this->uri = '/v2/movie/'.$id.'/tags';
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function userTags($id)
-    {
-        $this->uri = '/v2/movie/user_tags/'.$id;
+        $this->uri = '/v2/music/'.$id.'/tags';
         $this->type = 'GET';
         return $this;
     }
 
     public function addReview()
     {
-        $this->uri = '/v2/movie/reviews';
+        $this->uri = '/v2/music/reviews';
         $this->type = 'POST';
         return $this;
-
     }
 
     public function editReview($id)
     {
-        $this->uri = '/v2/movie/review/'.$id;
+        $this->uri = '/v2/music/review/'.$id;
         $this->type = 'PUT';
         return $this;
-
     }
 
     public function deleteReview($id)
     {
-        $this->uri = '/v2/movie/review/'.$id;
+        $this->uri = '/v2/music/review/'.$id;
         $this->type = 'DELETE';
         return $this;
-
+    }
+    
+    /**
+     * @brief 用户对音乐的所有标签
+     *
+     * @param $id
+     *
+     * @return object
+     */
+    public function userTags($id)
+    {
+        $this->uri = '/v2/music/user_tags/'.$id;
+        $this->type = 'GET';
+        return $this;
     }
 }

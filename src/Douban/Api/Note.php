@@ -5,7 +5,7 @@
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-02
  */
-namespace Douban\api;
+namespace Douban\Api;
 
 class Note extends Base {
 
@@ -19,6 +19,21 @@ class Note extends Base {
     public function __construct($clientId)
     {
         $this->clientId = $clientId;
+    }
+
+    /**
+     * @brief 获取一条日记
+     *
+     * @param $id
+     * @param $format
+     *
+     * @return object
+     */
+    public function getNote($id, $format = 'text')
+    {
+        $this->uri = '/v2/note/'.$id.'?format='.$format;
+        $this->type = 'GET';
+        return $this;
     }
 
     public function addNote()

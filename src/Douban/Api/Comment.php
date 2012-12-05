@@ -5,7 +5,7 @@
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-03
  */
-namespace Douban\api;
+namespace Douban\Api;
 
 class Comment extends Base {
 

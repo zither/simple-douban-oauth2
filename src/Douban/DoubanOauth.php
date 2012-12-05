@@ -236,7 +236,8 @@ class DoubanOauth {
      */
     public function apiRegister($api)
     {
-        return new $api($this->clientId);
+        $doubanApi = 'Douban\\Api\\'.ucfirst(strtolower($api));
+        return new $doubanApi($this->clientId);
     }
 
     /**

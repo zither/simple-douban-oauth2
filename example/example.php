@@ -9,6 +9,8 @@
 // 载入composer自动加载类，请把example.php放入web根目录
 require dirname(__FILE__).'/vendor/autoload.php';
 
+use Douban\DoubanOauth;
+
 /* ------------实例化Oauth2--------------- */
 
 // 豆瓣应用public key
