@@ -18,6 +18,11 @@
     },
     "autoload": {
         "classmap": ["src"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-composer": "0.4.x-dev"
+        }
     }
 }
 
