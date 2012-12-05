@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Base.php
+ * @file DoubanBase.php
  * @brief 豆瓣api的Base类
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-11-27
  */
 
-class Base {
+class DoubanBase {
 
     /**
      * @brief 豆瓣API uri

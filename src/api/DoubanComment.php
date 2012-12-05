@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Comment.php
+ * @file DuobanComment.php
  * @brief 豆瓣回复API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-03
+ * @date 2012-12-05
  */
 
-class Comment extends Base {
+class DoubanComment extends DoubanBase {
 
     /**
      * @brief 构造函数，初始设置clientId

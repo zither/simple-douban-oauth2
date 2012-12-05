@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Event.php
+ * @file DoubanEvent.php
  * @brief 豆瓣同城API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-03
+ * @date 2012-12-05
  */
 
-class Event extends Base {
+class DoubanEvent extends DoubanBase {
 
     /**
      * @brief 构造函数，初始设置clientId

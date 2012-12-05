@@ -1,12 +1,12 @@
 <?php
 /**
- * @file User.php
+ * @file DoubanUser.php
  * @brief 豆瓣用户API
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-03
  */
 
-class User extends Base {
+class DoubanUser extends DoubanBase {
 
     /**
      * @brief 构造函数，初始设置clientId

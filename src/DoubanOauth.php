@@ -16,7 +16,11 @@ if (!function_exists('json_decode')) {
 
 class DoubanOauth {
     
-    
+    /**
+     * @brief 豆瓣Oauth类词头
+     */
+    const PREFIX = 'Douban';
+
     /**
      * @brief authorizeCode请求链接
      */
@@ -120,7 +124,7 @@ class DoubanOauth {
         $this->responseType = $responseType;
 
         // API基类路径
-        $basePath = dirname(__FILE__).'/api/Base.php';
+        $basePath = dirname(__FILE__).'/api/DoubanBase.php';
 
         // 载入API基类
         try {
@@ -245,8 +249,9 @@ class DoubanOauth {
      */
     public function apiRegister($api)
     {
+        $doubanApi = self::PREFIX.ucfirst(strtolower($api));
         // 需要注册的API路径
-        $apiPath = dirname(__FILE__).'/api/'.ucfirst(strtolower($api)).'.php';
+        $apiPath = dirname(__FILE__).'/api/'.$doubanApi.'.php';
 
         try {
             $this->fileLoader($apiPath);
@@ -254,7 +259,7 @@ class DoubanOauth {
             echo 'Apiloader error:'.$e->getMessage();
         }
 
-        return new $api($this->clientId);
+        return new $doubanApi($this->clientId);
     }
 
     /**
