@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Miniblog.php
+ * @file DoubanMiniblog.php
  * @brief 豆瓣广播API
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-03
  */
 
-class Miniblog extends Base {
+class DoubanMiniblog extends DoubanBase {
 
     /**
      * @brief 构造函数，初始设置clientId

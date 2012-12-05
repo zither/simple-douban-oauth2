@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Photo.php
+ * @file DoubanPhoto.php
  * @brief 豆瓣相册API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-02
+ * @date 2012-12-05
  */
 
-class Photo extends Base {
+class DoubanPhoto extends DoubanBase {
 
     /**
      * @brief 构造函数，初始设置clientId和accessToken

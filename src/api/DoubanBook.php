@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Book.php
+ * @file DoubanBook.php
  * @brief 豆瓣图书API
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-11-27
  */
 
-class Book extends Base {
+class DoubanBook extends DoubanBase {
     
     /**
      * @brief 构造函数，初始设置clientId

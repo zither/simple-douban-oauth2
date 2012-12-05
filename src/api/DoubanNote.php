@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Note.php
+ * @file DoubanNote.php
  * @brief 豆瓣日记API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-02
+ * @date 2012-12-05
  */
 
-class Note extends Base {
+class DoubanNote extends DoubanBase {
 
     /**
      * @brief 构造函数，初始设置clientId
@@ -18,6 +18,21 @@ class Note extends Base {
     public function __construct($clientId)
     {
         $this->clientId = $clientId;
+    }
+    
+    /**
+     * @brief 获取一条日记
+     *
+     * @param $id
+     * @param $format
+     *
+     * @return object
+     */
+    public function getNote($id, $format = 'text')
+    {
+        $this->uri = '/v2/note/'.$id.'?format='.$format;
+        $this->type = 'GET';
+        return $this;
     }
 
     public function addNote()

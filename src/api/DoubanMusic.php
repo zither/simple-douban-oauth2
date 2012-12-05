@@ -1,12 +1,12 @@
 <?php
 /**
- * @file Music.php
+ * @file DoubanMusic.php
  * @brief 豆瓣音乐API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-02
+ * @date 2012-12-05
  */
 
-class Music extends Base {
+class DoubanMusic extends DoubanBase {
 
     /**
      * @brief 构造函数，初始设置clientId
