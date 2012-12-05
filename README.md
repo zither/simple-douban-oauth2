@@ -88,7 +88,7 @@ simple douban oauth2所有的Api接口都保存在**api**文件夹中，其中�
    ```php
     <?php
 
-    class Book extends Base {
+    class DoubanBook extends DoubanBase {
         
         // 初始化clientId，在uri后面添加apikey可以拥有更宽裕的请求次数
         public function __construct($clientId)
