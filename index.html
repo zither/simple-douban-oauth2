@@ -39,13 +39,13 @@
         <p>目前支持的豆瓣Api如下：</p>
         <pre><code>
         - 图书 Book
-        - 电影 Movie （未测试）
-        - 音乐 Music （未测试）
-        - 同城 Event （未测试）
+        - 电影 Movie 
+        - 音乐 Music 
+        - 同城 Event 
         - 广播 Miniblog 
         - 用户 User
-        - 豆邮 Doumail （未测试）
-        - 日记 Note （未测试）
+        - 豆邮 Doumail 
+        - 日记 Note 
         - 相册 Photo （未测试）
         - 线上活动 Online （未测试）
         - 论坛 discussion （未测试）
@@ -53,7 +53,7 @@
         </code></pre>
 
         <h3>Usage</h3>
-        <p>这里提供了一个<a href="https://github.com/zither/simple-douban-oauth2/blob/master/example.php">使用Simple douban oauth2来发送图片广播</a>的例子。</p>
+        <p>这里以使用Simple douban oauth2来发送图片广播作为的例子。</p>
 
         <pre><code>/**
  * @file example.php
@@ -63,7 +63,7 @@
  */
 
 // 载入豆瓣Oauth类
-require 'DoubanOauth.php';
+require '../src/DoubanOauth.php';
 
 /* ------------实例化Oauth2--------------- */
 
@@ -84,13 +84,13 @@ $douban = new DoubanOauth($clientId, $secret, $callback, $scope);
 
 // 如果没有requestToken，跳转到用户授权页面
 if ( ! isset($_GET['code'])) {
-    $douban->getAuthorizeCode();
+    $douban->requestAuthorizeCode();
     exit;
 }
 // 设置authorizeCode
 $douban->setAuthorizeCode($_GET['code']);
 // 通过requestToken获取accessToken，至此完成用户授权
-$douban->getAccessToken();
+$douban->requestAccessToken();
 
 
 /* ------------发送图片广播--------------- */
@@ -120,7 +120,7 @@ var_dump($result);
 
         <p>一个简单的豆瓣图书Api类作为示例：</p>
 
-        <pre><code>class Book extends Base {
+        <pre><code>class DoubanBook extends DoubanBase {
 
     // 初始化clientId，在uri后面添加apikey可以拥有更宽裕的请求次数
     public function __construct($clientId)
