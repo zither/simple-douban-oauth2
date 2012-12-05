@@ -54,6 +54,7 @@ $miniblog = $douban->apiRegister('Miniblog');
 // 选择发表我说
 $miniblog->addMiniblog();
 // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
+// 如果API需授权，请把makeRequest函数的第三个参数设置true
 $result = $douban->makeRequest($miniblog, $data, true);
 ?>
 
