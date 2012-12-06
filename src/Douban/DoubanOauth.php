@@ -9,10 +9,10 @@
 namespace Douban;
 
 if (!function_exists('curl_init')) {
-    throw new Exception('Simple douban oauth2 needs the CURL PHP extension.');
+    throw new \Exception('Simple douban oauth2 needs the CURL PHP extension.');
 }
 if (!function_exists('json_decode')) {
-    throw new Exception('Simple douban oauth2 needs the JSON PHP extension.');
+    throw new \Exception('Simple douban oauth2 needs the JSON PHP extension.');
 }
 
 class DoubanOauth {
