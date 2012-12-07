@@ -261,6 +261,36 @@ class DoubanOauth {
 
         return new $doubanApi($this->clientId);
     }
+    
+    /**
+     * @brief 注册豆瓣Api
+     *
+     * @param string $api
+     * @param array $params
+     *
+     * @return object
+     */
+    public function api($api, $params)
+    {
+        $info = explode('.', $api);
+        $class = $info[0];
+        $func = $info[1];
+        $type = strtoupper($info[2]);
+
+        $doubanApi = self::PREFIX.ucfirst(strtolower($class));
+        $apiFile = dirname(__FILE__).'/api/'.$doubanApi.'.php';
+        
+        try
+        {
+            $this->fileLoader($apiFile);
+        } catch(Exception $e) {
+            echo 'Apiloader error:'.$e->getMessage();
+        }
+
+        $instance = new $doubanApi($this->clientId);
+
+        return $instance->$func($type, $params);
+    }
 
     /**
      * @brief 获取Authorization header

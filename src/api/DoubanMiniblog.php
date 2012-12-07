@@ -256,7 +256,7 @@ class DoubanMiniblog extends DoubanBase {
      *
      * @return object
      */
-    public function homeTimeline($sinceId = null, $untilId = null, $count = null, $start = null )
+    public function gethomeTimeline($sinceId = null, $untilId = null, $count = null, $start = null )
     {
         $params = array(
                     'since_id' => $sinceId,
@@ -270,6 +270,22 @@ class DoubanMiniblog extends DoubanBase {
 
     }
     
+    /**
+     * @brief 获取登录用户的广播列表
+     *
+     * @param $requestType
+     * @param $params
+     *
+     * @return object
+     */
+    public function homeTimeline($requestType, $params)
+    {
+        $this->type = $requestType;
+        $query = !empty($params) ? '?'.http_build_query($params) : null;
+        $this->uri = '/shuo/v2/statuses/home_timeline'.$query;
+        return $this;
+    }
+
     /**
      * @brief 获取用户发布的广播列表
      *
