@@ -27,10 +27,10 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function getBook($id)
+    public function info($requestType, $params)
     {
-        $this->uri = '/v2/book/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/book/'.$params['id'];
         return $this;
     }
     
@@ -41,10 +41,10 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function isbn($name)
+    public function isbn($requestType, $params)
     {
-        $this->uri = '/v2/book/isbn/'.$name;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/book/isbn/'.$params['name'];
         return $this;
     }
    
@@ -58,16 +58,10 @@ class DoubanBook extends DoubanBase {
      *
      * @return object 
      */
-    public function search($q, $tag, $start = 0, $count = 20)
+    public function search($requestType , $params)
     {
-        $params = array(
-                    'q' => $q,
-                    'tag' => $tag,
-                    'start' => $start,
-                    'count' => $count
-                    );
+        $this->type = $requestType;
         $this->uri = '/v2/book/search?'.http_build_query($params);
-        $this->type = 'GET';
         return $this;
     }
     /**
@@ -77,10 +71,10 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function bookTags($id)
+    public function bookTags($requestType,$params)
     {
-        $this->uri = '/v2/book/'.$id.'/tags';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/book/'.$params['id'].'/tags';
         return $this;    
     }
    
@@ -91,10 +85,10 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function userTags($name)
+    public function userTags($requestType, $params)
     {
-        $this->uri = '/v2/book/user/'.$name.'/tags';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/book/user/'.$params['name'].'/tags';
         return $this;
     }
     
@@ -105,66 +99,31 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function collections($name)
+    public function collections($requestType, $params)
     {
-        $this->uri = '/v2/book/user/'.$name.'/collections';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/book/user/'.$params['name'].'/collections';
         return $this;
     }
     
     /**
-     * @brief 获取用户对某本图书的收藏信息(为测试)
+     * @brief 用户对某本图书的收藏信息的操作
      *
      * @param string $id
      *
      * @return object
      */
-    public function getCollection($id)
+    public function collection($requestType, $params)
     {
-        $this->uri = '/v2/book/'.$id.'/collection';
-        $this->type = 'GET';
-        return $this;
-    }
-     
-    /**
-     * @brief 用户收藏某本图书(未测试)
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function addCollection($id)
-    {
-        $this->uri = '/v2/book/'.$id.'/collection';
-        $this->type = 'POST';
-        return $this;
-    }
-
-    /**
-     * @brief 用户修改对某本图书的收藏(未测试)
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function editCollection($id)
-    {
-        $this->uri = '/v2/book/'.$id.'/collection';
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    /**
-     * @brief 用户删除对某本图书的收藏(未测试)
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function deleteCollection($id)
-    {
-        $this->uri = '/v2/book/'.$id.'/collection';
-        $this->type = 'DELETE';
+        $this->type = $requestType;
+        switch($this->type) {
+            case 'GET':
+            case 'POST':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/book/'.$params['id'].'/collection';
+                break;
+        }
         return $this;
     }
 
@@ -175,10 +134,10 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function userAnnotations($name)
+    public function userAnnotations($requestType, $params)
     {
-        $this->uri = '/v2/book/user/'.$name.'/annotations';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/book/user/'.$params['name'].'/annotations';
         return $this;
     }
     
@@ -189,10 +148,10 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function bookAnnotations($id)
+    public function bookAnnotations($requestType, $params)
     {
-        $this->uri = '/v2/book/user/'.$id.'/annotations';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/book/user/'.$params['id'].'/annotations';
         return $this;
     }
     
@@ -203,91 +162,39 @@ class DoubanBook extends DoubanBase {
      *
      * @return object
      */
-    public function getAnnotation($id)
+    public function annotation($requestType, $params)
     {
-        $this->uri = '/v2/book/annotation/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/book/annotation/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/book/'.$params['id'].'/annotations';
+                break;
+        }
         return $this;
     }
 
     /**
-     * @brief 用户给某本图书写笔记(未测试)
-     *
-     * @param string $id
+     * @brief 书评相关操作
      *
      * @return object
      */
-    public function addAnnotation($id)
+    public function review($requestType, $params)
     {
-        $this->uri = '/v2/book/'.$id.'/annotations';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        switch ($thi->type) {
+            case 'POST':
+                $this->uri = '/v2/book/reviews';
+                break;
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/book/review/'.$params['id'];
+                break;
+        }
         return $this;
-    }
-
-    /**
-     * @brief 用户修改某篇笔记(未测试)
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function editAnnotation($id)
-    {
-        $this->uri = '/v2/book/annotation/'.$id;
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    /**
-     * @brief 用户删除某篇笔记(未测试)
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function deleteAnnotation($id)
-    {
-        $this->uri = '/v2/book/annotation/'.$id;
-        $this->type = 'DELETE';
-        return $this;
-    }
-    /**
-     * @brief 添加书评
-     *
-     * @return object
-     */
-    public function addReview()
-    {
-        $this->uri = '/v2/book/reviews';
-        $this->type = 'POST';
-        return $this;     
-    }
-
-    /**
-     * @brief 修改书评
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function editReview($id)
-    {
-        $this->uri = '/v2/book/review/'.$id;
-        $this->type = 'PUT';
-        return $this;          
-    }
-
-    /**
-     * @brief 删除书评
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function deleteReview($id)
-    {
-        $this->uri = '/v2/book/review/'.$id;
-        $this->type = 'DELETE';
-        return $this;          
     }
 }

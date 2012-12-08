@@ -270,14 +270,6 @@ class DoubanMiniblog extends DoubanBase {
 
     }
     
-    /**
-     * @brief 获取登录用户的广播列表
-     *
-     * @param $requestType
-     * @param $params
-     *
-     * @return object
-     */
     public function homeTimeline($requestType, $params)
     {
         $this->type = $requestType;

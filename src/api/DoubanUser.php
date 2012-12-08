@@ -40,24 +40,10 @@ class DoubanUser extends DoubanBase {
      *
      * @return object
      */
-    public function me()
+    public function me($requestType, $params)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/user/~me';
-        $this->type = 'GET';
-        return $this;
-    }
-    
-    /**
-     * @brief 获取指定ID用户信息
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function get($id)
-    {
-        $this->uri = '/v2/user/'.$id;
-        $this->type = 'GET';
         return $this;
     }
     
@@ -70,16 +56,10 @@ class DoubanUser extends DoubanBase {
      *
      * @return object
      */
-    public function search($q, $start = null, $count = null)
+    public function search($requestType, $params)
     {
-        $params = array(
-                    'q' => $q,
-                    'start' => $start,
-                    'count' => $count
-                    );
-        $this->uri = '/v2/user?'.http_build_query($params);
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/user/?'.http_build_query($params);
         return $this;
     }
-    
 }
