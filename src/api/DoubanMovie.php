@@ -27,10 +27,10 @@ class DoubanMovie extends DoubanBase {
      *
      * @return object
      */
-    public function get($id)
+    public function info($requestType, $params)
     {
-        $this->uri = '/v2/movie/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/movie/'.$params['id'];
         return $this;
     }
     
@@ -41,61 +41,54 @@ class DoubanMovie extends DoubanBase {
      *
      * @return object
      */
-    public function imdb($name)
+    public function imdb($requestType, $params)
     {
-        $this->uri = '/v2/movie/imdb/'.$name;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/movie/imdb/'.$params['name'];
         return $this;
     }
 
-    public function search($q, $tag, $start = 0, $count = 20)
+    public function search($requestType, $params)
     {
-        $params = array(
-                    'q' => $q,
-                    'tag' => $tag,
-                    'start' => $start,
-                    'count' => $count
-                    );
+        $this->type = $requestType;
         $this->uri = '/v2/movie/search?'.http_build_query($params);
-        $this->type = 'GET';
         return $this;
     }
 
-    public function movieTags($id)
+    public function movieTags($requestType, $params)
     {
-        $this->uri = '/v2/movie/'.$id.'/tags';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/movie/'.$params['id'].'/tags';
         return $this;
     }
 
-    public function userTags($id)
+    public function userTags($requestType, $params)
     {
-        $this->uri = '/v2/movie/user_tags/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/movie/user_tags/'.$params['id'];
         return $this;
     }
-
-    public function addReview()
+    
+    /**
+     * @brief 电影评论相干操作
+     *
+     * @param $requestType
+     * @param $params
+     *
+     * @return object
+     */
+    public function review($requestType, $params)
     {
-        $this->uri = '/v2/movie/reviews';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'POST':
+                $this->uri = '/v2/movie/reviews';
+                break;
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/movie/review/'.$params['id'];
+                break;
+        }
         return $this;
-
-    }
-
-    public function editReview($id)
-    {
-        $this->uri = '/v2/movie/review/'.$id;
-        $this->type = 'PUT';
-        return $this;
-
-    }
-
-    public function deleteReview($id)
-    {
-        $this->uri = '/v2/movie/review/'.$id;
-        $this->type = 'DELETE';
-        return $this;
-
     }
 }

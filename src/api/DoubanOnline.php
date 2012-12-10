@@ -20,115 +20,87 @@ class DoubanOnline extends DoubanBase {
         $this->client = $clientId;
     }
 
-    public function getOnline($id)
+    public function discussionsList($requestType, $params)
     {
-        $this->uri = '/v2/online/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/'.$params['id'].'/discussions';
         return $this;
     }
 
-    public function participants($id)
+    public function onlinesList($requestType,$params)
     {
-        $this->uri = '/v2/online/'.$id.'/participants';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/onlines?cate='.$params['cate'];
         return $this;
     }
 
-    public function getDiscussionsList($id)
+    public function online($requestType, $params)
     {
-        $this->uri = '/v2/online/'.$id.'/discussions';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/onlines/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/onlines';
+                break;
+        }
+        return $this;
+
+    }
+
+    public function participants($requestType, $params)
+    {
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+                $this->uri = '/v2/online/'.$params['id'].'/participants';
+                break;
+            case 'POST':
+            case 'DELETE':
+                $this->uri = '/v2/online/'.$params['id'].'/participants';
+                break;
+        }
         return $this;
     }
 
-    public function getOnlinesList($cate)
+    public function like($requestType, $params)
     {
-        $this->uri = '/v2/onlines?cate='.$cate;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/'.$params['id'].'/like';
         return $this;
     }
 
-    public function addOnline()
+    public function photo($requestType, $params)
     {
-        $this->uri = '/v2/onlines';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/'.$params['id'].'/photos';
+        return $this;
+
+    }
+
+    public function replyDiscussion($requestType, $params)
+    {
+        $this->type = $requestType;
+        $this->uri = '/v2/online/'.$params['id'].'/discussions';
         return $this; 
     }
 
-    public function editOnline($id)
+    public function userParticipated($requestType, $params)
     {
-        $this->uri = '/v2/onlines/'.$id;
-        $this->type = 'PUT';
-        return $this; 
-    }
-
-    public function deleteOnline($id)
-    {
-        $this->uri = '/v2/onlines/'.$id;
-        $this->type = 'DELETE';
-        return $this; 
-    }
-
-    public function join($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/participants';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function quit($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/participants';
-        $this->type = 'DELETE';
-        return $this; 
-    }
-
-    public function like($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/like';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function dislike($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this; 
-    }
-
-    public function getPhoto($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/photos';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/user_participated/'.$params['id'];
+        if (isset($params['excludeExpired'])) 
+            $this->uri .= '?exclude_expired='.$excludeExpired;
         return $this;
     }
 
-    public function addPhoto($id)
+    public function userCreated($requestType, $params$)
     {
-        $this->uri = '/v2/online/'.$id.'/photos';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function replyDiscussion($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/discussions';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function userParticipated($id, $excludeExpired = true)
-    {
-        $this->uri = '/v2/online/user_participated/'.$id.'?exclude_expired='.$excludeExpired;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function userCreated($id)
-    {
-        $this->uri = '/v2/online/user_created/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/user_created/'.$params['id'];
         return $this;
     }
 }

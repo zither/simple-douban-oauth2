@@ -20,110 +20,70 @@ class DoubanPhoto extends DoubanBase {
         $this->clientId = $clientId;
     }
 
-    public function getAlbum($id)
+    public function album($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/album/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/albums';
+                break;
+        }
         return $this;
     }
 
-    public function addAlbum()
+    public function photosList($requestType, $params)
     {
-        $this->uri = '/v2/albums';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/'.$params['id'].'/photos';
         return $this;
     }
 
-    public function editAlbum($id)
+    public function albumLike($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'PUT';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/'.$params['id'].'/like';
         return $this;
     }
 
-    public function deleteAlbum($id)
+    public function userAlbumList($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'DELETE';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/user_created/'.$params['id'];
         return $this;
     }
 
-
-    public function getPhotosList($id)
+    public function userLiked($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id.'/photos';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/user_liked/'.$params['id'];
         return $this;
     }
 
-    public function getPhoto($id)
+    public function photo($requestType, $params)
     {
-        $this->uri = '/v2/photo/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+                $this->uri = '/v2/photo/'.$params['id'];
+                break;
+            case 'POST':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/album/'.$params['id'];
+                break;
+        }
         return $this;
     }
 
-    public function likeAlbum($id)
+    public function photoLike($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id.'/like';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/photo/'.$params['id'].'/like';
         return $this;
     }
-
-    public function dislikeAlbum($id)
-    {
-        $this->uri = '/v2/album/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this;
-    }
-
-    public function getUserAlbumList($id)
-    {
-        $this->uri = '/v2/album/user_created/'.$id;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function userLiked($id)
-    {
-        $this->uri = '/v2/album/user_liked/'.$id;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function addPhoto($id)
-    {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'POST';
-        return $this;
-    }
-
-    public function editPhoto($id)
-    {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    public function deletePhoto($id)
-    {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'DELETE';
-        return $this;
-    }
-
-    public function likePhoto($id)
-    {
-        $this->uri = '/v2/photo/'.$id.'/like';
-        $this->type = 'POST';
-        return $this;
-    }
-
-    public function dislikePhoto($id)
-    {
-        $this->uri = '/v2/photo/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this;
-    }
-
 }

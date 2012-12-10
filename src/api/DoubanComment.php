@@ -20,31 +20,33 @@ class DoubanComment extends DoubanBase {
         $this->clientId = $clientId;
     }
 
-    public function getCommentsList($target, $id)
+    public function getCommentsList($requestType, $params)
     {
-        $this->uri = '/v2/'.$target.'/'.$id.'/comments';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/comments';
         return $this;
     }
 
-    public function addComment($target, $id)
+    public function addComment($requestType, $params)
     {
-        $this->uri = '/v2/'.$target.'/'.$id.'/comments';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/comments';
         return $this; 
     }
 
-    public function getComment($target, $targetId, $commentId)
+    public function getComment($requestType, $params)
     {
-        $this->uri = '/v2/'.$target.'/'.$targetId.'/comment/'.$commentId;
-        $this->type = 'GET';
+        $this->type = $requestType; 
+        $this->uri = '/v2/'.$params['target'].'/'.$params['targetId']
+            .'/comment/'.$params['commentId'];
         return $this;
     }
 
-    public function deleteComment($target, $targetId, $commentId)
+    public function deleteComment($requestType, $params)
     {
-        $this->uri = '/v2/'.$target.'/'.$targetId.'/comment/'.$commentId;
-        $this->type = 'DELETE';
+        $this->type = $requestType;
+        $this->uri = '/v2/'.$params['target'].'/'.$params['targetId']
+            .'/comment/'.$params['commentId'];
         return $this; 
     }
 }

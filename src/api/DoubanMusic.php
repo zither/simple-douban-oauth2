@@ -27,10 +27,10 @@ class DoubanMusic extends DoubanBase {
      *
      * @return object
      */
-    public function get($id)
+    public function info($requestType, $params)
     {
-        $this->uri = '/v2/music/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/music/'.$params['id'];
         return $this;
     }
     
@@ -44,16 +44,10 @@ class DoubanMusic extends DoubanBase {
      *
      * @return object
      */
-    public function search($q, $tag = null, $start = 0, $count = 20)
+    public function search($requestType, $params)
     {
-        $params = array(
-                    'q' => $q,
-                    'tag' => $tag,
-                    'start' => $start,
-                    'count' => $count
-                    );
+        $this->type = $requestType;
         $this->uri = '/v2/music/search?'.http_build_query($params);
-        $this->type = 'GET';
         return $this;
     }
     
@@ -64,34 +58,28 @@ class DoubanMusic extends DoubanBase {
      *
      * @return object
      */
-    public function musicTags($id)
+    public function musicTags($requestType, $params)
     {
-        $this->uri = '/v2/music/'.$id.'/tags';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/music/'.$params['id'].'/tags';
         return $this;
     }
 
-    public function addReview()
+    public function review($requestType, $params)
     {
-        $this->uri = '/v2/music/reviews';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'POST':
+                $this->uri = '/v2/music/reviews';
+                break;
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/music/review/'.$params['id'];
+                break;
+        }
         return $this;
     }
 
-    public function editReview($id)
-    {
-        $this->uri = '/v2/music/review/'.$id;
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    public function deleteReview($id)
-    {
-        $this->uri = '/v2/music/review/'.$id;
-        $this->type = 'DELETE';
-        return $this;
-    }
-    
     /**
      * @brief 用户对音乐的所有标签
      *
@@ -99,10 +87,10 @@ class DoubanMusic extends DoubanBase {
      *
      * @return object
      */
-    public function userTags($id)
+    public function userTags($requestType, $params)
     {
-        $this->uri = '/v2/music/user_tags/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/music/user_tags/'.$params['id'];
         return $this;
     }
 }

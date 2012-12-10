@@ -28,80 +28,56 @@ class DoubanNote extends DoubanBase {
      *
      * @return object
      */
-    public function getNote($id, $format = 'text')
+    public function note($requestType, $params)
     {
-        $this->uri = '/v2/note/'.$id.'?format='.$format;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+                $this->uri = '/v2/note/'.$params['id'].'?format='.$params['format'];
+            case 'POST':
+                $this->uri = '/v2/notes';
+                break;
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/note/'.$params['id'];
+                break;
+        }
         return $this;
     }
 
-    public function addNote()
+    public function like($requestType, $params)
     {
-        $this->uri = '/v2/notes';
-        $this->type = 'POST';
-        return $this;   
+        $this->type = $requestType;
+        $this->uri = '/v2/note/'.$params['id'].'/like';
+        return $this;
     }
 
-    public function editNote($id)
+    public function image($requestType, $params)
     {
-        $this->uri = '/v2/note/'.$id;
-        $this->type = 'PUT';
-        return $this;   
-    }
-
-    public function deleteNote($id)
-    {
-        $this->uri = '/v2/note/'.$id;
-        $this->type = 'DELETE';
-        return $this;   
-    }
-
-    public function like($id)
-    {
-        $this->uri = '/v2/note/'.$id.'/like';
-        $this->type = 'POST';
-        return $this;   
-    }
-
-    public function dislike($id)
-    {
-        $this->uri = '/v2/note/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this;   
-    }
-
-    public function image($id)
-    {
-        $this->uri = '/v2/note/'.$id;
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/note/'.$params['id'];
         return $this;  
     }
 
-    public function getCommentsList($id)
+    public function commentsList($requestType, $params)
     {
-        $this->uri = '/v2/note/'.$id.'/comments';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/note/'.$params['id'].'/comments';
         return $this;
     }
 
-    public function reply($id)
+    public function comment($requestType, $params)
     {
-        $this->uri = '/v2/note/'.$id.'/comments';
-        $this->type = 'POST';
-        return $this;  
-    }
-
-    public function getComment($noteId, $commentId)
-    {
-        $this->uri = '/v2/note/'.$noteId.'/comment/'.$commentId;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function deleteComment($noteId, $commentId)
-    {
-        $this->uri = '/v2/note/'.$noteId.'/comment/'.$id;
-        $this->type = 'DELETE';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'DELETE':
+                $this->uri = '/v2/note/'.$params['noteId'].'/comment/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/note/'.$params['id'].'/comments';
+                break;
+        }
         return $this;
     }
 }

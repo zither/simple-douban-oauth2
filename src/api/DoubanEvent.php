@@ -19,96 +19,83 @@ class DoubanEvent extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-
-    public function get($id)
+    
+    public function info($requestType, $params)
     {
-        $this->uri = '/v2/event/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/event/'.$params['id'];
         return $this;
     }
 
-    public function participants($id)
+    public function wishers($requestType, $params)
     {
-        $this->uri = '/v2/event/'.$id.'/participants';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/event/'.$params['id'].'/wishers';
         return $this;
     }
 
-    public function wishers($id)
+    public function userCreated($requestType, $params)
     {
-        $this->uri = '/v2/event/'.$id.'/wishers';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/event/user_created/'.$params['id'];
         return $this;
     }
 
-    public function userCreated($id)
+    public function userParticipated($requestType, $params)
     {
-        $this->uri = '/v2/event/user_created/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/event/user_participated/'.$params['id'];
         return $this;
     }
 
-    public function userParticipated($id)
+    public function userWished($requestType, $params)
     {
-        $this->uri = '/v2/event/user_participated/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/event/user_wished/'.$params['id'];
         return $this;
     }
 
-    public function userWished($id)
+    public function eventList($requestType)
     {
-        $this->uri = '/v2/event/user_wished/'.$id;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function eventList()
-    {
+        $this->type = $requestType;
         $this->uri = '/v2/event/list';
-        $this->type = 'GET';
         return $this;
     }
 
-    public function loc($id)
+    public function loc($requestType, $params)
     {
-        $this->uri = '/v2/loc/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/loc/'.$params['id'];
         return $this;
     }
 
-    public function locList()
+    public function locList($requestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/loc/list';
-        $this->type = 'GET';
         return $this;
     }
 
-    public function join($id)
-    {
-        $this->uri = '/v2/event/'.$id.'/participants';
-        $this->type = 'POST';
-        return $this;
 
-    }
-
-    public function quit($id)
+    /**
+     * @brief 同城活动相关操作
+     *
+     * @param string $requestType 可为'GET','POST','DELETE'
+     * @param $params
+     *
+     * @return object
+     */
+    public function participants($requestType, $params)
     {
-        $this->uri = '/v2/event/'.$id.'/participants';
-        $this->type = 'DELETE';
-        return $this;
-    }
-
-    public function wish($id)
-    {
-        $this->uri = '/v2/event/'.$id.'/wishers';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/event/'.$params['id'].'/participants';
         return $this;
     }
 
-    public function unwish($id)
+    public function wish($requestType, $params)
     {
-        $this->uri = '/v2/event/'.$id.'/wishers';
-        $this->type = 'DELETE';
+        $this->type = $requestType;
+        $this->uri = '/v2/event/'.$params['id'].'/wishers';
         return $this;
     }
 }

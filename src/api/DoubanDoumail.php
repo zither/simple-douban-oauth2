@@ -20,78 +20,59 @@ class DoubanDoumail extends DoubanBase {
         $this->clientId = $clientId;
     }
     
-    /**
-     * @brief 获取一封豆邮
-     *
-     * @param string $id 豆邮id
-     *
-     * @return object
-     */
-    public function get($id)
+    public function doumail($requestType, $params)
     {
-        $this->uri = '/v2/doumail/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/doumail/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/doumails';
+                break;
+        }
         return $this;
+
     }
-    
     /**
      * @brief 获取用户收件箱
      *
      * @return object
      */
-    public function inbox()
+    public function inbox($reuestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/inbox';
-        $this->type = 'GET';
         return $this;
     }
 
-    public function outbox()
+    public function outbox($requestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/outbox';
-        $this->type = 'GET';
         return $this;
     }
 
-    public function unread()
+    public function unread($requestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/inbox/unread';
-        $this->type = 'GET';
         return $this;
     }
 
-    public function read($id)
+    public function mutilRead($requestType)
     {
-        $this->uri = '/v2/doumail/'.$id;
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    public function mutilRead()
-    {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/read';
-        $this->type = 'PUT';
         return $this;
     }
 
-    public function delete($id)
+    public function mutilDelete($requestType)
     {
-        $this->uri = '/v2/doumail/'.$id;
-        $this->type = "DELETE";
-        return $this;
-    }
-
-    public function mutilDelete()
-    {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/delete';
-        $this->type = 'POST';
-        return $this;
-    }
-
-    public function add()
-    {
-        $this->uri = '/v2/doumails';
-        $this->type = 'POST';
         return $this;
     }
 }
