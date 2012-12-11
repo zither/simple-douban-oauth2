@@ -19,7 +19,15 @@ class DoubanMiniblog extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-
+    
+    /**
+     * @brief 用户对豆瓣广播相关操作
+     *
+     * @param string $requestType GET,POST,DELETE
+     * @param array $params
+     *
+     * @return object
+     */
     public function statuses($requestType, $params)
     {
         $this->type = $requestType;
@@ -29,18 +37,17 @@ class DoubanMiniblog extends DoubanBase {
                 $this->uri = '/shuo/v2/statuses/'.$params['id'];
                 break;
             case 'POST':
-                $this->uri = '/shuo/v2/statuses';
+                $this->uri = '/shuo/v2/statuses/';
                 break;
         }
         return $this;
     }
-
+    
     /**
-     * @brief 获取一条广播的回复列表（未测试）
+     * @brief 获取广播的回复列表
      *
-     * @param string $id
-     * @param int $start
-     * @param int $count
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -49,11 +56,19 @@ class DoubanMiniblog extends DoubanBase {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/statuses/'.$params['id'].'/comments';
         unset($params['id']);
-        $query = !empty($params) ? '?'.http_build_query($params) : null;
-        $this->uri .= $query;
+        if (!empty($params))
+            $this->uri .= '?'.http_build_query($params);
         return $this;
     }
-    
+        
+    /**
+     * @brief 对广播回复的操作
+     *
+     * @param string $requestType GET,POST,DELETE
+     * @param array $params
+     *
+     * @return object
+     */
     public function comment($requestType, $params)
     {
         $this->type = $requestType;
@@ -68,42 +83,60 @@ class DoubanMiniblog extends DoubanBase {
         }
         return $this;
     }
-
+    
+    /**
+     * @brief 对转播相关操作
+     *
+     * @param string $requestType GET,POST
+     * @param array $params
+     *
+     * @return object
+     */
     public function reshare($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/statuses/'.$params['id'].'/reshare';
         return $this;
     }
-
+    
     /**
-     * @brief 获取一条广播的赞相关信息（未测试）
+     * @brief 赞某条广播
      *
-     * @param string $id
+     * @param string $requestType GET,POST
+     * @param array $params
      *
      * @return object
      */
-    public function likers($requestType, $params)
-    {
-        $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/like';
-        return $this;
-    }
-
     public function like($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/statuses/'.$params['id'].'/like';
         return $this;
     }
-
+    
+    /**
+     * @brief 获取用户关注列表，此Api无需授权，发送accessToken会返回107。
+     *
+     * @param string $requestType GET
+     * @param array $params
+     *
+     * @return object
+     */
     public function following($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/users/'.$params['id'].'/following';
         return $this;
     }
-
+    
+    /**
+     * @brief 获取用户关注者列表,此Api无需授权，发送accessToken会返回107。
+     *
+     * @param string $requestType GET
+     * @param array $params
+     *
+     * @return object
+     */
     public function followers($requestType, $params)
     {
         $this->type = $requestType;
@@ -111,26 +144,58 @@ class DoubanMiniblog extends DoubanBase {
         return $this;
     }
 
+
+    /**
+     * @brief 获取共同关注列表，这个是奇葩中的奇葩，需要附带cookie信息，待修改。 
+     *
+     * @param string $requestType GET
+     * @param array $params
+     *
+     * @return object
+     */
     public function followInCommon($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/users/'.$params['id'].'/follow_in_common';
         return $this;
     }
-
+    
+    /**
+     * @brief 获取关注的人关注了该用户的列表，同上，待修改。
+     *
+     * @param $requestType
+     * @param $params
+     *
+     * @return 
+     */
     public function suggestions($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/users/'.$params['id'].'/following_followers_of';
         return $this;
     }
-
+    
+    /**
+     * @brief 将指定用户加入黑名单
+     *
+     * @param $requestType
+     * @param $params
+     *
+     * @return 
+     */
     public function block($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/users/'.$params['id'].'/block';
         return $this;
 
+    }
+
+    public function follow($requestType)
+    {
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/friendships/create';
+        return $this;
     }
 
     public function unfollow($requestType)
@@ -148,13 +213,12 @@ class DoubanMiniblog extends DoubanBase {
         return $this;
     }
 
+    
     /**
-     * @brief 获取当前登录用户及其所关注用户的最新广播（友邻广播）
+     * @brief 获取当前登录用户及其所关注用户的最新广播(友邻广播)
      *
-     * @param string $sinceId
-     * @param string $untilId
-     * @param string $count
-     * @param string $start
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -165,13 +229,12 @@ class DoubanMiniblog extends DoubanBase {
         $this->uri = '/shuo/v2/statuses/home_timeline'.$query;
         return $this;
     }
-
+    
     /**
-     * @brief 获取用户发布的广播列表
+     * @brief 获取用户发表的广播列表
      *
-     * @param string $user
-     * @param string $sinceId
-     * @param string $untilId
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -180,8 +243,8 @@ class DoubanMiniblog extends DoubanBase {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/statuses/user_timeline/'.$params['user'];
         unset($params['user']);
-        $query = !empty($params) ? '?'.http_build_query($params) : null;
-        $this->uri .= $query;
+        if (!empty($params))
+            $this->uri .= '?'.http_build_query($params);
         return $this;
     }
     

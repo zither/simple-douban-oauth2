@@ -3,7 +3,7 @@
  * @file DoubanBook.php
  * @brief 豆瓣图书API
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-11-27
+ * @date 2012-12-11
  */
 
 class DoubanBook extends DoubanBase {
@@ -19,11 +19,12 @@ class DoubanBook extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-
+    
     /**
-     * @brief 获取指定书籍
+     * @brief 通过id获取书籍信息
      *
-     * @param int $id
+     * @param string $requestType GET
+     * @param array $params 书籍id
      *
      * @return object
      */
@@ -33,11 +34,12 @@ class DoubanBook extends DoubanBase {
         $this->uri = '/v2/book/'.$params['id'];
         return $this;
     }
-    
+        
     /**
-     * @brief 获取Isbn对应书籍
+     * @brief 通过isbn获取书籍信息
      *
-     * @param string $name
+     * @param string $requestType GET
+     * @param array $params 书籍isbn name
      *
      * @return object
      */
@@ -47,27 +49,29 @@ class DoubanBook extends DoubanBase {
         $this->uri = '/v2/book/isbn/'.$params['name'];
         return $this;
     }
-   
+       
     /**
-     * @brief 图书搜素接口(未测试)，q和tag必选其一。
+     * @brief 图书搜索
      *
-     * @param string $q
-     * @param string $tag
-     * @param int $start
-     * @param int $count
+     * @param string $requestType GET
+     * @param array $params
      *
-     * @return object 
+     * @return object
      */
     public function search($requestType , $params)
     {
         $this->type = $requestType;
+        if (!isset($params['q']) && !isset($params['tag']))
+            throw new Exception('Need q or tag.');
         $this->uri = '/v2/book/search?'.http_build_query($params);
         return $this;
     }
+    
     /**
-     * @brief 获取某个图书中标记最多的标签(未测试)
+     * @brief 获取图书中最多标签
      *
-     * @param string $id
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -77,11 +81,12 @@ class DoubanBook extends DoubanBase {
         $this->uri = '/v2/book/'.$params['id'].'/tags';
         return $this;    
     }
-   
+       
     /**
-     * @brief 获取用户对图书的所有标签(未测试)
+     * @brief 获取用户对图书的所有标签
      *
-     * @param string $name
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -93,9 +98,10 @@ class DoubanBook extends DoubanBase {
     }
     
     /**
-     * @brief 获取某个用户的所有图书收藏信息(未测试)
+     * @brief 获取用户的所有图书收藏信息
      *
-     * @param string $name
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -105,11 +111,12 @@ class DoubanBook extends DoubanBase {
         $this->uri = '/v2/book/user/'.$params['name'].'/collections';
         return $this;
     }
-    
+        
     /**
-     * @brief 用户对某本图书的收藏信息的操作
+     * @brief 操作用户对某本图书的收藏信息
      *
-     * @param string $id
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params
      *
      * @return object
      */
@@ -126,11 +133,12 @@ class DoubanBook extends DoubanBase {
         }
         return $this;
     }
-
+    
     /**
-     * @brief 获取某个用户的所有笔记(未测试)
+     * @brief 获取用户的所有笔记
      *
-     * @param string $name
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -140,25 +148,28 @@ class DoubanBook extends DoubanBase {
         $this->uri = '/v2/book/user/'.$params['name'].'/annotations';
         return $this;
     }
-    
+     
     /**
-     * @brief 获取某本图书的所有笔记(未测试)
+     * @brief 获取某本图书的所有笔记
      *
-     * @param string $id
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
     public function bookAnnotations($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/user/'.$params['id'].'/annotations';
+        $this->uri = '/v2/book/'.$params['id'].'/annotations';
         return $this;
     }
     
+    
     /**
-     * @brief 获取某篇笔记的信息(未测试)
+     * @brief 操作用户对某本书的笔记信息
      *
-     * @param string $id
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params
      *
      * @return object
      */
@@ -177,16 +188,19 @@ class DoubanBook extends DoubanBase {
         }
         return $this;
     }
-
+    
     /**
-     * @brief 书评相关操作
+     * @brief 用户对书评相关操作
+     *
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params
      *
      * @return object
      */
     public function review($requestType, $params)
     {
         $this->type = $requestType;
-        switch ($thi->type) {
+        switch ($this->type) {
             case 'POST':
                 $this->uri = '/v2/book/reviews';
                 break;

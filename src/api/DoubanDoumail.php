@@ -19,8 +19,17 @@ class DoubanDoumail extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-    
-    public function doumail($requestType, $params)
+
+
+    /**
+     * @brief 对单封豆邮的相关操作
+     *
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params
+     *
+     * @return object
+     */
+    public function mail($requestType, $params)
     {
         $this->type = $requestType;
         switch ($this->type) {
@@ -36,32 +45,56 @@ class DoubanDoumail extends DoubanBase {
         return $this;
 
     }
+    
     /**
      * @brief 获取用户收件箱
      *
+     * @param string $requestType GET
+     *
      * @return object
      */
-    public function inbox($reuestType)
+    public function inbox($requestType)
     {
         $this->type = $requestType;
         $this->uri = '/v2/doumail/inbox';
         return $this;
     }
-
+    
+    /**
+     * @brief 获取用户发件箱
+     *
+     * @param string $requestType GET
+     *
+     * @return object
+     */
     public function outbox($requestType)
     {
         $this->type = $requestType;
         $this->uri = '/v2/doumail/outbox';
         return $this;
     }
-
+    
+    /**
+     * @brief 获取用户未读豆邮
+     *
+     * @param string $requestType GET
+     *
+     * @return object
+     */
     public function unread($requestType)
     {
         $this->type = $requestType;
         $this->uri = '/v2/doumail/inbox/unread';
         return $this;
     }
-
+    
+    /**
+     * @brief 批量标记豆邮为已读
+     *
+     * @param string $requestType PUT
+     *
+     * @return object
+     */
     public function mutilRead($requestType)
     {
         $this->type = $requestType;
@@ -69,6 +102,14 @@ class DoubanDoumail extends DoubanBase {
         return $this;
     }
 
+
+    /**
+     * @brief 批量删除豆邮
+     *
+     * @param string $requestType POST 这是一个奇葩，用的是POST请求
+     *
+     * @return object
+     */
     public function mutilDelete($requestType)
     {
         $this->type = $requestType;

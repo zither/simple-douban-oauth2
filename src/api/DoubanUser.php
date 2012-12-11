@@ -21,7 +21,7 @@ class DoubanUser extends DoubanBase {
     }
     
     /**
-     * @brief 获取用户的基本个人信息
+     * @brief 获取用户个人信息接口
      *
      * @param string $requestType HTTP请求方式
      * @param array $params api需要的参数
@@ -34,9 +34,12 @@ class DoubanUser extends DoubanBase {
         $this->uri = '/v2/user/'.$params['id'].'?apikey='.$this->clientId;
         return $this;
     }
-
+    
     /**
-     * @brief 获取当前授权用户信息
+     * @brief 获取当前登录用户信息接口
+     *
+     * @param string $requestType
+     * @param array $params
      *
      * @return object
      */
@@ -48,18 +51,17 @@ class DoubanUser extends DoubanBase {
     }
     
     /**
-     * @brief 搜索用户
+     * @brief 搜索用户接口
      *
-     * @param string $q
-     * @param int $start
-     * @param int $count
+     * @param string $requestType
+     * @param array $params
      *
      * @return object
      */
     public function search($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/user/?'.http_build_query($params);
+        $this->uri = '/v2/user?'.http_build_query($params);
         return $this;
     }
 }

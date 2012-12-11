@@ -19,11 +19,12 @@ class DoubanMovie extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-    
+        
     /**
      * @brief 获取电影信息
      *
-     * @param string $id
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -33,11 +34,12 @@ class DoubanMovie extends DoubanBase {
         $this->uri = '/v2/movie/'.$params['id'];
         return $this;
     }
-    
+        
     /**
-     * @brief 根据imdb号获取电影信息
+     * @brief 通过imdb获取电影信息
      *
-     * @param string $name
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
@@ -47,21 +49,45 @@ class DoubanMovie extends DoubanBase {
         $this->uri = '/v2/movie/imdb/'.$params['name'];
         return $this;
     }
-
+    
+    /**
+     * @brief 搜索电影
+     *
+     * @param string $requestType GET
+     * @param array $params
+     *
+     * @return object
+     */
     public function search($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/movie/search?'.http_build_query($params);
         return $this;
     }
-
+    
+    /**
+     * @brief 获取电影最多标签
+     *
+     * @param $requestType
+     * @param $params
+     *
+     * @return 
+     */
     public function movieTags($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/movie/'.$params['id'].'/tags';
         return $this;
     }
-
+    
+    /**
+     * @brief 获取用户对电影的所有标签 
+     *
+     * @param $requestType
+     * @param $params
+     *
+     * @return 
+     */
     public function userTags($requestType, $params)
     {
         $this->type = $requestType;
