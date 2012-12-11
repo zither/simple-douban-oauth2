@@ -5,6 +5,8 @@ simple-douban-oauth2
 
 所有最新的修改都会直接上传到[Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支。
 
+豆瓣广播Api中，对于用户关系的接口很多都存在问题，比如获取用户共同关注列表等，这些Api需要附加cookie信息，有待修改。
+
 ###依赖
 
     PHP >= 5.2.0
