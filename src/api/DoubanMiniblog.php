@@ -3,7 +3,7 @@
  * @file DoubanMiniblog.php
  * @brief 豆瓣广播API
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-03
+ * @date 2012-12-13
  */
 
 class DoubanMiniblog extends DoubanBase {
@@ -190,14 +190,28 @@ class DoubanMiniblog extends DoubanBase {
         return $this;
 
     }
-
+    
+    /**
+     * @brief 关注一个用户
+     *
+     * @param string $requestType POST
+     *
+     * @return object
+     */
     public function follow($requestType)
     {
         $this->type = $requestType;
         $this->uri = '/shuo/v2/friendships/create';
         return $this;
     }
-
+    
+    /**
+     * @brief 取消关注
+     *
+     * @param string $requestType POST
+     *
+     * @return object
+     */
     public function unfollow($requestType)
     {
         $this->type = $requestType;
@@ -206,6 +220,14 @@ class DoubanMiniblog extends DoubanBase {
 
     }
 
+    /**
+     * @brief 获取两个用户的关系
+     *
+     * @param string $requestType GET
+     * @param array $params source,source_id,target_id
+     *
+     * @return object
+     */
     public function show($requestType, $params)
     {
         $this->type = $requestType;
