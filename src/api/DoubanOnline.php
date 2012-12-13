@@ -3,7 +3,7 @@
  * @file DoubanOnline.php
  * @brief 豆瓣线上活动API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-05
+ * @date 2012-12-13
  */
 
 class DoubanOnline extends DoubanBase {
@@ -19,21 +19,45 @@ class DoubanOnline extends DoubanBase {
     {
         $this->client = $clientId;
     }
-
-    public function discussionsList($requestType, $params)
+    
+    /**
+     * @brief 获取线上活动论坛列表
+     *
+     * @param string $requestType GET,POST
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function discussions($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/online/'.$params['id'].'/discussions';
         return $this;
     }
-
+    
+    /**
+     * @brief 获取线上活动列表
+     *
+     * @param string $requestType GET
+     * @param array $params cate
+     *
+     * @return object
+     */
     public function onlinesList($requestType,$params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/onlines?cate='.$params['cate'];
         return $this;
     }
-
+    
+    /**
+     * @brief 线上活动相关操作
+     *
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
     public function online($requestType, $params)
     {
         $this->type = $requestType;
@@ -41,7 +65,7 @@ class DoubanOnline extends DoubanBase {
             case 'GET':
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/onlines/'.$params['id'];
+                $this->uri = '/v2/online/'.$params['id'];
                 break;
             case 'POST':
                 $this->uri = '/v2/onlines';
@@ -50,7 +74,15 @@ class DoubanOnline extends DoubanBase {
         return $this;
 
     }
-
+    
+    /**
+     * @brief 获取线上活动成员相关操作
+     *
+     * @param string $requestType GET,POST,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
     public function participants($requestType, $params)
     {
         $this->type = $requestType;
@@ -65,29 +97,46 @@ class DoubanOnline extends DoubanBase {
         }
         return $this;
     }
-
+    
+    /**
+     * @brief 喜欢或者不喜欢线上活动
+     *
+     * @param string $requestType POST,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
     public function like($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/online/'.$params['id'].'/like';
         return $this;
     }
-
-    public function photo($requestType, $params)
+    
+    /**
+     * @brief 线上活动图片列表
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function photos($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/online/'.$params['id'].'/photos';
         return $this;
 
     }
-
-    public function replyDiscussion($requestType, $params)
-    {
-        $this->type = $requestType;
-        $this->uri = '/v2/online/'.$params['id'].'/discussions';
-        return $this; 
-    }
-
+    
+    /**
+     * @brief 获取用户参加的线上活动列表
+     *
+     * @param string $requestType GET
+     * @param array $params id,excludeExpired
+     *
+     * @return object
+     */
     public function userParticipated($requestType, $params)
     {
         $this->type = $requestType;
@@ -96,8 +145,16 @@ class DoubanOnline extends DoubanBase {
             $this->uri .= '?exclude_expired='.$excludeExpired;
         return $this;
     }
-
-    public function userCreated($requestType, $params$)
+    
+    /**
+     * @brief 获取用户创建的线上活动列表
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function userCreated($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/online/user_created/'.$params['id'];

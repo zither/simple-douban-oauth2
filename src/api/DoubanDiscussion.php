@@ -3,7 +3,7 @@
  * @file DoubanDiscussion.php
  * @brief 豆瓣论坛API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-05
+ * @date 2012-12-13
  */
 
 class DoubanDiscussion extends DoubanBase {
@@ -35,8 +35,16 @@ class DoubanDiscussion extends DoubanBase {
         }
         return $this;
     }
-
-    public function getDiscussionsList($requestType, $params)
+    
+    /**
+     * @brief 获取相关内容评论列表
+     *
+     * @param string $requestType GET
+     * @param array $params target,id
+     *
+     * @return object
+     */
+    public function discussionsList($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/discussions';

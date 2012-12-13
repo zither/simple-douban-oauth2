@@ -19,34 +19,42 @@ class DoubanComment extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-
-    public function getCommentsList($requestType, $params)
+    
+    /**
+     * @brief 获取评论列表
+     *
+     * @param string $requestType GET
+     * @param array $params target,id
+     *
+     * @return object
+     */
+    public function commentsList($requestType, $params)
     {
         $this->type = $requestType;
         $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/comments';
         return $this;
     }
-
-    public function addComment($requestType, $params)
+    
+    /**
+     * @brief 评论相关操作
+     *
+     * @param string $requestType GET,POST,DELETE
+     * @param array $params target,targetId,commentId
+     *
+     * @return object
+     */
+    public function comment($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/comments';
-        return $this; 
-    }
-
-    public function getComment($requestType, $params)
-    {
-        $this->type = $requestType; 
-        $this->uri = '/v2/'.$params['target'].'/'.$params['targetId']
-            .'/comment/'.$params['commentId'];
+        switch ($this->type) {
+            case 'GET':
+            case 'DELETE':
+                $this->uri = '/v2/'.$params['target'].'/'.$params['targetId'].'/comment/'.$params['commentId'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/'.$params['target'].'/'.$params['targetId'].'/comments';
+                break;
+        }
         return $this;
-    }
-
-    public function deleteComment($requestType, $params)
-    {
-        $this->type = $requestType;
-        $this->uri = '/v2/'.$params['target'].'/'.$params['targetId']
-            .'/comment/'.$params['commentId'];
-        return $this; 
     }
 }
