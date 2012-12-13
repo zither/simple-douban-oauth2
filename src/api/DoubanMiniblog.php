@@ -115,7 +115,7 @@ class DoubanMiniblog extends DoubanBase {
     }
     
     /**
-     * @brief 获取用户关注列表，此Api无需授权，发送accessToken会返回107。
+     * @brief 获取用户关注列表。
      *
      * @param string $requestType GET
      * @param array $params
@@ -130,7 +130,7 @@ class DoubanMiniblog extends DoubanBase {
     }
     
     /**
-     * @brief 获取用户关注者列表,此Api无需授权，发送accessToken会返回107。
+     * @brief 获取用户关注者列表。
      *
      * @param string $requestType GET
      * @param array $params
@@ -146,7 +146,7 @@ class DoubanMiniblog extends DoubanBase {
 
 
     /**
-     * @brief 获取共同关注列表，这个是奇葩中的奇葩，需要附带cookie信息，待修改。 
+     * @brief 获取共同关注列表。 
      *
      * @param string $requestType GET
      * @param array $params
@@ -161,7 +161,7 @@ class DoubanMiniblog extends DoubanBase {
     }
     
     /**
-     * @brief 获取关注的人关注了该用户的列表，同上，待修改。
+     * @brief 获取关注的人关注了该用户的列表。
      *
      * @param $requestType
      * @param $params
