@@ -123,14 +123,7 @@ class DoubanBook extends DoubanBase {
     public function collection($requestType, $params)
     {
         $this->type = $requestType;
-        switch($this->type) {
-            case 'GET':
-            case 'POST':
-            case 'PUT':
-            case 'DELETE':
-                $this->uri = '/v2/book/'.$params['id'].'/collection';
-                break;
-        }
+        $this->uri = '/v2/book/'.$params['id'].'/collection';
         return $this;
     }
     

@@ -3,7 +3,7 @@
  * @file DoubanMusic.php
  * @brief 豆瓣音乐API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-05
+ * @date 2012-12-13
  */
 
 class DoubanMusic extends DoubanBase {
@@ -19,11 +19,12 @@ class DoubanMusic extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-    
+        
     /**
      * @brief 获取音乐信息
      *
-     * @param $id
+     * @param string $requestType GET
+     * @param array $params id
      *
      * @return object
      */
@@ -37,10 +38,8 @@ class DoubanMusic extends DoubanBase {
     /**
      * @brief 搜索音乐
      *
-     * @param $q
-     * @param $tag
-     * @param $start
-     * @param $count
+     * @param string $requestType GET
+     * @param array $params q,tag,start,count
      *
      * @return object
      */
@@ -54,7 +53,8 @@ class DoubanMusic extends DoubanBase {
     /**
      * @brief 某个音乐中标记最多的标签
      *
-     * @param $id
+     * @param string $requestType GET
+     * @param array $params id
      *
      * @return object
      */
@@ -64,7 +64,15 @@ class DoubanMusic extends DoubanBase {
         $this->uri = '/v2/music/'.$params['id'].'/tags';
         return $this;
     }
-
+    
+    /**
+     * @brief 音乐评论相关操作
+     *
+     * @param string $requestType POST,PUT,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
     public function review($requestType, $params)
     {
         $this->type = $requestType;
@@ -79,11 +87,12 @@ class DoubanMusic extends DoubanBase {
         }
         return $this;
     }
-
+     
     /**
      * @brief 用户对音乐的所有标签
      *
-     * @param $id
+     * @param string $requestType GET
+     * @param array $params id
      *
      * @return object
      */
