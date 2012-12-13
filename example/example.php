@@ -16,7 +16,7 @@ $clientId = '037c0301d3b81d570a7409057b285805';
 // 豆瓣应用secret key
 $secret = 'c2c9c36981ef49c6';
 // 用户授权后的回调链接
-$callback = 'http://localhost/example.php';
+$callback = 'http://localhost/example/example.php';
 // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
 // 我们要发送豆瓣广播，就必须申请shuo_basic_w权限
 $scope ='douban_basic_common,shuo_basic_r,shuo_basic_w,community_advanced_doumail_r';
@@ -50,12 +50,16 @@ $data = array(
             'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg'
             );
 // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
-$miniblog = $douban->apiRegister('Miniblog');
+//$miniblog = $douban->apiRegister('Miniblog');
 // 选择发表我说
-$miniblog->addMiniblog();
+//$miniblog->addMiniblog();
+
+$user = $douban->api('Miniblog.homeTimeline.GET');
+$result = $douban->makeRequest($user, '', true);
+
 // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
 // 如果API需授权，请把makeRequest函数的第三个参数设置true
-$result = $douban->makeRequest($miniblog, $data, true);
+//$result = $douban->makeRequest($miniblog, $data, true);
 ?>
 
 <html>

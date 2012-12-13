@@ -3,7 +3,7 @@
  * @file DoubanMiniblog.php
  * @brief 豆瓣广播API
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-03
+ * @date 2012-12-13
  */
 
 class DoubanMiniblog extends DoubanBase {
@@ -19,274 +19,254 @@ class DoubanMiniblog extends DoubanBase {
     {
         $this->clientId = $clientId;
     }
-
-    /**
-     * @brief 发送一条豆瓣广播
-     *
-     * @return object
-     */
-    public function addMiniblog()
-    {
-        $this->uri = '/shuo/v2/statuses/';
-        $this->type = 'POST';
-        return $this;   
-    }
     
     /**
-     * @brief 读取一条广播
+     * @brief 用户对豆瓣广播相关操作
      *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function getMiniblog($id)
-    {
-        $this->uri = '/shuo/v2/statuses/'.$id;
-        $this->type = 'GET';
-        return $this;   
-    }    
-
-    /**
-     * @brief 删除一条广播
-     *
-     * @param string $id
+     * @param string $requestType GET,POST,DELETE
+     * @param array $params
      *
      * @return object
      */
-    public function deleteMiniblog($id)
+    public function statuses($requestType, $params)
     {
-        $this->uri = '/shuo/v2/statuses/'.$id;
-        $this->type = 'DELETE';
-        return $this;   
-    }
-    
-    /**
-     * @brief 获取一条广播的回复列表（未测试）
-     *
-     * @param string $id
-     * @param int $start
-     * @param int $count
-     *
-     * @return object
-     */
-    public function getCommentsList($id, $start = 0, $count = 20)
-    {
-        $this->uri = '/shuo/v2/statuses/'.$id.'/comments?start='.$start.'&count='.$count;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'DELETE':
+                $this->uri = '/shuo/v2/statuses/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/shuo/v2/statuses/';
+                break;
+        }
         return $this;
     }
     
     /**
-     * @brief 回复某条广播（未测试）
+     * @brief 获取广播的回复列表
      *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function addComment($id)
-    {
-        $this->uri = '/shuo/v2/statuses/'.$id.'/comments';
-        $this->type = 'POST';
-        return $this;   
-    }
-    
-    /**
-     * @brief 获取广播的单条回复（未测试）
-     *
-     * @param string $id
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
-    public function getComment($id)
+    public function commentsList($requestType, $params)
     {
-        $this->uri ='/shuo/v2/statuses/comment/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/comments';
+        unset($params['id']);
+        if (!empty($params))
+            $this->uri .= '?'.http_build_query($params);
         return $this;
     }
-    
+        
     /**
-     * @brief 删除广播的单条回复
+     * @brief 对广播回复的操作
      *
-     * @param string $id
+     * @param string $requestType GET,POST,DELETE
+     * @param array $params
      *
      * @return object
      */
-    public function deleleComment($id)
+    public function comment($requestType, $params)
     {
-        $this->uri = '/shuo/v2/statuses/comment/'.$id;
-        $this->type = 'DELETE';
-        return $this;   
-    }
-    
-    /**
-     * @brief 获取一条广播的转发相关信息（未测试）
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function getReshare($id)
-    {
-        $this->uri = '/shuo/v2/statuses/'.$id.'/reshare';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'DELETE':
+                $this->uri = '/shuo/v2/statuses/comment/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/shuo/v2/statuses/'.$params['id'].'/comments';
+                break;
+        }
         return $this;
     }
     
     /**
-     * @brief 转发一条广播
+     * @brief 对转播相关操作
      *
-     * @param string $id
+     * @param string $requestType GET,POST
+     * @param array $params
      *
      * @return object
      */
-    public function reshare($id)
+    public function reshare($requestType, $params)
     {
-        $this->uri = '/shuo/v2/statuses/'.$id.'/reshare';
-        $this->type = 'POST';
-        return $this;   
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/reshare';
+        return $this;
+    }
+    
+    /**
+     * @brief 赞某条广播
+     *
+     * @param string $requestType GET,POST
+     * @param array $params
+     *
+     * @return object
+     */
+    public function like($requestType, $params)
+    {
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/like';
+        return $this;
+    }
+    
+    /**
+     * @brief 获取用户关注列表。
+     *
+     * @param string $requestType GET
+     * @param array $params
+     *
+     * @return object
+     */
+    public function following($requestType, $params)
+    {
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/users/'.$params['id'].'/following';
+        return $this;
+    }
+    
+    /**
+     * @brief 获取用户关注者列表。
+     *
+     * @param string $requestType GET
+     * @param array $params
+     *
+     * @return object
+     */
+    public function followers($requestType, $params)
+    {
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/users/'.$params['id'].'/followers';
+        return $this;
     }
 
 
     /**
-     * @brief 获取一条广播的赞相关信息（未测试）
+     * @brief 获取共同关注列表。 
      *
-     * @param string $id
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
-    public function getLikers($id)
+    public function followInCommon($requestType, $params)
     {
-        $this->uri = '/shuo/v2/statuses/'.$id.'/like';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/users/'.$params['id'].'/follow_in_common';
         return $this;
     }
-
-
+    
     /**
-     * @brief 赞一条广播
+     * @brief 获取关注的人关注了该用户的列表。
      *
-     * @param string $id
+     * @param $requestType
+     * @param $params
      *
-     * @return object
+     * @return 
      */
-    public function like($id)
+    public function suggestions($requestType, $params)
     {
-        $this->uri = '/shuo/v2/statuses/'.$id.'/like';
-        $this->type = 'POST';
-        return $this;    
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/users/'.$params['id'].'/following_followers_of';
+        return $this;
     }
-
+    
     /**
-     * @brief 取消赞（未测试）
+     * @brief 将指定用户加入黑名单
      *
-     * @param string $id
+     * @param $requestType
+     * @param $params
+     *
+     * @return 
+     */
+    public function block($requestType, $params)
+    {
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/users/'.$params['id'].'/block';
+        return $this;
+
+    }
+    
+    /**
+     * @brief 关注一个用户
+     *
+     * @param string $requestType POST
      *
      * @return object
      */
-    public function dislike($id)
+    public function follow($requestType)
     {
-        $this->uri = '/shuo/v2/statuses/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this;    
-    }
-
-    public function following($id)
-    {
-        $this->uri = '/shuo/v2/users/'.$id.'/following';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/friendships/create';
         return $this;
     }
-
-    public function followers($id)
+    
+    /**
+     * @brief 取消关注
+     *
+     * @param string $requestType POST
+     *
+     * @return object
+     */
+    public function unfollow($requestType)
     {
-        $this->uri = '/shuo/v2/users/'.$id.'/followers';
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function followInCommon($id)
-    {
-        $this->uri = '/shuo/v2/users/'.$id.'/follow_in_common';
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function suggestions($id)
-    {
-        $this->uri = '/shuo/v2/users/'.$id.'/following_followers_of';
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function block($id)
-    {
-        $this->uri = '/shuo/v2/users/'.$id.'/block';
-        $this->type = 'POST';
-        return $this;
-
-    }
-
-    public function unfollow()
-    {
+        $this->type = $requestType;
         $this->uri = '/shuo/v2/friendships/destroy';
-        $this->type = 'POST';
         return $this;
 
-    }
-
-    public function show($source, $sourceId, $targetId)
-    {
-        $params = array(
-                    'source' => $source,
-                    'source_id' => $sourceId,
-                    'target_id' => $targetId
-                    );
-        $this->uri = '/shuo/v2/friendships/show?'.http_build_query($params);
-        $this->type = 'GET';
-        return $this;
     }
 
     /**
-     * @brief 获取当前登录用户及其所关注用户的最新广播（友邻广播）
+     * @brief 获取两个用户的关系
      *
-     * @param string $sinceId
-     * @param string $untilId
-     * @param string $count
-     * @param string $start
+     * @param string $requestType GET
+     * @param array $params source,source_id,target_id
      *
      * @return object
      */
-    public function homeTimeline($sinceId = null, $untilId = null, $count = null, $start = null )
+    public function show($requestType, $params)
     {
-        $params = array(
-                    'since_id' => $sinceId,
-                    'until_id' => $untilId,
-                    'count' => $count,
-                    'start' => $start
-                    );
-        $this->uri = '/shuo/v2/statuses/home_timeline?'.http_build_query($params);
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/friendships/show?'.http_build_query($params);
         return $this;
+    }
 
+    
+    /**
+     * @brief 获取当前登录用户及其所关注用户的最新广播(友邻广播)
+     *
+     * @param string $requestType GET
+     * @param array $params
+     *
+     * @return object
+     */
+    public function homeTimeline($requestType, $params)
+    {
+        $this->type = $requestType;
+        $query = !empty($params) ? '?'.http_build_query($params) : null;
+        $this->uri = '/shuo/v2/statuses/home_timeline'.$query;
+        return $this;
     }
     
     /**
-     * @brief 获取用户发布的广播列表
+     * @brief 获取用户发表的广播列表
      *
-     * @param string $user
-     * @param string $sinceId
-     * @param string $untilId
+     * @param string $requestType GET
+     * @param array $params
      *
      * @return object
      */
-    public function userTimeline($user, $sinceId = null, $untilId = null)
+    public function userTimeline($requestType, $params)
     {
-        $params = array(
-                    'since_id' => $sinceId,
-                    'until_id' => $untilId
-                    );
-        $this->uri = '/shuo/v2/statuses/user_timeline/'.$user.'?'.http_build_query($params);
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/shuo/v2/statuses/user_timeline/'.$params['user'];
+        unset($params['user']);
+        if (!empty($params))
+            $this->uri .= '?'.http_build_query($params);
         return $this;
     }
     

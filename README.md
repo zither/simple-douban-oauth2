@@ -64,9 +64,7 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
                 'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg'
                 );
     // 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
-    $miniblog = $douban->apiRegister('Miniblog');
-    // 选择发表我说
-    $miniblog->addMiniblog();
+    $miniblog = $douban->api('Miniblog.statuses.POST');
     // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
     $result = $douban->makeRequest($miniblog, $data, true);
     ?>
@@ -85,12 +83,12 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
 
 ###添加API方法
 
-simple douban oauth2所有的Api接口都保存在**api**文件夹中，其中部分接口还未经过测试。你可以选择你需要修改的API文件，或者参考例子编写自己需要的api类。用一个简单的豆瓣图书Api类作为示例：
+simple douban oauth2所有的Api接口都保存在**api**文件夹中，其中部分接口还未经过测试。你可以选择你需要修改的API文件，或者参考例子编写自己需要的api类。用一个简单的豆瓣广播Api类作为示例：
 
    ```php
     <?php
 
-    class DoubanBook extends DoubanBase {
+    class DoubanMiniblog extends DoubanBase {
         
         // 初始化clientId，在uri后面添加apikey可以拥有更宽裕的请求次数
         public function __construct($clientId)
@@ -98,24 +96,42 @@ simple douban oauth2所有的Api接口都保存在**api**文件夹中，其中�
             $this->clientId = $clientId;
         }
 
-        // 无需授权的GET请求示例
-        public function getBook($id)
+        /**
+         * @brief 用户对豆瓣广播相关操作
+         *
+         * @param string $requestType GET,POST,DELETE
+         * @param array $params
+         *
+         * @return object
+         */
+        public function statuses($requestType, $params)
         {
-            // 没有添加apikey，单IP每分钟只能请求10次
-            $this->uri = '/v2/book/'.$id;
-            // 添加apikey之后，单IP每分钟可以请求40次
-            // $this->uri = '/v2/book/'.$id.'?apikey='.$this->clientId;
-            $this->type = 'GET';
+            $this->type = $requestType;
+            switch ($this->type) {
+                case 'GET':
+                case 'DELETE':
+                    $this->uri = '/shuo/v2/statuses/'.$params['id'];
+                    break;
+                case 'POST':
+                    $this->uri = '/shuo/v2/statuses/';
+                    break;
+            }
             return $this;
         }
 
-        // 需要授权的POST请求示例
-        public function addReview()
+        /**
+         * @brief 获取用户关注者列表。
+         *
+         * @param string $requestType GET
+         * @param array $params
+         *
+         * @return object
+         */
+        public function followers($requestType, $params)
         {
-            $this->uri = "/v2/book/reviews";
-            // API默认请求设置为GET，因此这里需说明请求类型
-            $this->type = 'POST';
-            return $this;     
-        }        
+            $this->type = $requestType;
+            $this->uri = '/shuo/v2/users/'.$params['id'].'/followers';
+            return $this;
+        }
     }
    ```
