@@ -122,16 +122,6 @@ class DoubanOauth {
         $this->redirectUri = $redirectUri;
         $this->scope = $scope;
         $this->responseType = $responseType;
-
-        // API基类路径
-        $basePath = dirname(__FILE__).'/api/DoubanBase.php';
-
-        // 载入API基类
-        try {
-            $this->fileLoader($basePath);
-        } catch(Exception $e) {
-            echo 'Baseloader error:'.$e->getMessage();
-        }
     }
 
     /**
@@ -165,11 +155,17 @@ class DoubanOauth {
      */
     public function requestAccessToken()
     {
-        // 获取accessToken请求链接
-        $accessUrl = $this->getAccessUrl();
+        $accessUrl = $this->accessUri;
         $header = $this->defaultHeader;
-        $result = $this->curl($accessUrl, 'POST', $header);
+        $data = array(
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->secret,
+                    'redirect_uri' => $this->redirectUri,
+                    'grant_type' => 'authorization_code',
+                    'code' => $this->authorizeCode,
+                    );
 
+        $result = $this->curl($accessUrl, 'POST', $header, $data);
         $this->tokens = json_decode($result);
         $this->refreshToken = $this->tokens->refresh_token;
         $this->accessToken = $this->tokens->access_token;
@@ -193,7 +189,7 @@ class DoubanOauth {
      *
      * @return object
      */
-    public function api($api, $params)
+    public function api($api, $params = array())
     {
         $info = explode('.', $api);
         $class = $info[0];
@@ -201,16 +197,19 @@ class DoubanOauth {
         $type = strtoupper($info[2]);
 
         $doubanApi = self::PREFIX.ucfirst(strtolower($class));
+        // 豆瓣Api路径
         $apiFile = dirname(__FILE__).'/api/'.$doubanApi.'.php';
+        // 豆瓣Api基类路径
+        $basePath = dirname(__FILE__).'/api/DoubanBase.php';
         
         try {
+            $this->fileLoader($basePath);
             $this->fileLoader($apiFile);
         } catch(Exception $e) {
             echo 'Apiloader error:'.$e->getMessage();
         }
 
         $instance = new $doubanApi($this->clientId);
-
         return $instance->$func($type, $params);
     }
 
@@ -251,25 +250,6 @@ class DoubanOauth {
     }
 
     /**
-     * @brief 生成豆瓣access_token完整获取链接
-     *
-     * @return string
-     */
-    protected function getAccessUrl()
-    {
-
-        $params = array(
-                    'client_id' => $this->clientId,
-                    'client_secret' => $this->secret,
-                    'redirect_uri' => $this->redirectUri,
-                    'grant_type' => 'authorization_code',
-                    'code' => $this->authorizeCode,
-                    );
-
-        return $this->accessUri.'?'.http_build_query($params);
-    }
-
-    /**
      * @brief 获取Authorization header
      *
      * @return array
@@ -305,7 +285,7 @@ class DoubanOauth {
         $result = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            die('CURL error: '.curl_error($sh));
+            die('CURL error: '.curl_error($ch));
         }
 
         curl_close($ch);  

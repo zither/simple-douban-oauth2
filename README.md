@@ -28,10 +28,10 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
     // 豆瓣应用secret key
     $secret = 'c2c9c36981ef49c6';
     // 用户授权后的回调链接
-    $callback = 'http://localhost/example.php';
+    $callback = 'http://localhost/example/example.php';
     // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
     // 我们要发送豆瓣广播，就必须申请shuo_basic_w权限
-    $scope ='douban_basic_common,shuo_basic_r,shuo_basic_w,community_advanced_doumail_r';
+    $scope ='douban_basic_common,shuo_basic_r,shuo_basic_w';
     // 生成一个豆瓣Oauth类实例
     $douban = new DoubanOauth($clientId, $secret, $callback, $scope);
 
