@@ -18,11 +18,9 @@ Simple douban oauth2提供Composer快捷安装的方式，你可以直接查看[
 ###使用方法
 
    ```php
+    /* ------------实例化Oauth2--------------- */
     // 载入豆瓣Oauth类
     require '../src/DoubanOauth.php';
-
-    /* ------------实例化Oauth2--------------- */
-
     // 豆瓣应用public key
     $clientId = '037c0301d3b81d570a7409057b285805';
     // 豆瓣应用secret key
