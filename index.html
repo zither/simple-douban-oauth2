@@ -191,7 +191,18 @@ var_dump($result);
         <pre><code>User.info.GET  获取用户个人信息  参数 'id' 
 User.me.GET  获取当前登录用户信息  需授权
 User.search.GET  搜索用户  参数 'q' 'start' 'count'</code></pre>
-
+        <p>豆瓣图书</p>
+        <pre><code>Book.info.GET  获取书籍信息  参数 'id' 
+Book.isbn.GET  通过isbn获取书籍信息  参数 'isbn'
+Book.search.GET  搜索图书  参数 'q' 'tag' 'start' 'count'
+Book.bookTags.GET  获取图书中最多标签  参数 'id'
+Book.userTags.GET  获取用户对图书的所有标签  参数 'name'
+Book.collections.GET  获取用户的所有图书收藏信息  参数 'name'
+Book.collection.GET(POST|PUT|DELETE)  用户对某本图书的收藏信息  参数 'id'
+Book.userAnnotations.GET  用户的所有笔记  参数 'name'
+Book.bookAnnotations.GET  某本图书的所有笔记  参数 'id'
+Book.annotation.GET(POST|PUT|DELETE) 操作某本书的笔记  参数 'id'
+Book.review.POST(PUT|DELETE)  用户对书评相关操作  参数 'id'</code></pre>
         
       </section>
     </div>
