@@ -33,7 +33,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>关于</h3>
-        <p>Simple douban oauth2是一个非常简洁的豆瓣PHP Oauth2 SDK，为小型PHP网站提供了简单的豆瓣Oauth2认证及豆瓣各类Api调用接口。目前还有很多api接口没有经过测试，我会尽快完成测试，并逐步完善PHP客户端文档。</p>
+        <p>Simple douban oauth2是一个非常简洁的豆瓣PHP Oauth2 SDK，为小型PHP网站提供了简单的豆瓣Oauth2认证及豆瓣各类Api调用接口。目前基础Api已经全部测试完毕，接下来会逐步完善PHP客户端文档。</p>
 
         <h3>状态</h3>
         <p>目前支持的豆瓣Api如下：</p>
@@ -52,6 +52,34 @@
     - 回复 comment
         </code></pre>
 
+        <h3>豆瓣api权限列表</h3>
+        <p>豆瓣暂时只开放了基础api，所有可申请的权限组如下</p>
+        <pre><code>豆瓣公共
+douban_basic_common：豆瓣公共api
+豆瓣电影
+movie_basic_r：获取你的电影信息、评论、标签等
+movie_basic_w：发布、修改、删除你的电影评论，添加、更新、删除你的收藏信息
+豆瓣社区
+community_basic_note：豆瓣社区日记功能
+community_basic_user：豆瓣社区用户信息
+community_basic_photo：豆瓣社区相册基本功能
+community_basic_online：获取线上活动信息，参加者，论坛；获取热门线上活动列表
+豆瓣读书
+book_basic_r：读书基本读功能，包括获取书籍信息，评论等
+book_basic_w：读书基本写功能，包括发布、修改、删除读书评论
+豆瓣音乐
+music_basic_r：豆瓣音乐基本读功能，包括获取音乐信息，评论等
+music_basic_w：豆瓣音乐基本写功能，包括发布、修改、删除评论
+music_artist_r：音乐人相关API
+豆瓣广播
+shuo_basic_r：获得你的个人信息，好友关系和我说
+shuo_basic_w：修改你的个人信息、好友关系; 发布或修改你的广播
+豆瓣同城
+event_basic_r：豆瓣同城基本读功能
+event_basic_w：豆瓣同城基本写功能
+        </code></pre>
+
+
         <h3>用法</h3>
         <p>这里以使用Simple douban oauth2来发送图片广播作为的例子。</p>
 
@@ -65,7 +93,7 @@ $clientId = '037c0301d3b81d570a7409057b285805';
 // 豆瓣应用secret key
 $secret = 'c2c9c36981ef49c6';
 // 用户授权后的回调链接
-$callback = 'http://localhost/example.php';
+$callback = 'http://localhost//example/example.php';
 // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
 // 我们要发送豆瓣广播，就必须申请shuo_basic_w权限
 $scope ='douban_basic_common,shuo_basic_r,shuo_basic_w';
