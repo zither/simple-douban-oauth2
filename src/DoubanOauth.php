@@ -170,7 +170,19 @@ class DoubanOauth {
         $this->refreshToken = $this->tokens->refresh_token;
         $this->accessToken = $this->tokens->access_token;
     }
-        
+    
+    /**
+     * @brief 设置accessToken
+     *
+     * @param string $accessToken
+     *
+     * @return object
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+    }
+
     /**
      * @brief 获取accessToken
      *
