@@ -5,7 +5,7 @@ simple-douban-oauth2
 
 所有最新的修改都会直接上传到[Dev](https://github.com/zither/simple-douban-oauth2/tree/dev)分支。
 
-Composer分支的更新相对比较滞后，暂时推荐使用master分支版本。
+Composer分支版本已与Master分支同步。
 
 ###依赖
 
