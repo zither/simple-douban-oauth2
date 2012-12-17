@@ -9,6 +9,6 @@ Composer分支的更新相对比较滞后，暂时推荐使用master分支版本
 
 ###依赖
 
-    PHP >= 5.2.0
+    PHP >= 5.3.0
     ext-curl
     ext-json
