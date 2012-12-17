@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanMusic.php
+ * @file Music.php
  * @brief 豆瓣音乐API接口
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

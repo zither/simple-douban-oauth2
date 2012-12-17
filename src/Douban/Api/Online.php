@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanOnline.php
+ * @file Online.php
  * @brief 豆瓣线上活动API接口
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanNote.php
+ * @file Note.php
  * @brief 豆瓣日记API接口
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

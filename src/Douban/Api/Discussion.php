@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanDiscussion.php
+ * @file Discussion.php
  * @brief 豆瓣论坛API接口
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

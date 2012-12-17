@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanDoumail.php
+ * @file Doumail.php
  * @brief 豆邮API接口
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

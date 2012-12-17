@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanPhoto.php
+ * @file Photo.php
  * @brief 豆瓣相册API接口
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

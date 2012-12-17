@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanMovie.php
+ * @file Movie.php
  * @brief 豆瓣电影API接口
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

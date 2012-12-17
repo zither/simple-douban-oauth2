@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanBook.php
+ * @file Book.php
  * @brief 豆瓣图书API
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17

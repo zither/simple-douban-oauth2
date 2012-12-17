@@ -1,6 +1,6 @@
 <?php
 /**
- * @file DoubanMiniblog.php
+ * @file Miniblog.php
  * @brief 豆瓣广播API
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17
