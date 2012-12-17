@@ -203,7 +203,83 @@ Book.userAnnotations.GET  用户的所有笔记  参数 'name'
 Book.bookAnnotations.GET  某本图书的所有笔记  参数 'id'
 Book.annotation.GET(POST|PUT|DELETE) 操作某本书的笔记  参数 'id'
 Book.review.POST(PUT|DELETE)  用户对书评相关操作  参数 'id'</code></pre>
-        
+         <p>豆瓣电影</p>
+        <pre><code>Movie.info.GET  获取电影信息  参数 'id' 
+Movie.imdb.GET  通过imdb获取电影信息  参数 'imdb'
+Movie.search.GET  搜索电影  参数 'q'  'tag' 'start' 'count'
+Movie.movieTages.GET  获取某电影最多标签  参数 'id'
+Movie.userTags.GET  获取用户对电影的所有标签  参数 'id'
+Movie.review.POST(PUT|DELETE)  电影评论相关操作  参数 'id'</code></pre>          
+        <p>豆瓣音乐</p>
+        <pre><code>Music.info.GET  获取音乐信息  参数 'id' 
+Music.search.GET  搜索音乐  参数 'q'  'tag' 'start' 'count'
+Music.musicTages.GET  获取某音乐标记最多的标签  参数 'id'
+Music.userTags.GET  获取用户对音乐的所有标签  参数 'id'
+Music.review.POST(PUT|DELETE)  音乐评论相关操作  参数 'id'</code></pre>
+        <p>豆瓣同城</p>
+        <pre><code>Event.info.GET  获取同城活动信息  参数 'id' 
+Event.wishers.GET  获取对活动感兴趣的用户  参数 'id'
+Event.userCreated.GET  获取用户创建的活动  参数 'id'
+Event.userParticipated.GET  获取用户参与的活动  参数 'id'
+Event.userWished.GET  获取用户感兴趣的活动  参数 'id'
+Event.eventList.GET  获取同城活动列表  参数 'loc' 'day_type' 'type'
+Event.loc.GET  获取城市信息  参数 'id'
+Event.locList.GET  获取城市列表
+Event.participants.POST(DELETE)  参加或者退出同城活动  参数 'id'
+Event.wish.POST(DELETE)  关注或者取消关注某活动  参数 'id'  </code></pre>
+        <p>豆瓣广播</p>
+        <pre><code>Miniblog.statuses.GET(POST|DELETE)  用户获取（发表|删除）豆瓣广播  参数 'id' 
+Miniblog.commentsList.GET  获取广播的回复列表  参数 'id'
+Miniblog.comment.GET(POST|DELETE)  对广播回复相关操作  参数 'id'
+Miniblog.reshare.GET(POST)  获取转播信息或转播广播  参数 'id'
+Miniblog.like.GET(POST|DELETE)  赞相关操作  参数 'id'
+Miniblog.following.GET  获取用户关注列表  参数 'id'
+Miniblog.followers.GET  获取用户关注者列表  参数 'id'
+Miniblog.followInCommon.GET  获取共同关注列表  参数 'id'
+Miniblog.suggestions.GET  获取关注的人关注了该用户的列表  参数 'id'
+Miniblog.block.POST  将制定用户加入黑名单  参数 'id'
+Miniblog.follow.POST  关注某用户
+Miniblog.unfollow.POST  取消关注某用户
+Miniblog.show.GET  获取两个用户的关系  参数 'source' 'source_id' 'target_id'
+Miniblog.homeTimeline.GET  获取友邻广播
+Miniblog.userTimeline.GET  获取用户发表的广播列表  参数 'user'</code></pre>
+        <p>豆邮</p>
+        <pre><code>Doumail.mail.GET(POST|PUT|DELETE)  对单封邮件的相关操作  参数 'id'
+Doumail.inbox.GET  获取用户收件箱
+Doumail.outbox.GET  获取用户发件箱
+Doumail.unread.GET  获取用户未读豆邮
+Doumail.mutilRead.PUT  批量标记已读
+Doumail.mutilDelete.POST  批量删除豆邮</code></pre>
+        <p>豆瓣日记</p>
+        <pre><code>Note.note.GET(POST|PUT|DELETE)  豆瓣日记CRUD操作  参数 'id'
+Note.like.POST(DELETE)  喜欢或者取消喜欢某日记  参数 'id'
+Note.image.POST  上传图片到日记  参数 'id'
+Note.commentsList.GET  获取回复列表  参数 'id'
+Note.comment.GET(POST|DELETE)  日记评论相关操作 参数 'noteId' 'commentId'</code></pre>
+        <p>豆瓣相册</p>
+        <pre><code>Photo.album.GET(POST|PUT|DELETE)  豆瓣相册CRUD操作  参数 'id'
+Photo.photosList.GET  获取相册相片列表  参数 'id'
+Photo.albumLike.POST(DELETE)  喜欢或者取消喜欢  参数 'id'
+Photo.userAlbumList.GET  获取用户创建的相册列表  参数 'id'
+Photo.userLiked.GET  获取用户喜欢的相册列表  参数 'id'
+Photo.photo.GET(POST|PUT|DELETE)  相片CRUD操作  参数 'id'
+Photo.photoLike.POST(DELETE)  喜欢或取消喜欢某张照片  参数 'id'</code></pre>
+        <p>豆瓣线上活动</p>
+        <pre><code>Online.discussions.GET(POST)  获取线上活动论坛列表  参数 'id'
+Online.onlinesList.GET  获取线上活动列表  参数 'cate'
+Online.online.GET(POST|PUT|DELETE)  线上活动CRUD操作  参数 'id'
+Online.participants.GET  获取线上活动成员列表  参数 'id'
+Online.participants.POST(DELETE)  参加或退出线上活动  参数 'id'
+Online.like.POST(DELETE)  喜欢或者不喜欢某线上活动  参数 'id'
+Online.photos.GET  线上活动图片列表  参数 'id'
+Online.userParticipated.GET  获取用户参加的线上活动列表  参数 'id'
+Online.userCreated.GET  获取用户创建的线上活动  参数 'id'</code></pre>
+        <p>论坛相关</p>
+        <pre><code>Discussion.discussion.GET(POST|PUT|DELETE)  讨论CRUD操作  参数 'target' 'targetId' 'commentId'
+Comment.commentsList.GET  获取相内容的评论列表  参数 'target' 'id'</code></pre>
+        <p>回复相关</p>
+        <pre><code>Comment.comment.GET(POST|PUT|DELETE)  评论CRUD操作  参数 'target' 'id'
+Discussion.discussionsList.GET  获取相内容的评论列表  参数 'target' 'id'</code></pre>
       </section>
     </div>
 
