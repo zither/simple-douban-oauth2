@@ -1,9 +1,9 @@
 <?php
 /**
- * @file Photo.php
+ * @file DoubanPhoto.php
  * @brief 豆瓣相册API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-02
+ * @date 2012-12-17
  */
 namespace Douban\Api;
 
@@ -20,111 +20,127 @@ class Photo extends Base {
     {
         $this->clientId = $clientId;
     }
-
-    public function getAlbum($id)
+    
+    /**
+     * @brief 豆瓣相册相关操作
+     *
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function album($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/album/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/albums';
+                break;
+        }
         return $this;
     }
-
-    public function addAlbum()
+    
+    /**
+     * @brief 获取相册照片列表
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function photosList($requestType, $params)
     {
-        $this->uri = '/v2/albums';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/'.$params['id'].'/photos';
         return $this;
     }
-
-    public function editAlbum($id)
+        
+    /**
+     * @brief 喜欢相册
+     *
+     * @param string $requestType POST
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function albumLike($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'PUT';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/'.$params['id'].'/like';
         return $this;
     }
-
-    public function deleteAlbum($id)
+    
+    /**
+     * @brief 获取用户创建的相册列表
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function userAlbumList($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'DELETE';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/user_created/'.$params['id'];
         return $this;
     }
-
-
-    public function getPhotosList($id)
+    
+    /**
+     * @brief 获取用户喜欢的相册列表
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function userLiked($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id.'/photos';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/album/user_liked/'.$params['id'];
         return $this;
     }
-
-    public function getPhoto($id)
+    
+    /**
+     * @brief 豆瓣相册图片相关操作
+     *
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function photo($requestType, $params)
     {
-        $this->uri = '/v2/photo/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+                $this->uri = '/v2/photo/'.$params['id'];
+                break;
+            case 'POST':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/album/'.$params['id'];
+                break;
+        }
         return $this;
     }
-
-    public function likeAlbum($id)
+    
+    /**
+     * @brief 喜欢某张照片
+     *
+     * @param string $requestType POST,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function photoLike($requestType, $params)
     {
-        $this->uri = '/v2/album/'.$id.'/like';
-        $this->type = 'POST';
+        $this->type = $requestType;
+        $this->uri = '/v2/photo/'.$params['id'].'/like';
         return $this;
     }
-
-    public function dislikeAlbum($id)
-    {
-        $this->uri = '/v2/album/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this;
-    }
-
-    public function getUserAlbumList($id)
-    {
-        $this->uri = '/v2/album/user_created/'.$id;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function userLiked($id)
-    {
-        $this->uri = '/v2/album/user_liked/'.$id;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function addPhoto($id)
-    {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'POST';
-        return $this;
-    }
-
-    public function editPhoto($id)
-    {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    public function deletePhoto($id)
-    {
-        $this->uri = '/v2/album/'.$id;
-        $this->type = 'DELETE';
-        return $this;
-    }
-
-    public function likePhoto($id)
-    {
-        $this->uri = '/v2/photo/'.$id.'/like';
-        $this->type = 'POST';
-        return $this;
-    }
-
-    public function dislikePhoto($id)
-    {
-        $this->uri = '/v2/photo/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this;
-    }
-
 }

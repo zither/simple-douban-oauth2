@@ -1,9 +1,9 @@
 <?php
 /**
- * @file Doumail.php
+ * @file DoubanDoumail.php
  * @brief 豆邮API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-03
+ * @date 2012-12-17
  */
 namespace Douban\Api;
 
@@ -20,79 +20,101 @@ class Doumail extends Base {
     {
         $this->clientId = $clientId;
     }
-    
+
+
     /**
-     * @brief 获取一封豆邮
+     * @brief 对单封豆邮的相关操作
      *
-     * @param string $id 豆邮id
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params
      *
      * @return object
      */
-    public function get($id)
+    public function mail($requestType, $params)
     {
-        $this->uri = '/v2/doumail/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/doumail/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/doumails';
+                break;
+        }
         return $this;
+
     }
     
     /**
      * @brief 获取用户收件箱
      *
+     * @param string $requestType GET
+     *
      * @return object
      */
-    public function inbox()
+    public function inbox($requestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/inbox';
-        $this->type = 'GET';
         return $this;
     }
-
-    public function outbox()
+    
+    /**
+     * @brief 获取用户发件箱
+     *
+     * @param string $requestType GET
+     *
+     * @return object
+     */
+    public function outbox($requestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/outbox';
-        $this->type = 'GET';
         return $this;
     }
-
-    public function unread()
+    
+    /**
+     * @brief 获取用户未读豆邮
+     *
+     * @param string $requestType GET
+     *
+     * @return object
+     */
+    public function unread($requestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/inbox/unread';
-        $this->type = 'GET';
         return $this;
     }
-
-    public function read($id)
+    
+    /**
+     * @brief 批量标记豆邮为已读
+     *
+     * @param string $requestType PUT
+     *
+     * @return object
+     */
+    public function mutilRead($requestType)
     {
-        $this->uri = '/v2/doumail/'.$id;
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    public function mutilRead()
-    {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/read';
-        $this->type = 'PUT';
         return $this;
     }
 
-    public function delete($id)
-    {
-        $this->uri = '/v2/doumail/'.$id;
-        $this->type = "DELETE";
-        return $this;
-    }
 
-    public function mutilDelete()
+    /**
+     * @brief 批量删除豆邮
+     *
+     * @param string $requestType POST 这是一个奇葩，用的是POST请求
+     *
+     * @return object
+     */
+    public function mutilDelete($requestType)
     {
+        $this->type = $requestType;
         $this->uri = '/v2/doumail/delete';
-        $this->type = 'POST';
-        return $this;
-    }
-
-    public function add()
-    {
-        $this->uri = '/v2/doumails';
-        $this->type = 'POST';
         return $this;
     }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
- * @file User.php
+ * @file DoubanUser.php
  * @brief 豆瓣用户API
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-03
+ * @date 2012-12-17
  */
 namespace Douban\Api;
 
@@ -20,52 +20,49 @@ class User extends Base {
     {
         $this->clientId = $clientId;
     }
-
+    
     /**
-     * @brief 获取当前授权用户信息
+     * @brief 获取用户个人信息接口
+     *
+     * @param string $requestType HTTP请求方式
+     * @param array $params api需要的参数
      *
      * @return object
      */
-    public function me()
+    public function info($requestType, $params)
     {
+        $this->type = $requestType;
+        $this->uri = '/v2/user/'.$params['id'].'?apikey='.$this->clientId;
+        return $this;
+    }
+    
+    /**
+     * @brief 获取当前登录用户信息接口
+     *
+     * @param string $requestType
+     * @param array $params
+     *
+     * @return object
+     */
+    public function me($requestType, $params)
+    {
+        $this->type = $requestType;
         $this->uri = '/v2/user/~me';
-        $this->type = 'GET';
         return $this;
     }
     
     /**
-     * @brief 获取指定ID用户信息
+     * @brief 搜索用户接口
      *
-     * @param string $id
-     *
-     * @return object
-     */
-    public function get($id)
-    {
-        $this->uri = '/v2/user/'.$id;
-        $this->type = 'GET';
-        return $this;
-    }
-    
-    /**
-     * @brief 搜索用户
-     *
-     * @param string $q
-     * @param int $start
-     * @param int $count
+     * @param string $requestType
+     * @param array $params
      *
      * @return object
      */
-    public function search($q, $start = null, $count = null)
+    public function search($requestType, $params)
     {
-        $params = array(
-                    'q' => $q,
-                    'start' => $start,
-                    'count' => $count
-                    );
+        $this->type = $requestType;
         $this->uri = '/v2/user?'.http_build_query($params);
-        $this->type = 'GET';
         return $this;
     }
-    
 }

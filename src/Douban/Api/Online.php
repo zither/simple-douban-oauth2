@@ -1,9 +1,9 @@
 <?php
 /**
- * @file Online.php
+ * @file DoubanOnline.php
  * @brief 豆瓣线上活动API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-02
+ * @date 2012-12-17
  */
 namespace Douban\Api;
 
@@ -20,116 +20,145 @@ class Online extends Base {
     {
         $this->client = $clientId;
     }
-
-    public function getOnline($id)
+    
+    /**
+     * @brief 获取线上活动论坛列表
+     *
+     * @param string $requestType GET,POST
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function discussions($requestType, $params)
     {
-        $this->uri = '/v2/online/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/'.$params['id'].'/discussions';
         return $this;
     }
-
-    public function participants($id)
+    
+    /**
+     * @brief 获取线上活动列表
+     *
+     * @param string $requestType GET
+     * @param array $params cate
+     *
+     * @return object
+     */
+    public function onlinesList($requestType,$params)
     {
-        $this->uri = '/v2/online/'.$id.'/participants';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/onlines?cate='.$params['cate'];
         return $this;
     }
-
-    public function getDiscussionsList($id)
+    
+    /**
+     * @brief 线上活动相关操作
+     *
+     * @param string $requestType GET,POST,PUT,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function online($requestType, $params)
     {
-        $this->uri = '/v2/online/'.$id.'/discussions';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/online/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/onlines';
+                break;
+        }
+        return $this;
+
+    }
+    
+    /**
+     * @brief 获取线上活动成员相关操作
+     *
+     * @param string $requestType GET,POST,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function participants($requestType, $params)
+    {
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+                $this->uri = '/v2/online/'.$params['id'].'/participants';
+                break;
+            case 'POST':
+            case 'DELETE':
+                $this->uri = '/v2/online/'.$params['id'].'/participants';
+                break;
+        }
         return $this;
     }
-
-    public function getOnlinesList($cate)
+    
+    /**
+     * @brief 喜欢或者不喜欢线上活动
+     *
+     * @param string $requestType POST,DELETE
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function like($requestType, $params)
     {
-        $this->uri = '/v2/onlines?cate='.$cate;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/'.$params['id'].'/like';
         return $this;
     }
-
-    public function addOnline()
+    
+    /**
+     * @brief 线上活动图片列表
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function photos($requestType, $params)
     {
-        $this->uri = '/v2/onlines';
-        $this->type = 'POST';
-        return $this; 
+        $this->type = $requestType;
+        $this->uri = '/v2/online/'.$params['id'].'/photos';
+        return $this;
+
     }
-
-    public function editOnline($id)
+    
+    /**
+     * @brief 获取用户参加的线上活动列表
+     *
+     * @param string $requestType GET
+     * @param array $params id,excludeExpired
+     *
+     * @return object
+     */
+    public function userParticipated($requestType, $params)
     {
-        $this->uri = '/v2/onlines/'.$id;
-        $this->type = 'PUT';
-        return $this; 
-    }
-
-    public function deleteOnline($id)
-    {
-        $this->uri = '/v2/onlines/'.$id;
-        $this->type = 'DELETE';
-        return $this; 
-    }
-
-    public function join($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/participants';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function quit($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/participants';
-        $this->type = 'DELETE';
-        return $this; 
-    }
-
-    public function like($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/like';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function dislike($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/like';
-        $this->type = 'DELETE';
-        return $this; 
-    }
-
-    public function getPhoto($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/photos';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/user_participated/'.$params['id'];
+        if (isset($params['excludeExpired'])) 
+            $this->uri .= '?exclude_expired='.$excludeExpired;
         return $this;
     }
-
-    public function addPhoto($id)
+    
+    /**
+     * @brief 获取用户创建的线上活动列表
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function userCreated($requestType, $params)
     {
-        $this->uri = '/v2/online/'.$id.'/photos';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function replyDiscussion($id)
-    {
-        $this->uri = '/v2/online/'.$id.'/discussions';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function userParticipated($id, $excludeExpired = true)
-    {
-        $this->uri = '/v2/online/user_participated/'.$id.'?exclude_expired='.$excludeExpired;
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function userCreated($id)
-    {
-        $this->uri = '/v2/online/user_created/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/online/user_created/'.$params['id'];
         return $this;
     }
 }

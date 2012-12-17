@@ -1,9 +1,9 @@
 <?php
 /**
- * @file Music.php
+ * @file DoubanMusic.php
  * @brief 豆瓣音乐API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-02
+ * @date 2012-12-17
  */
 namespace Douban\Api;
 
@@ -20,90 +20,87 @@ class Music extends Base {
     {
         $this->clientId = $clientId;
     }
-    
+        
     /**
      * @brief 获取音乐信息
      *
-     * @param $id
+     * @param string $requestType GET
+     * @param array $params id
      *
      * @return object
      */
-    public function get($id)
+    public function info($requestType, $params)
     {
-        $this->uri = '/v2/music/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/music/'.$params['id'];
         return $this;
     }
     
     /**
      * @brief 搜索音乐
      *
-     * @param $q
-     * @param $tag
-     * @param $start
-     * @param $count
+     * @param string $requestType GET
+     * @param array $params q,tag,start,count
      *
      * @return object
      */
-    public function search($q, $tag = null, $start = 0, $count = 20)
+    public function search($requestType, $params)
     {
-        $params = array(
-                    'q' => $q,
-                    'tag' => $tag,
-                    'start' => $start,
-                    'count' => $count
-                    );
+        $this->type = $requestType;
         $this->uri = '/v2/music/search?'.http_build_query($params);
-        $this->type = 'GET';
         return $this;
     }
     
     /**
      * @brief 某个音乐中标记最多的标签
      *
-     * @param $id
+     * @param string $requestType GET
+     * @param array $params id
      *
      * @return object
      */
-    public function musicTags($id)
+    public function musicTags($requestType, $params)
     {
-        $this->uri = '/v2/music/'.$id.'/tags';
-        $this->type = 'GET';
-        return $this;
-    }
-
-    public function addReview()
-    {
-        $this->uri = '/v2/music/reviews';
-        $this->type = 'POST';
-        return $this;
-    }
-
-    public function editReview($id)
-    {
-        $this->uri = '/v2/music/review/'.$id;
-        $this->type = 'PUT';
-        return $this;
-    }
-
-    public function deleteReview($id)
-    {
-        $this->uri = '/v2/music/review/'.$id;
-        $this->type = 'DELETE';
+        $this->type = $requestType;
+        $this->uri = '/v2/music/'.$params['id'].'/tags';
         return $this;
     }
     
     /**
-     * @brief 用户对音乐的所有标签
+     * @brief 音乐评论相关操作
      *
-     * @param $id
+     * @param string $requestType POST,PUT,DELETE
+     * @param array $params id
      *
      * @return object
      */
-    public function userTags($id)
+    public function review($requestType, $params)
     {
-        $this->uri = '/v2/music/user_tags/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'POST':
+                $this->uri = '/v2/music/reviews';
+                break;
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/music/review/'.$params['id'];
+                break;
+        }
+        return $this;
+    }
+     
+    /**
+     * @brief 用户对音乐的所有标签
+     *
+     * @param string $requestType GET
+     * @param array $params id
+     *
+     * @return object
+     */
+    public function userTags($requestType, $params)
+    {
+        $this->type = $requestType;
+        $this->uri = '/v2/music/user_tags/'.$params['id'];
         return $this;
     }
 }

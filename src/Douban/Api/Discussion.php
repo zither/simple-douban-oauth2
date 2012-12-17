@@ -1,9 +1,9 @@
 <?php
 /**
- * @file Discussion.php
+ * @file DoubanDiscussion.php
  * @brief 豆瓣论坛API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-02
+ * @date 2012-12-17
  */
 namespace Douban\Api;
 
@@ -21,39 +21,34 @@ class Discussion extends Base {
         $this->clientId = $clientId;
     }
 
-
-    public function getDiscussion($id)
+    public function discussion($requestType, $params)
     {
-        $this->uri = '/v2/discussion/'.$id;
-        $this->type = 'GET';
+        $this->type = $requestType;
+        switch ($this->type) {
+            case 'GET':
+            case 'PUT':
+            case 'DELETE':
+                $this->uri = '/v2/discussion/'.$params['id'];
+                break;
+            case 'POST':
+                $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/discussions';
+                break;
+        }
         return $this;
     }
-
-    public function editDiscussion($id)
+    
+    /**
+     * @brief 获取相关内容评论列表
+     *
+     * @param string $requestType GET
+     * @param array $params target,id
+     *
+     * @return object
+     */
+    public function discussionsList($requestType, $params)
     {
-        $this->uri = '/v2/discussion/'.$id;
-        $this->type = 'PUT';
-        return $this;   
-    }
-
-    public function deleteDiscussion($id)
-    {
-        $this->uri = '/v2/discussion/'.$id;
-        $this->type = 'DELETE';
-        return $this;   
-    }
-
-    public function addDiscussion($target, $id)
-    {
-        $this->uri = '/v2/'.$target.'/'.$id.'/discussions';
-        $this->type = 'POST';
-        return $this; 
-    }
-
-    public function getDiscussionsList($target, $id)
-    {   
-        $this->uri = '/v2/'.$target.'/'.$id.'/discussions';
-        $this->type = 'GET';
+        $this->type = $requestType;
+        $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/discussions';
         return $this;
     }
 }
