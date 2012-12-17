@@ -15,10 +15,10 @@ Composer分支版本已与Master分支同步。
 
 ###安装
 
-   ```Bush
+   ```Bash
     {
-    "require": {
-        "zither/simple-douban-oauth2": "0.4.x-dev"
-    }
+        "require": {
+            "zither/simple-douban-oauth2": "0.4.x-dev"
+        }
     }
    ```
