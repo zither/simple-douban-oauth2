@@ -5,6 +5,7 @@
  * @author JonChou <ilorn.mc@gmail.com>
  * @date 2012-12-17
  */
+require dirname(__FILE__).'/vendor/autoload.php';
 
 /* ------------实例化Oauth2--------------- */
 
@@ -13,7 +14,7 @@ $clientId = '037c0301d3b81d570a7409057b285805';
 // 豆瓣应用secret key
 $secret = 'c2c9c36981ef49c6';
 // 用户授权后的回调链接
-$callback = 'http://localhost/example/example.php';
+$callback = 'http://localhost/example.php';
 // 设置应用需要的权限，Oauth类默认设置为douban_basic_common
 // 我们要发送豆瓣广播，就必须申请shuo_basic_w权限
 $scope ='douban_basic_common,shuo_basic_r,shuo_basic_w';
@@ -43,8 +44,8 @@ $douban->requestAccessToken();
 // 那是因为没有指定图片类型时，上传的文件类型默认为“application/octet-stream”。
 $data = array(
             'source' => $clientId, 
-            'text' =>'继续修改，继续测试。', 
-            'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg'
+            'text' =>'Composer分支测试。', 
+            'image' => '@/home/chou/Downloads/123.jpg;type=image/jpeg'
             );
 
 $miniblog = $douban->api('Miniblog.statuses.POST');

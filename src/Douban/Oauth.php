@@ -200,10 +200,10 @@ class Oauth {
     public function api($api, $params = array())
     {
         $info = explode('.', $api);
-        $class = ucfirst(strtolower($info[0]));
+        $class = 'Douban\\Api\\'.ucfirst(strtolower($info[0]));
         $func = $info[1];
         $type = strtoupper($info[2]);
-        $instance =  new Douban\Api\$class($this->clientId);
+        $instance =  new $class($this->clientId);
         return $instance->$func($type, $params);
     }
 
