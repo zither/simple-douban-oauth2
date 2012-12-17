@@ -12,3 +12,13 @@ Composer分支版本已与Master分支同步。
     PHP >= 5.3.0
     ext-curl
     ext-json
+
+###安装
+
+   ```Bush
+    {
+    "require": {
+        "zither/simple-douban-oauth2": "0.4.x-dev"
+    }
+    }
+   ```
