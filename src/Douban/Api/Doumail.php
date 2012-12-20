@@ -96,7 +96,7 @@ class Doumail extends Base {
      *
      * @return object
      */
-    public function mutilRead($requestType)
+    public function multiRead($requestType)
     {
         $this->type = $requestType;
         $this->uri = '/v2/doumail/read';
@@ -111,7 +111,7 @@ class Doumail extends Base {
      *
      * @return object
      */
-    public function mutilDelete($requestType)
+    public function multiDelete($requestType)
     {
         $this->type = $requestType;
         $this->uri = '/v2/doumail/delete';
