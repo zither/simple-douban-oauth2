@@ -51,11 +51,9 @@ $data = array(
             );
 
 $miniblog = $douban->api('Miniblog.statuses.POST');
+// 如果API需授权，请把makeRequest函数的第三个参数设置true
 $result = $douban->makeRequest($miniblog, $data, true);
 
-// 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
-// 如果API需授权，请把makeRequest函数的第三个参数设置true
-//$result = $douban->makeRequest($miniblog, $data, true);
 ?>
 
 <html>
