@@ -114,9 +114,9 @@ $douban->setAuthorizeCode($_GET['code']);
 $douban->requestAccessToken();
 
 
-/* ------------发送图片广播--------------- */
+/* ------------豆瓣API请求示例--------------- */
 
-// 通过豆瓣API发送一条带图片的豆瓣广播
+// 使用POST方法发送一条带图片的豆瓣广播
 // 豆瓣API小组里很多朋友都卡在了发送图片广播上，那是因为没有正确设置Content-Type。
 // 在PHP中通过curl上传图片需使用“@/home/chou/images/123.png;type=image/png”格式。
 // 必须在图片绝对路径后指定正确的图片类型，如果没有就会返回“不支持的图片类型错误”。
@@ -132,7 +132,13 @@ $miniblog = $douban->api('Miniblog.statuses.POST');
 // 使用需授权API时请把makeRequest第三个参数设置为true
 $result = $douban->makeRequest($miniblog, $data, true);
 
+// 使用GET方法获取制定书籍信息
+$book = $douban->api('Book.info.GET', array('id' => '20458897'));
+// GET请求不需要设置POSTDATA，无需授权的API也不需要发送accessToken
+$bookInfo = $douban->makeRequest($book);
+
 var_dump($result);
+var_dump($bookInfo);
        </code></pre>
 
         <p>Simple douban oauth2的所有API类都保存在<strong>api</strong>文件夹中，你可以非常方便的按照需求修改各个接口。</p>
