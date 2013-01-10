@@ -8,18 +8,20 @@
 require dirname(__FILE__).'/vendor/autoload.php';
 
 /* ------------实例化Oauth2--------------- */
-
-// 豆瓣应用public key
-$clientId = '037c0301d3b81d570a7409057b285805';
-// 豆瓣应用secret key
-$secret = 'c2c9c36981ef49c6';
-// 用户授权后的回调链接
-$callback = 'http://localhost/example.php';
-// 设置应用需要的权限，Oauth类默认设置为douban_basic_common
-// 我们要发送豆瓣广播，就必须申请shuo_basic_w权限
-$scope ='douban_basic_common,shuo_basic_r,shuo_basic_w';
+$appConfig = array(
+            // 必选参数，豆瓣应用public key。
+            'client_id' => '037c0301d3b81d570a7409057b285805',
+            // 必选参数，豆瓣应用secret key。
+            'secret' => 'c2c9c36981ef49c6',
+            // 必选参数，用户授权后的回调链接。
+            'redirect_uri' => 'http://miniradio.com/douban/login',
+            // 可选参数（默认为douban_basic_common），授权范围。
+            'scope' => 'douban_basic_common,shuo_basic_r,shuo_basic_w',
+            // 可选参数（默认为false），是否在header中发送accessToken。
+            'need_permission' => true
+            );
 // 生成一个豆瓣Oauth类实例
-$douban = new Douban\Oauth($clientId, $secret, $callback, $scope);
+$douban = new Douban\Oauth($appConfig);
 
 
 /* ------------请求用户授权--------------- */
@@ -49,7 +51,7 @@ $data = array(
             );
 
 $miniblog = $douban->api('Miniblog.statuses.POST');
-$result = $douban->makeRequest($miniblog, $data, true);
+$result = $douban->makeRequest($miniblog, $data);
 
 // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
 // 如果API需授权，请把makeRequest函数的第三个参数设置true

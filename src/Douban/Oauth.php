@@ -4,7 +4,7 @@
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
- * @date 2012-12-17
+ * @date 2013-01-10
  */
 namespace Douban;
 
@@ -48,24 +48,19 @@ class Oauth {
     protected $redirectUri;
 
     /**
-     * @brief Api权限
+     * @brief APP权限
      */
-    protected $scope;
+    protected $scope = 'douban_basic_common';
     
     /**
      * @brief 返回类型，默认使用code
      */
-    protected $responseType;
+    protected $responseType = 'code';
     
     /**
      * @brief 用户授权码
      */
     protected $authorizeCode;
-
-    /**
-     * @brief 储存返回的令牌（accessToken,refreshToken）
-     */
-    protected $tokens;
 
     /**
      * @brief 通过authorizeCode获得的访问令牌
@@ -78,17 +73,10 @@ class Oauth {
     protected $refreshToken;
 
     /**
-     * @var 默认请求头信息 
+     * @brief 默认情况下，授权状态为false，不会在header中发送accessToken
      */
-    protected $defaultHeader = array(
-                'Content_type: application/x-www-form-urlencoded'
-                );
+    protected $needPermission = false;
 
-    /**
-     * @var 需授权的请求头
-     */
-    protected $authorizeHeader;
-    
     /**
      * @var curl默认设置  
      */
@@ -111,13 +99,17 @@ class Oauth {
      *
      * @return void
      */
-    public function __construct($clientId, $secret, $redirectUri, $scope ='douban_basic_common', $responseType = 'code')
+    public function __construct($config)
     {
-        $this->clientId = $clientId;
-        $this->secret = $secret;
-        $this->redirectUri = $redirectUri;
-        $this->scope = $scope;
-        $this->responseType = $responseType;
+        $this->clientId = $config['client_id'];
+        $this->secret = $config['secret'];
+        $this->redirectUri = $config['redirect_uri'];
+        if (!empty($config['scope']))
+            $this->scope = $config['scope'];
+        if (!empty($config['need_permission']))
+            $this->needPermission = $config['need_permission'];
+        if (!empty($config['response_type']))
+            $this->responseType = $responseType;
     }
 
     /**
@@ -130,6 +122,7 @@ class Oauth {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
         header('Location:'.$authorizeUrl);
+        exit;
     }
     
     /**
@@ -162,9 +155,9 @@ class Oauth {
                     );
 
         $result = $this->curl($accessUrl, 'POST', $header, $data);
-        $this->tokens = json_decode($result);
-        $this->refreshToken = $this->tokens->refresh_token;
-        $this->accessToken = $this->tokens->access_token;
+        $result = json_decode($result);
+        $this->refreshToken = $result->refresh_token;
+        $this->accessToken = $result->access_token;
     }
     
     /**
@@ -206,6 +199,27 @@ class Oauth {
         $instance =  new $class($this->clientId);
         return $instance->$func($type, $params);
     }
+       
+    /**
+     * @brief 授权设置选项，访问需授权API时，请调用该函数。
+     *
+     * @return object
+     */
+    public function setNeedPermission($permissionStatus = true)
+    {
+        $this->needPermission = $permissionStatus;
+        return $this;
+    }
+    
+    /**
+     * @brief 获取API当前授权状态
+     *
+     * @return boolean
+     */
+    public function getNeedPermission()
+    {
+        return $this->needPermission;
+    }
 
     /**
      * @brief 请求豆瓣API,返回包含相关数据的对象
@@ -216,11 +230,11 @@ class Oauth {
      *
      * @return object
      */
-    public function makeRequest($api, $data = array(), $authorization = false)
+    public function makeRequest($api, $data = array())
     {
-        // API的完整URL
+        // API的完整URI
         $url = $this->apiUri.$api->uri;
-        $header = $authorization ? $this->getAuthorizeHeader() : $this->defaultHeader;
+        $header = $this->needPermission ? $this->getAuthorizeHeader() : $this->getDefaultHeader();
         $type = $api->type;
 
         return $this->curl($url, $type, $header, $data);
@@ -242,15 +256,25 @@ class Oauth {
 
         return $this->authorizeUri.'?'.http_build_query($params);
     }
+    
+    /**
+     * @brief 获取HTTP默认请求头
+     *
+     * @return 
+     */
+    protected function getDefaultHeader()
+    {
+        return array('Content_type: application/x-www-form-urlencoded');
+    }
 
     /**
-     * @brief 获取Authorization header
+     * @brief 获取HTTP授权请求头
      *
      * @return array
      */
     protected function getAuthorizeHeader()
     {
-        return $this->authorizeHeader = array('Authorization: Bearer '.$this->accessToken);
+        return array('Authorization: Bearer '.$this->accessToken);
     }
 
     /**
@@ -270,19 +294,16 @@ class Oauth {
         $opts[CURLOPT_CUSTOMREQUEST] = $type;
         $header[] = 'Expect:'; 
         $opts[CURLOPT_HTTPHEADER] = $header;
-        if ($type == 'POST' || $type =='PUT') {
+        if ($type == 'POST' || $type =='PUT')
             $opts[CURLOPT_POSTFIELDS] = $data;
-        }
 
         $ch = curl_init();
         curl_setopt_array($ch, $opts);
         $result = curl_exec($ch);
-
-        if (curl_errno($ch)) {
+        if (curl_errno($ch))
             die('CURL error: '.curl_error($ch));
-        }
+        curl_close($ch); 
 
-        curl_close($ch);  
         return $result;
     }
 }
