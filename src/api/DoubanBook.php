@@ -39,14 +39,14 @@ class DoubanBook extends DoubanBase {
      * @brief 通过isbn获取书籍信息
      *
      * @param string $requestType GET
-     * @param array $params 书籍isbn name
+     * @param array $params 书籍isbn
      *
      * @return object
      */
     public function isbn($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/isbn/'.$params['name'];
+        $this->uri = '/v2/book/isbn/'.$params['isbn'];
         return $this;
     }
        
