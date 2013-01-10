@@ -91,11 +91,7 @@ class Oauth {
     /**
      * @brief 初始化豆瓣OAUTH，设置相关参数
      *
-     * @param string $client_id
-     * @param string $secret
-     * @param string $redirect_uri
-     * @param string $scope
-     * @param string $responseType
+     * @param array $config client_id, secret, redirect_uri, scope, need_permission, response_type
      *
      * @return void
      */
@@ -145,7 +141,7 @@ class Oauth {
     public function requestAccessToken()
     {
         $accessUrl = $this->accessUri;
-        $header = $this->defaultHeader;
+        $header = $this->getDefaultHeader();
         $data = array(
                     'client_id' => $this->clientId,
                     'client_secret' => $this->secret,
@@ -154,8 +150,7 @@ class Oauth {
                     'code' => $this->authorizeCode,
                     );
 
-        $result = $this->curl($accessUrl, 'POST', $header, $data);
-        $result = json_decode($result);
+        $result = json_decode($this->curl($accessUrl, 'POST', $header, $data));
         $this->refreshToken = $result->refresh_token;
         $this->accessToken = $result->access_token;
     }
@@ -207,7 +202,7 @@ class Oauth {
      */
     public function setNeedPermission($permissionStatus = true)
     {
-        $this->needPermission = $permissionStatus;
+        $this->needPermission = (boolean)$permissionStatus;
         return $this;
     }
     
