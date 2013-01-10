@@ -45,7 +45,7 @@ $douban->requestAccessToken();
 // 并且必须在图片绝对路径后指定正确的图片类型，如果没有指定类型会返回“不支持的图片类型错误”。
 // 那是因为没有指定图片类型时，上传的文件类型默认为“application/octet-stream”。
 $data = array(
-            'source' => $clientId, 
+            'source' => $appConfig['client_id'], 
             'text' =>'Composer分支测试。', 
             'image' => '@/home/chou/Downloads/123.jpg;type=image/jpeg'
             );
