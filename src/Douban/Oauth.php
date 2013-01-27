@@ -4,7 +4,7 @@
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
- * @date 2013-01-10
+ * @date 2013-01-28
  */
 namespace Douban;
 
@@ -117,7 +117,7 @@ class Oauth {
     {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
-        header('Location:'.$authorizeUrl);
+        header('Location:' . $authorizeUrl);
         exit;
     }
     
@@ -160,7 +160,7 @@ class Oauth {
      *
      * @param string $accessToken
      *
-     * @return object
+     * @return void
      */
     public function setAccessToken($accessToken)
     {
@@ -188,7 +188,7 @@ class Oauth {
     public function api($api, $params = array())
     {
         $info = explode('.', $api);
-        $class = 'Douban\\Api\\'.ucfirst(strtolower($info[0]));
+        $class = 'Douban\\Api\\' . ucfirst(strtolower($info[0]));
         $func = $info[1];
         $type = strtoupper($info[2]);
         $instance =  new $class($this->clientId);
@@ -223,12 +223,12 @@ class Oauth {
      * @param array $data
      * @param boolean 为true时会在header中发送accessToken
      *
-     * @return object
+     * @return string
      */
     public function makeRequest($api, $data = array())
     {
         // API的完整URI
-        $url = $this->apiUri.$api->uri;
+        $url = $this->apiUri . $api->uri;
         $header = $this->needPermission ? $this->getAuthorizeHeader() : $this->getDefaultHeader();
         $type = $api->type;
 
@@ -249,7 +249,7 @@ class Oauth {
                     'scope' => $this->scope
                     );
 
-        return $this->authorizeUri.'?'.http_build_query($params);
+        return $this->authorizeUri . '?' . http_build_query($params);
     }
     
     /**
@@ -269,7 +269,7 @@ class Oauth {
      */
     protected function getAuthorizeHeader()
     {
-        return array('Authorization: Bearer '.$this->accessToken);
+        return array('Authorization: Bearer ' . $this->accessToken);
     }
 
     /**
@@ -280,7 +280,7 @@ class Oauth {
      * @param array $header
      * @param array $data
      *
-     * @return object
+     * @return string
      */
     protected function curl($url, $type, $header, $data = array())
     {
@@ -296,7 +296,7 @@ class Oauth {
         curl_setopt_array($ch, $opts);
         $result = curl_exec($ch);
         if (curl_errno($ch))
-            die('CURL error: '.curl_error($ch));
+            die('CURL error: ' . curl_error($ch));
         curl_close($ch); 
 
         return $result;
