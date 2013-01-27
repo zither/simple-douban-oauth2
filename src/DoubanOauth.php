@@ -4,7 +4,7 @@
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
- * @date 2013-01-10
+ * @date 2013-01-28
  */
 
 if (!function_exists('curl_init')) {
@@ -17,7 +17,7 @@ if (!function_exists('json_decode')) {
 class DoubanOauth {
     
     /**
-     * @brief 豆瓣Oauth类词头
+     * @brief 豆瓣Oauth类头
      */
     const PREFIX = 'Douban';
 
@@ -163,7 +163,7 @@ class DoubanOauth {
      *
      * @param string $accessToken
      *
-     * @return object
+     * @return void
      */
     public function setAccessToken($accessToken)
     {
@@ -240,11 +240,11 @@ class DoubanOauth {
      * @param array $data
      * @param boolean 为true时会在header中发送accessToken
      *
-     * @return object
+     * @return string
      */
     public function makeRequest($api, $data = array())
     {
-        // API的完整URL
+        // API的完整Uri
         $url = $this->apiUri.$api->uri;
         $header = $this->needPermission ? $this->getAuthorizeHeader() : $this->getDefaultHeader();
         $type = $api->type;
@@ -331,9 +331,8 @@ class DoubanOauth {
     {
         // 文件路径错误时抛出异常
         if ( ! file_exists($path)) {
-            throw new Exception('The file you wanted to load does not exists.');
+            throw new Exception('The API file you wanted to load does not exists.');
         }
-
         require $path;
     }
 }
