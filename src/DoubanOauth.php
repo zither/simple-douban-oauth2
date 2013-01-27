@@ -121,7 +121,7 @@ class DoubanOauth {
     {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
-        header('Location:'.$authorizeUrl);
+        header('Location:' . $authorizeUrl);
     }
     
     /**
@@ -197,15 +197,15 @@ class DoubanOauth {
 
         $doubanApi = self::PREFIX.ucfirst(strtolower($class));
         // 豆瓣Api路径
-        $apiFile = dirname(__FILE__).'/api/'.$doubanApi.'.php';
+        $apiFile = dirname(__FILE__) . '/api/' . $doubanApi . '.php';
         // 豆瓣Api基类路径
-        $basePath = dirname(__FILE__).'/api/DoubanBase.php';
+        $basePath = dirname(__FILE__) . '/api/DoubanBase.php';
         
         try {
             $this->fileLoader($basePath);
             $this->fileLoader($apiFile);
         } catch(Exception $e) {
-            echo 'Apiloader error:'.$e->getMessage();
+            echo 'Apiloader error:' . $e->getMessage();
         }
 
         $instance = new $doubanApi($this->clientId);
@@ -245,7 +245,7 @@ class DoubanOauth {
     public function makeRequest($api, $data = array())
     {
         // API的完整Uri
-        $url = $this->apiUri.$api->uri;
+        $url = $this->apiUri . $api->uri;
         $header = $this->needPermission ? $this->getAuthorizeHeader() : $this->getDefaultHeader();
         $type = $api->type;
 
@@ -266,7 +266,7 @@ class DoubanOauth {
                     'scope' => $this->scope
                     );
 
-        return $this->authorizeUri.'?'.http_build_query($params);
+        return $this->authorizeUri . '?' . http_build_query($params);
     }
 
     /**
@@ -286,7 +286,7 @@ class DoubanOauth {
      */
     protected function getAuthorizeHeader()
     {
-        return array('Authorization: Bearer '.$this->accessToken);
+        return array('Authorization: Bearer ' . $this->accessToken);
     }
 
     /**
@@ -314,7 +314,7 @@ class DoubanOauth {
         curl_setopt_array($ch, $opts);
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
-            die('CURL error: '.curl_error($ch));
+            die('CURL error: ' . curl_error($ch));
         }
         curl_close($ch);  
         return $result;
