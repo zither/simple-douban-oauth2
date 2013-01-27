@@ -109,7 +109,7 @@ class DoubanOauth {
         if (!empty($config['need_permission']))
             $this->needPermission = $config['need_permission'];
         if (!empty($config['response_type']))
-            $this->responseType = $config['responseType'];
+            $this->responseType = $config['response_type'];
     }
 
     /**
