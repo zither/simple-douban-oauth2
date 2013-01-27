@@ -4,7 +4,7 @@
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
- * @date 2013-01-10
+ * @date 2013-01-28
  */
 
 if (!function_exists('curl_init')) {
@@ -17,7 +17,7 @@ if (!function_exists('json_decode')) {
 class DoubanOauth {
     
     /**
-     * @brief 豆瓣Oauth类词头
+     * @brief 豆瓣Oauth类头
      */
     const PREFIX = 'Douban';
 
@@ -121,7 +121,7 @@ class DoubanOauth {
     {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
-        header('Location:'.$authorizeUrl);
+        header('Location:' . $authorizeUrl);
     }
     
     /**
@@ -163,7 +163,7 @@ class DoubanOauth {
      *
      * @param string $accessToken
      *
-     * @return object
+     * @return void
      */
     public function setAccessToken($accessToken)
     {
@@ -197,15 +197,15 @@ class DoubanOauth {
 
         $doubanApi = self::PREFIX.ucfirst(strtolower($class));
         // 豆瓣Api路径
-        $apiFile = dirname(__FILE__).'/api/'.$doubanApi.'.php';
+        $apiFile = dirname(__FILE__) . '/api/' . $doubanApi . '.php';
         // 豆瓣Api基类路径
-        $basePath = dirname(__FILE__).'/api/DoubanBase.php';
+        $basePath = dirname(__FILE__) . '/api/DoubanBase.php';
         
         try {
             $this->fileLoader($basePath);
             $this->fileLoader($apiFile);
         } catch(Exception $e) {
-            echo 'Apiloader error:'.$e->getMessage();
+            echo 'Apiloader error:' . $e->getMessage();
         }
 
         $instance = new $doubanApi($this->clientId);
@@ -240,12 +240,12 @@ class DoubanOauth {
      * @param array $data
      * @param boolean 为true时会在header中发送accessToken
      *
-     * @return object
+     * @return string
      */
     public function makeRequest($api, $data = array())
     {
-        // API的完整URL
-        $url = $this->apiUri.$api->uri;
+        // API的完整Uri
+        $url = $this->apiUri . $api->uri;
         $header = $this->needPermission ? $this->getAuthorizeHeader() : $this->getDefaultHeader();
         $type = $api->type;
 
@@ -266,7 +266,7 @@ class DoubanOauth {
                     'scope' => $this->scope
                     );
 
-        return $this->authorizeUri.'?'.http_build_query($params);
+        return $this->authorizeUri . '?' . http_build_query($params);
     }
 
     /**
@@ -286,7 +286,7 @@ class DoubanOauth {
      */
     protected function getAuthorizeHeader()
     {
-        return array('Authorization: Bearer '.$this->accessToken);
+        return array('Authorization: Bearer ' . $this->accessToken);
     }
 
     /**
@@ -314,7 +314,7 @@ class DoubanOauth {
         curl_setopt_array($ch, $opts);
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
-            die('CURL error: '.curl_error($ch));
+            die('CURL error: ' . curl_error($ch));
         }
         curl_close($ch);  
         return $result;
@@ -331,9 +331,8 @@ class DoubanOauth {
     {
         // 文件路径错误时抛出异常
         if ( ! file_exists($path)) {
-            throw new Exception('The file you wanted to load does not exists.');
+            throw new Exception('The API file you wanted to load does not exists.');
         }
-
         require $path;
     }
 }
