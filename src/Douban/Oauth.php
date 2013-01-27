@@ -105,7 +105,7 @@ class Oauth {
         if (!empty($config['need_permission']))
             $this->needPermission = $config['need_permission'];
         if (!empty($config['response_type']))
-            $this->responseType = $responseType;
+            $this->responseType = $config['response_type'];
     }
 
     /**
