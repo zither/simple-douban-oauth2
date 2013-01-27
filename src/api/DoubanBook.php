@@ -3,7 +3,7 @@
  * @file DoubanBook.php
  * @brief 豆瓣图书API
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-11
+ * @date 2013-01-27
  */
 
 class DoubanBook extends DoubanBase {
@@ -109,6 +109,9 @@ class DoubanBook extends DoubanBase {
     {
         $this->type = $requestType;
         $this->uri = '/v2/book/user/'.$params['name'].'/collections';
+        unset($params['name']);
+        if (!empty($params))
+            $this->uri .= '?' . http_build_query($params); 
         return $this;
     }
         
