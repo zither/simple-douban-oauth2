@@ -122,6 +122,7 @@ class DoubanOauth {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
         header('Location:' . $authorizeUrl);
+        exit;
     }
     
     /**
@@ -333,6 +334,6 @@ class DoubanOauth {
         if ( ! file_exists($path)) {
             throw new Exception('The API file you wanted to load does not exists.');
         }
-        require $path;
+        require_once $path;
     }
 }
