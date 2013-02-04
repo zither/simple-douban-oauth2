@@ -4,7 +4,7 @@
  * @brief 一个简单的豆瓣PHP Oauth2类
  * @author JonChou <ilorn.mc@gmail.com>
  * @version 0.4
- * @date 2013-01-28
+ * @date 2013-02-04
  */
 namespace Douban;
 
@@ -28,9 +28,14 @@ class Oauth {
     protected $accessUri = 'https://www.douban.com/service/auth2/token';
     
     /**
-     * @brief api请求链接
+     * @brief API请求链接
      */
     protected $apiUri = 'https://api.douban.com';
+    
+    /**
+     * @brief API实例
+     */
+    protected $apiInstance;
                 
     /**
      * @brief 豆瓣应用public key
@@ -191,8 +196,10 @@ class Oauth {
         $class = 'Douban\\Api\\' . ucfirst(strtolower($info[0]));
         $func = $info[1];
         $type = strtoupper($info[2]);
-        $instance =  new $class($this->clientId);
-        return $instance->$func($type, $params);
+        if (!($this->apiInstance instanceof $class))
+            $this->apiInstance =  new $class($this->clientId);
+        $this->apiInstance->$func($type, $params);
+        return $this;
     }
        
     /**
@@ -219,19 +226,15 @@ class Oauth {
     /**
      * @brief 请求豆瓣API,返回包含相关数据的对象
      *
-     * @param object $API
      * @param array $data
-     * @param boolean 为true时会在header中发送accessToken
      *
      * @return string
      */
-    public function makeRequest($api, $data = array())
+    public function makeRequest($data = array())
     {
-        // API的完整URI
-        $url = $this->apiUri . $api->uri;
+        $url = $this->apiUri . $this->apiInstance->uri;
         $header = $this->needPermission ? $this->getAuthorizeHeader() : $this->getDefaultHeader();
-        $type = $api->type;
-
+        $type = $this->apiInstance->type;
         return $this->curl($url, $type, $header, $data);
     }
 

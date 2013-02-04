@@ -3,7 +3,7 @@
  * @file example.php
  * @brief Simple_douban_oauth2调用实例，内容为使用POST请求发表豆瓣广播。
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-17
+ * @date 2013-02-04
  */
 require dirname(__FILE__).'/vendor/autoload.php';
 
@@ -50,8 +50,7 @@ $data = array(
             'image' => '@/home/chou/Downloads/123.jpg;type=image/jpeg'
             );
 
-$miniblog = $douban->api('Miniblog.statuses.POST');
-$result = $douban->makeRequest($miniblog, $data);
+$miniblog = $douban->api('Miniblog.statuses.POST')->makeRequest($data);
 
 // 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
 // 如果API需授权，请把makeRequest函数的第三个参数设置true
@@ -63,6 +62,6 @@ $result = $douban->makeRequest($miniblog, $data);
         <meta charset="UTF-8">
     </head>
     <body>
-        <?php var_dump($result); ?>
+        <?php var_dump($miniblog); ?>
     </body>
 </html>
