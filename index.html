@@ -128,21 +128,17 @@ $postData = array(
             'text' =>'继续修改，继续测试。', 
             'image' => '@/home/chou/downloads/123.jpg;type=image/jpeg'
             );
-// 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
-$miniblog = $douban->api('Miniblog.statuses.POST');
 // 如果在实例化DoubanOauth类时没有添加need_permission参数，
 // 在调用需授权API时需调用以下函数：
 // $douban->setNeedPermission(true);
-// 使用豆瓣Oauth类向我说API发送请求，并获取返回结果
-$result = $douban->makeRequest($miniblog, $postData);
+// 发表广播需要用到豆瓣广播API，注册一个豆瓣广播API实例
+$miniblog = $douban->api('Miniblog.statuses.POST')->makeRequest($data);
 
 // 使用GET方法获取制定书籍信息
-$book = $douban->api('Book.info.GET', array('id' => '20458897'));
-// GET请求不需要设置POSTDATA
-$bookInfo = $douban->makeRequest($book);
+$book = $douban->api('Book.info.GET', array('id' => '20458897'))->makeRequest();
 
-var_dump($result);
-var_dump($bookInfo);
+var_dump($miniblog);
+var_dump($book);
        </code></pre>
 
         <p>Simple douban oauth2的所有API类都保存在<strong>api</strong>文件夹中，你可以非常方便的按照需求修改各个接口。</p>
