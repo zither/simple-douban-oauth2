@@ -52,8 +52,7 @@ $data = array(
             'image' => '@/home/chou/Downloads/canon.jpg;type=image/jpeg'
             );
 
-$miniblog = $douban->api('Miniblog.statuses.POST');
-$result = $douban->makeRequest($miniblog, $data);
+$miniblog = $douban->api('Miniblog.statuses.POST')->makeRequest($data);
 
 ?>
 
@@ -62,6 +61,6 @@ $result = $douban->makeRequest($miniblog, $data);
         <meta charset="UTF-8">
     </head>
     <body>
-        <?php var_dump($result); ?>
+        <?php var_dump($miniblog); ?>
     </body>
 </html>
