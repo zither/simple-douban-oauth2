@@ -32,10 +32,15 @@ class DoubanOauth {
     protected $accessUri = 'https://www.douban.com/service/auth2/token';
     
     /**
-     * @brief api请求链接
+     * @brief API请求链接
      */
     protected $apiUri = 'https://api.douban.com';
-                
+    
+    /**
+     * @brief API实例
+     */
+    protected $apiInstance;
+    
     /**
      * @brief 豆瓣应用public key
      */
@@ -122,7 +127,6 @@ class DoubanOauth {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
         header('Location:' . $authorizeUrl);
-        exit;
     }
     
     /**
@@ -197,20 +201,21 @@ class DoubanOauth {
         $type = strtoupper($info[2]);
 
         $doubanApi = self::PREFIX.ucfirst(strtolower($class));
-        // 豆瓣Api路径
-        $apiFile = dirname(__FILE__) . '/api/' . $doubanApi . '.php';
-        // 豆瓣Api基类路径
-        $basePath = dirname(__FILE__) . '/api/DoubanBase.php';
-        
-        try {
-            $this->fileLoader($basePath);
-            $this->fileLoader($apiFile);
-        } catch(Exception $e) {
-            echo 'Apiloader error:' . $e->getMessage();
+
+        if (!($this->apiInstance instanceof $doubanApi)) {
+            $apiFile = dirname(__FILE__) . '/api/' . $doubanApi . '.php';
+            $basePath = dirname(__FILE__) . '/api/DoubanBase.php';
+            try {
+                $this->fileLoader($basePath);
+                $this->fileLoader($apiFile);
+            } catch(Exception $e) {
+                echo 'Apiloader error:' . $e->getMessage();
+            }
+            $this->apiInstance = new $doubanApi($this->clientId);
         }
 
-        $instance = new $doubanApi($this->clientId);
-        return $instance->$func($type, $params);
+        $this->apiInstance->$func($type, $params);
+        return $this;
     }
 
     /**
@@ -237,18 +242,16 @@ class DoubanOauth {
     /**
      * @brief 请求豆瓣API,返回包含相关数据的对象
      *
-     * @param object $API
      * @param array $data
-     * @param boolean 为true时会在header中发送accessToken
      *
      * @return string
      */
-    public function makeRequest($api, $data = array())
+    public function makeRequest($data = array())
     {
         // API的完整Uri
-        $url = $this->apiUri . $api->uri;
+        $url = $this->apiUri . $this->apiInstance->uri;
         $header = $this->needPermission ? $this->getAuthorizeHeader() : $this->getDefaultHeader();
-        $type = $api->type;
+        $type = $this->apiInstance->type;
 
         return $this->curl($url, $type, $header, $data);
     }
