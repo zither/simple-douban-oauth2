@@ -127,6 +127,7 @@ class DoubanOauth {
         // 获取AuthorizeCode请求链接
         $authorizeUrl = $this->getAuthorizeUrl();
         header('Location:' . $authorizeUrl);
+        exit;
     }
     
     /**
