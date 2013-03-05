@@ -6,8 +6,8 @@
  * @date 2012-12-13
  */
 
-class DoubanMiniblog extends DoubanBase {
-
+class DoubanMiniblog extends DoubanBase 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -271,3 +271,4 @@ class DoubanMiniblog extends DoubanBase {
     }
     
 }
+

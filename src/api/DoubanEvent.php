@@ -6,8 +6,8 @@
  * @date 2012-12-11
  */
 
-class DoubanEvent extends DoubanBase {
-
+class DoubanEvent extends DoubanBase 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -169,3 +169,4 @@ class DoubanEvent extends DoubanBase {
         return $this;
     }
 }
+

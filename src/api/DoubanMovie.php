@@ -6,8 +6,8 @@
  * @date 2012-12-05
  */
 
-class DoubanMovie extends DoubanBase {
-
+class DoubanMovie extends DoubanBase 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -118,3 +118,4 @@ class DoubanMovie extends DoubanBase {
         return $this;
     }
 }
+
