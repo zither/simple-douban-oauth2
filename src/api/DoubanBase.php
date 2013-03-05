@@ -6,8 +6,8 @@
  * @date 2012-11-27
  */
 
-class DoubanBase {
-
+class DoubanBase 
+{
     /**
      * @brief 豆瓣API uri
      */
@@ -37,3 +37,4 @@ class DoubanBase {
         }
     }
 }
+

@@ -6,8 +6,8 @@
  * @date 2012-12-05
  */
 
-class DoubanNote extends DoubanBase {
-
+class DoubanNote extends DoubanBase 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -116,3 +116,4 @@ class DoubanNote extends DoubanBase {
         return $this;
     }
 }
+

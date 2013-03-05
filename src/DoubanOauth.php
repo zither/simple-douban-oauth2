@@ -14,8 +14,8 @@ if (!function_exists('json_decode')) {
     throw new Exception('Simple douban oauth2 needs the JSON PHP extension.');
 }
 
-class DoubanOauth {
-    
+class DoubanOauth 
+{    
     /**
      * @brief 豆瓣Oauth类头
      */
@@ -87,7 +87,7 @@ class DoubanOauth {
     protected $needPermission = false;
 
     /**
-     * @var curl默认设置  
+     * @brief curl默认设置  
      */
     protected $CURL_OPTS = array(
                 CURLOPT_CONNECTTIMEOUT => 10,
@@ -341,3 +341,4 @@ class DoubanOauth {
         require_once $path;
     }
 }
+
