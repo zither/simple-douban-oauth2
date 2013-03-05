@@ -7,8 +7,8 @@
  */
 namespace Douban\Api;
 
-class Movie extends Base {
-
+class Movie extends Base 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -119,3 +119,4 @@ class Movie extends Base {
         return $this;
     }
 }
+

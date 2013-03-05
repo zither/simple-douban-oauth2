@@ -15,8 +15,8 @@ if (!function_exists('json_decode')) {
     throw new \Exception('Simple douban oauth2 needs the JSON PHP extension.');
 }
 
-class Oauth {
-    
+class Oauth 
+{    
     /**
      * @brief authorizeCode请求链接
      */
@@ -305,3 +305,4 @@ class Oauth {
         return $result;
     }
 }
+

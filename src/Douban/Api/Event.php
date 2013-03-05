@@ -7,8 +7,8 @@
  */
 namespace Douban\Api;
 
-class Event extends Base {
-
+class Event extends Base 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -170,3 +170,4 @@ class Event extends Base {
         return $this;
     }
 }
+

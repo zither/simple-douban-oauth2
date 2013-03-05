@@ -7,8 +7,8 @@
  */
 namespace Douban\Api;
 
-class Photo extends Base {
-
+class Photo extends Base 
+{
     /**
      * @brief 构造函数，初始设置clientId和accessToken
      *
@@ -144,3 +144,4 @@ class Photo extends Base {
         return $this;
     }
 }
+

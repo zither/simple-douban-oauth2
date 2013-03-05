@@ -7,8 +7,8 @@
  */
 namespace Douban\Api;
 
-class Music extends Base {
-
+class Music extends Base 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -104,3 +104,4 @@ class Music extends Base {
         return $this;
     }
 }
+

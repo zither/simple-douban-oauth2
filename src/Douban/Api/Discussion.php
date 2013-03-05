@@ -7,8 +7,8 @@
  */
 namespace Douban\Api;
 
-class Discussion extends Base {
-
+class Discussion extends Base 
+{
     /**
      * @brief 构造函数，初始设置clientId
      *
@@ -52,3 +52,4 @@ class Discussion extends Base {
         return $this;
     }
 }
+

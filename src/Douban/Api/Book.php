@@ -7,8 +7,8 @@
  */
 namespace Douban\Api;
 
-class Book extends Base {
-    
+class Book extends Base 
+{    
     /**
      * @brief 构造函数，初始设置clientId
      *

@@ -7,8 +7,8 @@
  */
 namespace Douban\Api;
 
-class Base {
-
+class Base 
+{
     /**
      * @brief 豆瓣API uri
      */
@@ -38,3 +38,4 @@ class Base {
         }
     }
 }
+
