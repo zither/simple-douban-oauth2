@@ -31,7 +31,7 @@ class DoubanUser extends DoubanBase
     public function info($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/user/'.$params['id'].'?apikey='.$this->clientId;
+        $this->uri = '/v2/user/' . $params['id'] . '?apikey=' . $this->clientId;
         return $this;
     }
     
@@ -61,7 +61,7 @@ class DoubanUser extends DoubanBase
     public function search($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/user?'.http_build_query($params);
+        $this->uri = '/v2/user?' . http_build_query($params);
         return $this;
     }
 }

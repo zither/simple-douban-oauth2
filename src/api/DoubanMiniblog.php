@@ -34,7 +34,7 @@ class DoubanMiniblog extends DoubanBase
         switch ($this->type) {
             case 'GET':
             case 'DELETE':
-                $this->uri = '/shuo/v2/statuses/'.$params['id'];
+                $this->uri = '/shuo/v2/statuses/' . $params['id'];
                 break;
             case 'POST':
                 $this->uri = '/shuo/v2/statuses/';
@@ -54,10 +54,10 @@ class DoubanMiniblog extends DoubanBase
     public function commentsList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/comments';
+        $this->uri = '/shuo/v2/statuses/' . $params['id'] . '/comments';
         unset($params['id']);
         if (!empty($params))
-            $this->uri .= '?'.http_build_query($params);
+            $this->uri .= '?' . http_build_query($params);
         return $this;
     }
         
@@ -75,10 +75,10 @@ class DoubanMiniblog extends DoubanBase
         switch ($this->type) {
             case 'GET':
             case 'DELETE':
-                $this->uri = '/shuo/v2/statuses/comment/'.$params['id'];
+                $this->uri = '/shuo/v2/statuses/comment/' . $params['id'];
                 break;
             case 'POST':
-                $this->uri = '/shuo/v2/statuses/'.$params['id'].'/comments';
+                $this->uri = '/shuo/v2/statuses/' . $params['id'] . '/comments';
                 break;
         }
         return $this;
@@ -95,7 +95,7 @@ class DoubanMiniblog extends DoubanBase
     public function reshare($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/reshare';
+        $this->uri = '/shuo/v2/statuses/' . $params['id'] . '/reshare';
         return $this;
     }
     
@@ -110,7 +110,7 @@ class DoubanMiniblog extends DoubanBase
     public function like($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/like';
+        $this->uri = '/shuo/v2/statuses/' . $params['id'].'/like';
         return $this;
     }
     
@@ -125,7 +125,7 @@ class DoubanMiniblog extends DoubanBase
     public function following($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/following';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/following';
         return $this;
     }
     
@@ -140,7 +140,7 @@ class DoubanMiniblog extends DoubanBase
     public function followers($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/followers';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/followers';
         return $this;
     }
 
@@ -156,7 +156,7 @@ class DoubanMiniblog extends DoubanBase
     public function followInCommon($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/follow_in_common';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/follow_in_common';
         return $this;
     }
     
@@ -171,7 +171,7 @@ class DoubanMiniblog extends DoubanBase
     public function suggestions($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/following_followers_of';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/following_followers_of';
         return $this;
     }
     
@@ -186,7 +186,7 @@ class DoubanMiniblog extends DoubanBase
     public function block($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/block';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/block';
         return $this;
 
     }
@@ -231,7 +231,7 @@ class DoubanMiniblog extends DoubanBase
     public function show($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/friendships/show?'.http_build_query($params);
+        $this->uri = '/shuo/v2/friendships/show?' . http_build_query($params);
         return $this;
     }
 
@@ -247,8 +247,8 @@ class DoubanMiniblog extends DoubanBase
     public function homeTimeline($requestType, $params)
     {
         $this->type = $requestType;
-        $query = !empty($params) ? '?'.http_build_query($params) : null;
-        $this->uri = '/shuo/v2/statuses/home_timeline'.$query;
+        $query = !empty($params) ? '?' . http_build_query($params) : null;
+        $this->uri = '/shuo/v2/statuses/home_timeline' . $query;
         return $this;
     }
     
@@ -263,10 +263,10 @@ class DoubanMiniblog extends DoubanBase
     public function userTimeline($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/user_timeline/'.$params['user'];
+        $this->uri = '/shuo/v2/statuses/user_timeline/' . $params['user'];
         unset($params['user']);
         if (!empty($params))
-            $this->uri .= '?'.http_build_query($params);
+            $this->uri .= '?' . http_build_query($params);
         return $this;
     }
     

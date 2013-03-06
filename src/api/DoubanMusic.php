@@ -31,7 +31,7 @@ class DoubanMusic extends DoubanBase
     public function info($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/music/'.$params['id'];
+        $this->uri = '/v2/music/' . $params['id'];
         return $this;
     }
     
@@ -46,7 +46,7 @@ class DoubanMusic extends DoubanBase
     public function search($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/music/search?'.http_build_query($params);
+        $this->uri = '/v2/music/search?' . http_build_query($params);
         return $this;
     }
     
@@ -61,7 +61,7 @@ class DoubanMusic extends DoubanBase
     public function musicTags($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/music/'.$params['id'].'/tags';
+        $this->uri = '/v2/music/' . $params['id'] . '/tags';
         return $this;
     }
     
@@ -82,7 +82,7 @@ class DoubanMusic extends DoubanBase
                 break;
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/music/review/'.$params['id'];
+                $this->uri = '/v2/music/review/' . $params['id'];
                 break;
         }
         return $this;
@@ -99,7 +99,7 @@ class DoubanMusic extends DoubanBase
     public function userTags($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/music/user_tags/'.$params['id'];
+        $this->uri = '/v2/music/user_tags/' . $params['id'];
         return $this;
     }
 }

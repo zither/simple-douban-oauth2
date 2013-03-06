@@ -33,16 +33,16 @@ class DoubanNote extends DoubanBase
         $this->type = $requestType;
         switch ($this->type) {
             case 'GET':
-                $this->uri = '/v2/note/'.$params['id'];
+                $this->uri = '/v2/note/' . $params['id'];
                 if (isset($params['format']))
-                    $this->uri .= '?format='.$params['format'];
+                    $this->uri .= '?format=' . $params['format'];
                 break;
             case 'POST':
                 $this->uri = '/v2/notes';
                 break;
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/note/'.$params['id'];
+                $this->uri = '/v2/note/' . $params['id'];
                 break;
         }
         return $this;
@@ -59,7 +59,7 @@ class DoubanNote extends DoubanBase
     public function like($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/note/'.$params['id'].'/like';
+        $this->uri = '/v2/note/' . $params['id'] . '/like';
         return $this;
     }
     
@@ -74,7 +74,7 @@ class DoubanNote extends DoubanBase
     public function image($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/note/'.$params['id'];
+        $this->uri = '/v2/note/' . $params['id'];
         return $this;  
     }
     
@@ -89,7 +89,7 @@ class DoubanNote extends DoubanBase
     public function commentsList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/note/'.$params['id'].'/comments';
+        $this->uri = '/v2/note/' . $params['id'] . '/comments';
         return $this;
     }
     
@@ -107,10 +107,10 @@ class DoubanNote extends DoubanBase
         switch ($this->type) {
             case 'GET':
             case 'DELETE':
-                $this->uri = '/v2/note/'.$params['noteId'].'/comment/'.$params['commentId'];
+                $this->uri = '/v2/note/' . $params['noteId'] . '/comment/' . $params['commentId'];
                 break;
             case 'POST':
-                $this->uri = '/v2/note/'.$params['noteId'].'/comments';
+                $this->uri = '/v2/note/' . $params['noteId'] . '/comments';
                 break;
         }
         return $this;

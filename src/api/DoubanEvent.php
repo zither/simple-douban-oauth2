@@ -31,7 +31,7 @@ class DoubanEvent extends DoubanBase
     public function info($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/'.$params['id'];
+        $this->uri = '/v2/event/' . $params['id'];
         return $this;
     }
     
@@ -46,7 +46,7 @@ class DoubanEvent extends DoubanBase
     public function wishers($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/'.$params['id'].'/wishers';
+        $this->uri = '/v2/event/' . $params['id'] . '/wishers';
         return $this;
     }
     
@@ -61,7 +61,7 @@ class DoubanEvent extends DoubanBase
     public function userCreated($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/user_created/'.$params['id'];
+        $this->uri = '/v2/event/user_created/' . $params['id'];
         return $this;
     }
     
@@ -76,7 +76,7 @@ class DoubanEvent extends DoubanBase
     public function userParticipated($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/user_participated/'.$params['id'];
+        $this->uri = '/v2/event/user_participated/' . $params['id'];
         return $this;
     }
     
@@ -91,7 +91,7 @@ class DoubanEvent extends DoubanBase
     public function userWished($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/user_wished/'.$params['id'];
+        $this->uri = '/v2/event/user_wished/' . $params['id'];
         return $this;
     }
 
@@ -106,7 +106,7 @@ class DoubanEvent extends DoubanBase
     public function eventList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/list?'.http_build_query($params);
+        $this->uri = '/v2/event/list?' . http_build_query($params);
         return $this;
     }
     
@@ -121,7 +121,7 @@ class DoubanEvent extends DoubanBase
     public function loc($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/loc/'.$params['id'];
+        $this->uri = '/v2/loc/' . $params['id'];
         return $this;
     }
     
@@ -150,7 +150,7 @@ class DoubanEvent extends DoubanBase
     public function participants($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/'.$params['id'].'/participants';
+        $this->uri = '/v2/event/' . $params['id'] . '/participants';
         return $this;
     }
     
@@ -165,7 +165,7 @@ class DoubanEvent extends DoubanBase
     public function wish($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/event/'.$params['id'].'/wishers';
+        $this->uri = '/v2/event/' . $params['id'] . '/wishers';
         return $this;
     }
 }

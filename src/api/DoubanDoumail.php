@@ -36,7 +36,7 @@ class DoubanDoumail extends DoubanBase
             case 'GET':
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/doumail/'.$params['id'];
+                $this->uri = '/v2/doumail/' . $params['id'];
                 break;
             case 'POST':
                 $this->uri = '/v2/doumails';

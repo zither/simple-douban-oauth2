@@ -3,7 +3,7 @@
  * @file DuobanComment.php
  * @brief 豆瓣回复API接口
  * @author JonChou <ilorn.mc@gmail.com>
- * @date 2012-12-05
+ * @date 2013-3-06
  */
 
 class DoubanComment extends DoubanBase 
@@ -31,7 +31,7 @@ class DoubanComment extends DoubanBase
     public function commentsList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/comments';
+        $this->uri = '/v2/' . $params['target'] . '/' . $params['id'] . '/comments';
         return $this;
     }
     
@@ -49,10 +49,10 @@ class DoubanComment extends DoubanBase
         switch ($this->type) {
             case 'GET':
             case 'DELETE':
-                $this->uri = '/v2/'.$params['target'].'/'.$params['targetId'].'/comment/'.$params['commentId'];
+                $this->uri = '/v2/' . $params['target'] . '/' . $params['targetId'] . '/comment/' . $params['commentId'];
                 break;
             case 'POST':
-                $this->uri = '/v2/'.$params['target'].'/'.$params['targetId'].'/comments';
+                $this->uri = '/v2/' . $params['target'] . '/' . $params['targetId'] . '/comments';
                 break;
         }
         return $this;
