@@ -31,7 +31,7 @@ class DoubanBook extends DoubanBase
     public function info($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/'.$params['id'];
+        $this->uri = '/v2/book/' . $params['id'];
         return $this;
     }
         
@@ -46,7 +46,7 @@ class DoubanBook extends DoubanBase
     public function isbn($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/isbn/'.$params['isbn'];
+        $this->uri = '/v2/book/isbn/' . $params['isbn'];
         return $this;
     }
        
@@ -63,7 +63,7 @@ class DoubanBook extends DoubanBase
         $this->type = $requestType;
         if (!isset($params['q']) && !isset($params['tag']))
             throw new Exception('Need q or tag.');
-        $this->uri = '/v2/book/search?'.http_build_query($params);
+        $this->uri = '/v2/book/search?' . http_build_query($params);
         return $this;
     }
     
@@ -78,7 +78,7 @@ class DoubanBook extends DoubanBase
     public function bookTags($requestType,$params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/'.$params['id'].'/tags';
+        $this->uri = '/v2/book/' . $params['id'] . '/tags';
         return $this;    
     }
        
@@ -93,7 +93,7 @@ class DoubanBook extends DoubanBase
     public function userTags($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/user/'.$params['name'].'/tags';
+        $this->uri = '/v2/book/user/' . $params['name'] . '/tags';
         return $this;
     }
     
@@ -108,7 +108,7 @@ class DoubanBook extends DoubanBase
     public function collections($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/user/'.$params['name'].'/collections';
+        $this->uri = '/v2/book/user/' . $params['name'] . '/collections';
         unset($params['name']);
         if (!empty($params))
             $this->uri .= '?' . http_build_query($params); 
@@ -126,7 +126,7 @@ class DoubanBook extends DoubanBase
     public function collection($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/'.$params['id'].'/collection';
+        $this->uri = '/v2/book/' . $params['id'] . '/collection';
         return $this;
     }
     
@@ -141,7 +141,7 @@ class DoubanBook extends DoubanBase
     public function userAnnotations($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/user/'.$params['name'].'/annotations';
+        $this->uri = '/v2/book/user/' . $params['name'] . '/annotations';
         return $this;
     }
      
@@ -156,7 +156,7 @@ class DoubanBook extends DoubanBase
     public function bookAnnotations($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/book/'.$params['id'].'/annotations';
+        $this->uri = '/v2/book/' . $params['id'] . '/annotations';
         return $this;
     }
     
@@ -176,10 +176,10 @@ class DoubanBook extends DoubanBase
             case 'GET':
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/book/annotation/'.$params['id'];
+                $this->uri = '/v2/book/annotation/' . $params['id'];
                 break;
             case 'POST':
-                $this->uri = '/v2/book/'.$params['id'].'/annotations';
+                $this->uri = '/v2/book/' . $params['id'] . '/annotations';
                 break;
         }
         return $this;
@@ -202,7 +202,7 @@ class DoubanBook extends DoubanBase
                 break;
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/book/review/'.$params['id'];
+                $this->uri = '/v2/book/review/' . $params['id'];
                 break;
         }
         return $this;

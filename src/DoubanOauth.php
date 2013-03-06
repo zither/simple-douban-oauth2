@@ -311,7 +311,7 @@ class DoubanOauth
         $opts[CURLOPT_CUSTOMREQUEST] = $type;
         $header[] = 'Expect:'; 
         $opts[CURLOPT_HTTPHEADER] = $header;
-        if ($type == 'POST' || $type =='PUT') {
+        if ($type == 'POST' || $type == 'PUT') {
             $opts[CURLOPT_POSTFIELDS] = $data;
         }
 
