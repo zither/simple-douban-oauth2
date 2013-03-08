@@ -201,7 +201,7 @@ class DoubanOauth
         $func = $info[1];
         $type = strtoupper($info[2]);
 
-        $doubanApi = self::PREFIX.ucfirst(strtolower($class));
+        $doubanApi = self::PREFIX . ucfirst(strtolower($class));
 
         if (!($this->apiInstance instanceof $doubanApi)) {
             $apiFile = dirname(__FILE__) . '/api/' . $doubanApi . '.php';
