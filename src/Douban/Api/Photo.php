@@ -36,7 +36,7 @@ class Photo extends Base
             case 'GET':
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/album/'.$params['id'];
+                $this->uri = '/v2/album/' . $params['id'];
                 break;
             case 'POST':
                 $this->uri = '/v2/albums';
@@ -56,7 +56,7 @@ class Photo extends Base
     public function photosList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/album/'.$params['id'].'/photos';
+        $this->uri = '/v2/album/' . $params['id'] . '/photos';
         return $this;
     }
         
@@ -71,7 +71,7 @@ class Photo extends Base
     public function albumLike($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/album/'.$params['id'].'/like';
+        $this->uri = '/v2/album/' . $params['id'] . '/like';
         return $this;
     }
     
@@ -86,7 +86,7 @@ class Photo extends Base
     public function userAlbumList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/album/user_created/'.$params['id'];
+        $this->uri = '/v2/album/user_created/' . $params['id'];
         return $this;
     }
     
@@ -101,7 +101,7 @@ class Photo extends Base
     public function userLiked($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/album/user_liked/'.$params['id'];
+        $this->uri = '/v2/album/user_liked/' . $params['id'];
         return $this;
     }
     
@@ -118,12 +118,12 @@ class Photo extends Base
         $this->type = $requestType;
         switch ($this->type) {
             case 'GET':
-                $this->uri = '/v2/photo/'.$params['id'];
+                $this->uri = '/v2/photo/' . $params['id'];
                 break;
             case 'POST':
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/album/'.$params['id'];
+                $this->uri = '/v2/album/' . $params['id'];
                 break;
         }
         return $this;
@@ -140,7 +140,7 @@ class Photo extends Base
     public function photoLike($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/photo/'.$params['id'].'/like';
+        $this->uri = '/v2/photo/' . $params['id'] . '/like';
         return $this;
     }
 }

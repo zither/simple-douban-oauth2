@@ -32,7 +32,7 @@ class Movie extends Base
     public function info($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/movie/'.$params['id'];
+        $this->uri = '/v2/movie/' . $params['id'];
         return $this;
     }
         
@@ -47,7 +47,7 @@ class Movie extends Base
     public function imdb($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/movie/imdb/'.$params['name'];
+        $this->uri = '/v2/movie/imdb/' . $params['name'];
         return $this;
     }
     
@@ -62,7 +62,7 @@ class Movie extends Base
     public function search($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/movie/search?'.http_build_query($params);
+        $this->uri = '/v2/movie/search?' . http_build_query($params);
         return $this;
     }
     
@@ -77,7 +77,7 @@ class Movie extends Base
     public function movieTags($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/movie/'.$params['id'].'/tags';
+        $this->uri = '/v2/movie/' . $params['id'] . '/tags';
         return $this;
     }
     
@@ -92,7 +92,7 @@ class Movie extends Base
     public function userTags($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/movie/user_tags/'.$params['id'];
+        $this->uri = '/v2/movie/user_tags/' . $params['id'];
         return $this;
     }
     
@@ -113,7 +113,7 @@ class Movie extends Base
                 break;
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/movie/review/'.$params['id'];
+                $this->uri = '/v2/movie/review/' . $params['id'];
                 break;
         }
         return $this;

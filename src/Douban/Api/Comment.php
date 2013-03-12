@@ -32,7 +32,7 @@ class Comment extends Base
     public function commentsList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/'.$params['target'].'/'.$params['id'].'/comments';
+        $this->uri = '/v2/' . $params['target'] . '/'.$params['id'] . '/comments';
         return $this;
     }
     
@@ -50,10 +50,10 @@ class Comment extends Base
         switch ($this->type) {
             case 'GET':
             case 'DELETE':
-                $this->uri = '/v2/'.$params['target'].'/'.$params['targetId'].'/comment/'.$params['commentId'];
+                $this->uri = '/v2/' . $params['target'] . '/' . $params['targetId'] . '/comment/' . $params['commentId'];
                 break;
             case 'POST':
-                $this->uri = '/v2/'.$params['target'].'/'.$params['targetId'].'/comments';
+                $this->uri = '/v2/' . $params['target'] . '/'.$params['targetId'] . '/comments';
                 break;
         }
         return $this;

@@ -32,7 +32,7 @@ class Online extends Base
     public function discussions($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/online/'.$params['id'].'/discussions';
+        $this->uri = '/v2/online/' . $params['id'] . '/discussions';
         return $this;
     }
     
@@ -47,7 +47,7 @@ class Online extends Base
     public function onlinesList($requestType,$params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/onlines?cate='.$params['cate'];
+        $this->uri = '/v2/onlines?cate=' . $params['cate'];
         return $this;
     }
     
@@ -66,7 +66,7 @@ class Online extends Base
             case 'GET':
             case 'PUT':
             case 'DELETE':
-                $this->uri = '/v2/online/'.$params['id'];
+                $this->uri = '/v2/online/' . $params['id'];
                 break;
             case 'POST':
                 $this->uri = '/v2/onlines';
@@ -89,11 +89,11 @@ class Online extends Base
         $this->type = $requestType;
         switch ($this->type) {
             case 'GET':
-                $this->uri = '/v2/online/'.$params['id'].'/participants';
+                $this->uri = '/v2/online/' . $params['id'] . '/participants';
                 break;
             case 'POST':
             case 'DELETE':
-                $this->uri = '/v2/online/'.$params['id'].'/participants';
+                $this->uri = '/v2/online/' . $params['id'] . '/participants';
                 break;
         }
         return $this;
@@ -110,7 +110,7 @@ class Online extends Base
     public function like($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/online/'.$params['id'].'/like';
+        $this->uri = '/v2/online/' . $params['id'] . '/like';
         return $this;
     }
     
@@ -125,7 +125,7 @@ class Online extends Base
     public function photos($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/online/'.$params['id'].'/photos';
+        $this->uri = '/v2/online/' . $params['id'] . '/photos';
         return $this;
 
     }
@@ -141,9 +141,9 @@ class Online extends Base
     public function userParticipated($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/online/user_participated/'.$params['id'];
+        $this->uri = '/v2/online/user_participated/' . $params['id'];
         if (isset($params['excludeExpired'])) 
-            $this->uri .= '?exclude_expired='.$excludeExpired;
+            $this->uri .= '?exclude_expired=' . $excludeExpired;
         return $this;
     }
     
@@ -158,7 +158,7 @@ class Online extends Base
     public function userCreated($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/v2/online/user_created/'.$params['id'];
+        $this->uri = '/v2/online/user_created/' . $params['id'];
         return $this;
     }
 }

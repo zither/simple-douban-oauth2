@@ -35,7 +35,7 @@ class Miniblog extends Base
         switch ($this->type) {
             case 'GET':
             case 'DELETE':
-                $this->uri = '/shuo/v2/statuses/'.$params['id'];
+                $this->uri = '/shuo/v2/statuses/' . $params['id'];
                 break;
             case 'POST':
                 $this->uri = '/shuo/v2/statuses/';
@@ -55,10 +55,10 @@ class Miniblog extends Base
     public function commentsList($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/comments';
+        $this->uri = '/shuo/v2/statuses/' . $params['id'] . '/comments';
         unset($params['id']);
         if (!empty($params))
-            $this->uri .= '?'.http_build_query($params);
+            $this->uri .= '?' . http_build_query($params);
         return $this;
     }
         
@@ -76,10 +76,10 @@ class Miniblog extends Base
         switch ($this->type) {
             case 'GET':
             case 'DELETE':
-                $this->uri = '/shuo/v2/statuses/comment/'.$params['id'];
+                $this->uri = '/shuo/v2/statuses/comment/' . $params['id'];
                 break;
             case 'POST':
-                $this->uri = '/shuo/v2/statuses/'.$params['id'].'/comments';
+                $this->uri = '/shuo/v2/statuses/' . $params['id'] . '/comments';
                 break;
         }
         return $this;
@@ -96,7 +96,7 @@ class Miniblog extends Base
     public function reshare($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/reshare';
+        $this->uri = '/shuo/v2/statuses/' . $params['id'] . '/reshare';
         return $this;
     }
     
@@ -111,7 +111,7 @@ class Miniblog extends Base
     public function like($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/'.$params['id'].'/like';
+        $this->uri = '/shuo/v2/statuses/' . $params['id'] . '/like';
         return $this;
     }
     
@@ -126,7 +126,7 @@ class Miniblog extends Base
     public function following($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/following';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/following';
         return $this;
     }
     
@@ -141,7 +141,7 @@ class Miniblog extends Base
     public function followers($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/followers';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/followers';
         return $this;
     }
 
@@ -157,7 +157,7 @@ class Miniblog extends Base
     public function followInCommon($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/follow_in_common';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/follow_in_common';
         return $this;
     }
     
@@ -172,7 +172,7 @@ class Miniblog extends Base
     public function suggestions($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/following_followers_of';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/following_followers_of';
         return $this;
     }
     
@@ -187,7 +187,7 @@ class Miniblog extends Base
     public function block($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/users/'.$params['id'].'/block';
+        $this->uri = '/shuo/v2/users/' . $params['id'] . '/block';
         return $this;
 
     }
@@ -232,7 +232,7 @@ class Miniblog extends Base
     public function show($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/friendships/show?'.http_build_query($params);
+        $this->uri = '/shuo/v2/friendships/show?' . http_build_query($params);
         return $this;
     }
 
@@ -248,8 +248,8 @@ class Miniblog extends Base
     public function homeTimeline($requestType, $params)
     {
         $this->type = $requestType;
-        $query = !empty($params) ? '?'.http_build_query($params) : null;
-        $this->uri = '/shuo/v2/statuses/home_timeline'.$query;
+        $query = !empty($params) ? '?' . http_build_query($params) : null;
+        $this->uri = '/shuo/v2/statuses/home_timeline' . $query;
         return $this;
     }
     
@@ -264,10 +264,10 @@ class Miniblog extends Base
     public function userTimeline($requestType, $params)
     {
         $this->type = $requestType;
-        $this->uri = '/shuo/v2/statuses/user_timeline/'.$params['user'];
+        $this->uri = '/shuo/v2/statuses/user_timeline/' . $params['user'];
         unset($params['user']);
         if (!empty($params))
-            $this->uri .= '?'.http_build_query($params);
+            $this->uri .= '?' . http_build_query($params);
         return $this;
     }
     
