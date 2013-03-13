@@ -55,6 +55,11 @@ class DoubanOauth
      * @brief callback链接
      */
     protected $redirectUri;
+    
+    /**
+     * @brief 授权方式 
+     */
+    protected $grantType = 'authorization_code';
 
     /**
      * @brief APP权限
@@ -155,7 +160,7 @@ class DoubanOauth
                     'client_id' => $this->clientId,
                     'client_secret' => $this->secret,
                     'redirect_uri' => $this->redirectUri,
-                    'grant_type' => 'authorization_code',
+                    'grant_type' => $this->grantType,
                     'code' => $this->authorizeCode,
                     );
 
