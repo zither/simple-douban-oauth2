@@ -205,7 +205,6 @@ class DoubanOauth
         $class = $info[0];
         $func = $info[1];
         $type = strtoupper($info[2]);
-
         $doubanApi = self::PREFIX . ucfirst(strtolower($class));
 
         if (!($this->apiInstance instanceof $doubanApi)) {
