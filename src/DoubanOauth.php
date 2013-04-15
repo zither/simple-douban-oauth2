@@ -281,7 +281,7 @@ class DoubanOauth
     /**
      * @brief 获取HTTP默认请求头
      *
-     * @return 
+     * @return array 
      */
     protected function getDefaultHeader()
     {
