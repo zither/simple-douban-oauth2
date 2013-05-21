@@ -216,7 +216,8 @@ Movie.imdb.GET  通过imdb获取电影信息  参数 'imdb'
 Movie.search.GET  搜索电影  参数 'q'  'tag' 'start' 'count'
 Movie.movieTages.GET  获取某电影最多标签  参数 'id'
 Movie.userTags.GET  获取用户对电影的所有标签  参数 'id'
-Movie.review.POST(PUT|DELETE)  电影评论相关操作  参数 'id'</code></pre>          
+Movie.review.PUT(DELETE)  电影评论相关操作  参数 'id'
+Movie.review.POST 发表电影长评 参数为包含movie,rating,title,content的数组</code></pre>          
         <p>豆瓣音乐</p>
         <pre><code>Music.info.GET  获取音乐信息  参数 'id' 
 Music.search.GET  搜索音乐  参数 'q'  'tag' 'start' 'count'
