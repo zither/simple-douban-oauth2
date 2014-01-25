@@ -202,16 +202,16 @@ class DoubanOauth
     public function api($api, $params = array())
     {
         $info = explode('.', $api);
-        $class = $info[0];
-        $func = $info[1];
-        $type = strtoupper($info[2]);
+        $class = current($info);
+        $func = next($info);
+        $type = strtoupper(next($info));
         $doubanApi = self::PREFIX . ucfirst(strtolower($class));
 
         if (!($this->apiInstance instanceof $doubanApi)) {
             $apiFile = dirname(__FILE__) . '/api/' . $doubanApi . '.php';
-            $basePath = dirname(__FILE__) . '/api/DoubanBase.php';
+            $baseFile = dirname(__FILE__) . '/api/DoubanBase.php';
             try {
-                $this->fileLoader($basePath);
+                $this->fileLoader($baseFile);
                 $this->fileLoader($apiFile);
             } catch(Exception $e) {
                 echo 'Apiloader error:' . $e->getMessage();
