@@ -55,6 +55,11 @@ class DoubanOauth
      * @brief callback链接
      */
     protected $redirectUri;
+    
+    /**
+     * @brief 授权方式 
+     */
+    protected $grantType = 'authorization_code';
 
     /**
      * @brief APP权限
@@ -155,7 +160,7 @@ class DoubanOauth
                     'client_id' => $this->clientId,
                     'client_secret' => $this->secret,
                     'redirect_uri' => $this->redirectUri,
-                    'grant_type' => 'authorization_code',
+                    'grant_type' => $this->grantType,
                     'code' => $this->authorizeCode,
                     );
 
@@ -197,17 +202,16 @@ class DoubanOauth
     public function api($api, $params = array())
     {
         $info = explode('.', $api);
-        $class = $info[0];
-        $func = $info[1];
-        $type = strtoupper($info[2]);
-
+        $class = current($info);
+        $func = next($info);
+        $type = strtoupper(next($info));
         $doubanApi = self::PREFIX . ucfirst(strtolower($class));
 
         if (!($this->apiInstance instanceof $doubanApi)) {
             $apiFile = dirname(__FILE__) . '/api/' . $doubanApi . '.php';
-            $basePath = dirname(__FILE__) . '/api/DoubanBase.php';
+            $baseFile = dirname(__FILE__) . '/api/DoubanBase.php';
             try {
-                $this->fileLoader($basePath);
+                $this->fileLoader($baseFile);
                 $this->fileLoader($apiFile);
             } catch(Exception $e) {
                 echo 'Apiloader error:' . $e->getMessage();
@@ -277,7 +281,7 @@ class DoubanOauth
     /**
      * @brief 获取HTTP默认请求头
      *
-     * @return 
+     * @return array 
      */
     protected function getDefaultHeader()
     {
